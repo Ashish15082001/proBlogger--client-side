@@ -3,7 +3,7 @@
     grid-template-columns: repeat(4, 1fr);
     grid-auto-rows: max-content;
     gap: 4em;
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
 }
 
 @media screen and (max-width: 1600px) {
@@ -23,5 +23,12 @@
         grid-template-columns: repeat(1, 1fr);
         max-width: 44rem;
         margin-inline: auto;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .content_grid {
+        width: 100%;
+        margin: 0;
     }
 }

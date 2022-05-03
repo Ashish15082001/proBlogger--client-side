@@ -56,10 +56,6 @@ a.blog_card {
     transition: all 0.3s ease-in-out;
 }
 
-a.blog_card:hover {
-    transform: scale(1.05);
-}
-
 .upper_part>svg {
     position: absolute;
     right: 5%;

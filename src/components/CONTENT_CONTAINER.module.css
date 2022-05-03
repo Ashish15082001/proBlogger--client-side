@@ -3,3 +3,9 @@
     height: calc(100vh - 9rem);
     overflow-y: scroll;
 }
+
+@media screen and (max-width: 550px) {
+    .content_container {
+        padding: 3em 1em;
+    }
+}
