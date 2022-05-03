@@ -1,0 +1,6 @@
+.main_container {
+    /* border: 2px solid red; */
+    background-color: var(--theme-secondary);
+    display: grid;
+    grid-template-rows: 9rem 1fr;
+}

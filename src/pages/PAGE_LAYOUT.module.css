@@ -1,0 +1,15 @@
+.parent_container {
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 25rem 1fr;
+    position: relative;
+    background-color: var(--theme-white);
+    /* border: 1px solid green; */
+}
+
+@media screen and (max-width: 960px) {
+    .parent_container {
+        grid-template-columns: max-content 1fr;
+    }
+}

@@ -1,0 +1,22 @@
+.main_header {
+    background-color: var(--theme-white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 3em;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.greeting {
+    color: var(--theme-black);
+}
+
+.user_name {
+    color: var(--theme-primary);
+}
+
+.menu {
+    display: none;
+}
