@@ -1,4 +1,4 @@
-export const FACEBOOK = function () {
+export const Facebook = function () {
   return (
     <svg
       width="41"

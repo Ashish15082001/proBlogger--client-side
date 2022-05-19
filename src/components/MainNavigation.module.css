@@ -1,0 +1,63 @@
+.main_navigation {
+    background-color: var(--color-secondary);
+    padding: 0.5rem;
+    position: sticky;
+    top: 1rem;
+    z-index: 10;
+}
+
+.main_navigation {
+    margin-block: 2rem;
+    display: flex;
+    align-items: center;
+    margin-inline: auto;
+    width: max-content;
+    border-radius: 8px;
+    border: var(--border);
+    box-shadow: var(--box-shadow);
+}
+
+.main_navigation>li {
+    list-style: none;
+    padding: 0.5rem;
+    border-radius: 8px;
+    margin-inline: 0.5rem;
+
+    transition: all ease-in-out 0.2s;
+}
+
+.main_navigation>li>a {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.main_navigation>li>a>svg {
+    margin-right: 0.5rem;
+
+    transition: all ease-in-out 0.2s;
+}
+
+.navigation_text {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--color-dark);
+
+    transition: all ease-in-out 0.2s;
+}
+
+.main_navigation>li svg>path {
+    transition: all ease-in-out 0.2s;
+}
+
+.main_navigation>li:hover {
+    background-color: var(--color-dark)
+}
+
+.main_navigation>li:hover .navigation_text {
+    color: var(--color-secondary);
+}
+
+.main_navigation>li:hover svg>path {
+    fill: var(--color-secondary);
+}

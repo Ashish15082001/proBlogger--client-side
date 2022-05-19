@@ -1,0 +1,19 @@
+.main_container {
+    min-height: 100vh;
+    background-color: var(--color-primary);
+    position: relative;
+}
+
+.content_grid {
+    padding: 1rem;
+    /* background-color: var(--color-secondary); */
+    display: grid;
+    grid-template-columns: repeat(5, 18rem);
+    gap: 2rem;
+
+    width: max-content;
+    margin-inline: auto;
+    /* border-radius: 8px;
+    border: var(--border);
+    box-shadow: var(--box-shadow); */
+}

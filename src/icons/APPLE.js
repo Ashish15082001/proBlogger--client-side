@@ -1,4 +1,4 @@
-export const APPLE = function () {
+export const Apple = function () {
   return (
     <svg
       width="41"

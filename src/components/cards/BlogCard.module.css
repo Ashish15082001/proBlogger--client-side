@@ -1,0 +1,86 @@
+.card_container {
+    background-color: var(--color-secondary);
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: var(--box-shadow);
+    display: block;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.card_image {
+    overflow: hidden;
+    height: 13rem;
+    background-image: url('/src/images/md-shahareyar-yunus-n0kJ3EZ9Zbs-unsplash.jpg');
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+.lower_part[grid="true"] {
+    display: grid;
+    grid-template-columns: 3.5rem 1fr;
+    align-items: center;
+    padding: 0.5rem;
+    /* border: 1px solid red; */
+}
+
+.lower_part[grid="false"] {
+    padding: 0.5rem;
+}
+
+.stats_container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.blog_avatar {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    background-image: url(/src/images/laura-chouette-__uuuysuybw-unsplash.jpg);
+}
+
+.blog_title {
+    font-size: 16px;
+    color: var(--color-dark);
+    font-weight: 500;
+}
+
+.blog_info {
+    font-size: 14px;
+    color: var(--color-dark);
+    font-weight: 400;
+}
+
+.overlay {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.24);
+    height: 100%;
+    width: 100%;
+}
+
+.overlay svg {
+    transition: all 0.2s ease-in-out;
+}
+
+.overlay svg:hover {
+    transform: scale(1.1);
+}
+
+.overlay svg:nth-child(1) {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+
+.overlay svg:nth-child(2) {
+    position: absolute;
+    top: 1rem;
+    right: 4rem;
+}

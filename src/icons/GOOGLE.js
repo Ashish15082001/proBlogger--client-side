@@ -1,4 +1,4 @@
-export const GOOGLE = function () {
+export const Google = function () {
   return (
     <svg
       width="41"

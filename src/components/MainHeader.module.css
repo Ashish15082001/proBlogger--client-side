@@ -1,0 +1,21 @@
+.main_header_container {
+    background-color: var(--color-secondary);
+    border: var(--border);
+    box-shadow: var(--box-shadow);
+}
+
+.main_header {
+    margin-inline: auto;
+    max-width: 110rem;
+    height: 5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 2rem;
+}
+
+.main_logo {
+    color: var(--color-dark);
+    font-size: 24px;
+    font-weight: 500;
+}
