@@ -1,0 +1,72 @@
+.modalContainer {
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  min-height: 100%;
+  display: grid;
+  place-content: center;
+}
+
+.modal {
+  background-color: var(--color-secondary);
+  border-radius: 8px;
+  padding: 2rem;
+  display: grid;
+  z-index: 100;
+  margin: 1rem;
+}
+
+.modal > svg {
+  justify-self: flex-end;
+  margin-bottom: 1rem;
+  cursor: pointer;
+}
+
+.title {
+  color: var(--color-dark);
+  font-size: var(--small-heading);
+  font-weight: var(--semi-bold-text);
+  margin-bottom: 1rem;
+  justify-self: center;
+}
+
+.clickableText,
+.description {
+  color: var(--color-less-dark);
+  font-size: var(--paragraph-small);
+  margin-bottom: 1rem;
+  font-weight: var(--regular);
+  text-align: center;
+}
+
+.clickableText {
+  color: var(--color-primary);
+  font-weight: var(--semi-bold-text);
+  cursor: pointer;
+}
+
+form {
+  width: 100%;
+  display: grid;
+  margin-block: 1rem;
+  /* border: 1px solid red; */
+}
+
+button {
+  border-radius: 8px;
+  border: none;
+  padding-inline: 1em;
+  padding-block: 0.5em;
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  font-size: var(--small-heading);
+  font-weight: var(--semi-bold-text);
+  justify-self: center;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 669px) {
+  .modal {
+    padding: 1rem;
+  }
+}

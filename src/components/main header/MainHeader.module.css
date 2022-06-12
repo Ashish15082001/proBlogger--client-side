@@ -1,0 +1,37 @@
+.mainHeaderContainer {
+  background-color: var(--color-secondary);
+  border: var(--border);
+  box-shadow: var(--box-shadow);
+}
+
+.mainHeader {
+  margin-inline: auto;
+  max-width: 110rem;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 2rem;
+}
+
+.mainLogo {
+  color: var(--color-dark);
+  font-size: var(--heading-large);
+  font-weight: var(--semi-bold-text);
+}
+
+.flexContainer > p {
+  color: var(--color-primary);
+  font-size: var(--heading-small);
+  font-weight: var(--semi-bold-text);
+  cursor: pointer;
+  margin-inline: 0.5em;
+}
+
+.flexContainer > p:hover {
+  color: var(--color-dark);
+}
+
+.flexContainer {
+  display: flex;
+}

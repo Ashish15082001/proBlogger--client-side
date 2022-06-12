@@ -1,5 +1,5 @@
 import ContentStyles from "./Content.module.css";
-import { MyBlogCard } from "../cards/MyBlogCard";
+import { MyBlogCard } from "../../components/cards/MyBlogCard";
 
 export const MyBlogsContent = function () {
   const arr = [
@@ -7,10 +7,12 @@ export const MyBlogsContent = function () {
   ];
 
   return (
-    <div className={ContentStyles.content_grid}>
-      {arr.map(() => (
-        <MyBlogCard />
+    <ul className={ContentStyles.content_grid}>
+      {arr.map((item) => (
+        <li key={item}>
+          <MyBlogCard />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };

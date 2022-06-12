@@ -1,0 +1,36 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.inputContainer > div > label {
+  color: var(--color-dark);
+  font-size: var(--small-heading);
+  font-weight: var(--semi-bold-text);
+  margin-bottom: 0.2em;
+  margin-right: 2rem;
+}
+.inputContainer > input {
+  padding: 0.5em;
+  border-radius: 8px;
+  border: 1.5px solid var(--color-dark);
+  background-color: var(--color-white);
+}
+
+.inputContainer > input[iserror="true"] {
+  border-color: var(--color-error);
+  outline: var(--color-error);
+}
+
+.inputUpperTextContainer {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.description {
+  color: var(--color-error);
+  font-size: 0.8rem;
+}

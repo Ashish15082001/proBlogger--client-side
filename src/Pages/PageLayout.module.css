@@ -1,6 +1,4 @@
 .main_container {
-    min-height: 100vh;
-    background-color: var(--color-primary);
     position: relative;
 }
 

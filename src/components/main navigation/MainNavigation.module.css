@@ -1,0 +1,73 @@
+.main_navigation {
+  background-color: var(--color-secondary);
+  padding: 0.5rem;
+  position: sticky;
+  top: 1rem;
+  z-index: 10;
+  margin-block: 2rem;
+  display: flex;
+  align-items: center;
+  margin-inline: auto;
+  width: max-content;
+  border-radius: 2rem;
+  border: var(--border);
+  box-shadow: var(--box-shadow);
+}
+
+.main_navigation > li {
+  margin-inline: 0.25rem;
+  list-style: none;
+  padding-inline: 0.2rem;
+  border-radius: 5rem;
+  transition: all ease-in-out 0.2s;
+  cursor: pointer;
+}
+
+.main_navigation > li:first-child {
+  margin-left: 0;
+}
+.main_navigation > li:last-child {
+  margin-right: 0;
+}
+
+.main_navigation > li > a {
+  padding: 0.5rem;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+
+.main_navigation > li > a > svg {
+  margin-right: 0.5rem;
+
+  transition: all ease-in-out 0.2s;
+}
+
+.navigation_text {
+  font-size: var(--heading-small);
+  font-weight: var(--semi-bold-text);
+  color: var(--color-dark);
+
+  transition: all ease-in-out 0.2s;
+}
+
+.main_navigation > li svg > path {
+  transition: all ease-in-out 0.2s;
+}
+
+:is(.main_navigation > li[active="true"], .main_navigation > li:hover) {
+  background-color: var(--color-dark);
+}
+
+:is(.main_navigation > li[active="true"] .navigation_text, .main_navigation
+    > li:hover
+    .navigation_text) {
+  color: var(--color-secondary);
+}
+
+:is(.main_navigation > li[active="true"] svg > path, .main_navigation
+    > li:hover
+    svg
+    > path) {
+  fill: var(--color-secondary);
+}

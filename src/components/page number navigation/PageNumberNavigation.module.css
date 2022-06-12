@@ -1,0 +1,41 @@
+.pageNumberNavigationContainer {
+    border: var(--border);
+    position: fixed;
+    left: 50%;
+    bottom: 2rem;
+    display: flex;
+    align-items: center;
+    width: max-content;
+    transform: translateX(-50%);
+    background-color: var(--color-secondary);
+    padding: 0.5rem;
+    border-radius: 5rem;
+    box-shadow: var(--box-shadow);
+  }
+  .pageNumberNavigationList {
+    display: flex;
+  }
+  .pageNumberNavigationContainer > span {
+    padding-inline: 1rem;
+    font-weight: 500;
+  }
+  
+  .pageNumberNavigationList > li {
+    margin-inline: 0.3rem;
+    font-size: var(--heading-small);
+    font-weight: var(--semi-bold-text);
+    color: var(--color-dark);
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+  }
+  
+  :is(.pageNumberNavigationList > li[active="true"], .pageNumberNavigationList
+      > li:hover) {
+    background-color: var(--color-dark);
+    color: var(--color-secondary);
+  }
+  

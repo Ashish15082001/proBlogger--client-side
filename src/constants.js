@@ -1,1 +1,6 @@
-export const urls = ["/trending", "/blogs", "/favourites", "/blogs/:userId"];
+export const urls = {
+  trending: { url: "/trending" },
+  blogs: { url: "/blogs" },
+  favourites: { url: "/favourites" },
+  userBlogs: { url: "/blogs" },
+};

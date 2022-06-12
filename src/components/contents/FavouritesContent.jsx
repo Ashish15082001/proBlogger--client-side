@@ -7,10 +7,12 @@ export const FavouritesContent = function () {
   ];
 
   return (
-    <div className={ContentStyles.content_grid}>
-      {arr.map(() => (
-        <FavouriteBlogCard />
+    <ul className={ContentStyles.content_grid}>
+      {arr.map((item) => (
+        <li key={item}>
+          <FavouriteBlogCard />
+        </li>
       ))}
-    </div>
+    </ul>
   );
 };
