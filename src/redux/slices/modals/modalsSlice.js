@@ -7,7 +7,7 @@ export const modalNames = {
 };
 
 const initialState = {
-  showModal: modalNames.none,
+  modalName: modalNames.none,
 };
 
 const modalsSlice = createSlice({
@@ -15,13 +15,13 @@ const modalsSlice = createSlice({
   initialState,
   reducers: {
     showLoginModal(state, action) {
-      state.showModal = modalNames.login;
+      state.modalName = modalNames.login;
     },
     showSignupModal(state, action) {
-      state.showModal = modalNames.signup;
+      state.modalName = modalNames.signup;
     },
     hideModal(state, action) {
-      state.showModal = modalNames.none;
+      state.modalName = modalNames.none;
     },
   },
 });

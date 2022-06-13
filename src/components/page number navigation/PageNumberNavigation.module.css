@@ -2,7 +2,7 @@
     border: var(--border);
     position: fixed;
     left: 50%;
-    bottom: 2rem;
+    bottom: 1rem;
     display: flex;
     align-items: center;
     width: max-content;

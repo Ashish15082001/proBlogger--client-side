@@ -1,4 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+import { jwtKey, userIdKey } from "../../../constants";
+import { logIn, restoreState, signUp } from "./userThunks";
 
 export const userStatus = {
   loggedIn: "logged in",
@@ -6,6 +8,7 @@ export const userStatus = {
   loggingOut: "logging out",
   loggedOut: "logged out",
   signingUp: "signing up",
+  restoringState: "restoring state",
 };
 
 export const blogStatus = { fetching: "fetching", idle: "idle" };
@@ -29,8 +32,10 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     logOut(state, action) {
-      state.credentials.account = {};
       state.status = userStatus.loggedOut;
+      state.credentials = initialCredentials;
+      localStorage.removeItem(jwtKey);
+      localStorage.removeItem(userIdKey);
     },
   },
   extraReducers: (builder) =>
@@ -39,10 +44,33 @@ export const userSlice = createSlice({
         state.status = userStatus.loggingIn;
       })
       .addCase(logIn.fulfilled, (state, action) => {
+        const userData = action.payload;
+
         state.status = userStatus.loggedIn;
+        state.credentials.account = {
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          email: userData.email,
+          _id: userData._id,
+        };
+        state.credentials.blogs = {
+          myBlogs: {
+            status: blogStatus.idle,
+            entities: userData.blogs.myBlogs,
+          },
+          trendingBlogs: {
+            status: blogStatus.idle,
+            entities: userData.blogs.trendingBlogs,
+          },
+          favouriteBlogs: {
+            status: blogStatus.idle,
+            entities: userData.blogs.favouriteBlogs,
+          },
+        };
       })
       .addCase(logIn.rejected, (state, action) => {
         state.status = userStatus.loggedOut;
+        alert(action.error.message);
       })
       .addCase(signUp.pending, (state, action) => {
         state.status = userStatus.signingUp;
@@ -53,46 +81,16 @@ export const userSlice = createSlice({
       })
       .addCase(signUp.rejected, (state, action) => {
         state.status = userStatus.loggedOut;
+        alert(action.error.message);
+      })
+      .addCase(restoreState.pending, (state, acttion) => {
+        state.status = userStatus.restoringState;
+      })
+      .addCase(restoreState.fulfilled, (state, action) => {})
+      .addCase(restoreState.rejected, (state, action) => {
+        alert(action.error.message);
       }),
 });
-
-export const logIn = createAsyncThunk(
-  "user/logIn",
-  async ({ email, password }) => {
-    try {
-      return {};
-    } catch (error) {}
-  }
-);
-
-export const signUp = createAsyncThunk(
-  "user/signUp",
-  async ({ firstName, lastName, email, password, confirmedPassword }) => {
-    try {
-      const user = JSON.stringify({
-        user: { firstName, lastName, email, password, confirmedPassword },
-      });
-
-      const response = await fetch(`http://localhost:3001/signUp`, {
-        method: "POST",
-        body: user,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const responseData = await response.json();
-
-      if (responseData.isError)
-        throw new Error("Failed to create new account.");
-
-      const jwt = responseData.token;
-      localStorage.setItem("proBloggerToken", jwt);
-
-      return responseData.payload;
-    } catch (error) {}
-  }
-);
 
 export const userSliceReducer = userSlice.reducer;
 export const { logOut } = userSlice.actions;

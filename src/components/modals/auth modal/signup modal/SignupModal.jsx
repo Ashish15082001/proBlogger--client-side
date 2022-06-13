@@ -5,7 +5,6 @@ import { useState } from "react";
 import { Input } from "../../../input/Input";
 import {
   hideModal,
-  modalNames,
   showLoginModal,
 } from "../../../../redux/slices/modals/modalsSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +18,8 @@ import {
   validateName,
   validatePassword,
 } from "../../../../utilities/validate";
-import { signUp, userStatus } from "../../../../redux/slices/user/userSlice";
+import { userStatus } from "../../../../redux/slices/user/userSlice";
+import { signUp } from "../../../../redux/slices/user/userThunks";
 
 export const SignupModal = function (props) {
   const dispatch = useDispatch();
@@ -37,24 +37,9 @@ export const SignupModal = function (props) {
   });
   const [triedFormSubmition, setTriedFormSubmition] = useState(false);
 
-  const showSignUpModal = useSelector(
-    (state) => state.modals.showModal === modalNames.signup
-  );
-
   const isSigningUp = useSelector(
     (state) => state.user.status === userStatus.signingUp
   );
-
-  const isLoggedIn = useSelector(
-    (state) => state.user.status === userStatus.loggedIn
-  );
-
-  if (!showSignUpModal) return null;
-
-  if (isLoggedIn) {
-    dispatch(hideModal());
-    return null;
-  }
 
   const onFirstNameChanged = function (event) {
     const enteredFirstName = event.target.value;
@@ -157,9 +142,9 @@ export const SignupModal = function (props) {
       });
     }
 
-    if (isError) return setTriedFormSubmition(true);
+    if (isError && !triedFormSubmition) return setTriedFormSubmition(true);
+    if (isError) return;
 
-    console.log("signed up successfully...😊");
     dispatch(
       signUp({ firstName, lastName, email, password, confirmedPassword })
     );
@@ -225,9 +210,7 @@ export const SignupModal = function (props) {
             status={confirmedPasswordStatus}
           />
           <button disabled={isSigningUp} type="submit">
-            {`${
-              isSigningUp ? "please wait... creating account" : "create account"
-            }`}
+            {`${isSigningUp ? "creating account" : "create account"}`}
           </button>
         </form>
         <p className={SignupModalStyles.description}>

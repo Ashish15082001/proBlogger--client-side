@@ -14,9 +14,10 @@ import {
 } from "../../../../utilities/sanitise";
 import {
   hideModal,
-  modalNames,
   showSignupModal,
 } from "../../../../redux/slices/modals/modalsSlice";
+import { logIn } from "../../../../redux/slices/user/userThunks";
+import { userStatus } from "../../../../redux/slices/user/userSlice";
 
 export const LoginModal = function () {
   const dispatch = useDispatch();
@@ -26,11 +27,9 @@ export const LoginModal = function () {
   const [passwordStatus, setPasswordStatus] = useState({ isError: false });
   const [triedFormSubmition, setTriedFormSubmition] = useState(false);
 
-  const showModal = useSelector(
-    (state) => state.modals.showModal === modalNames.login
+  const isLoggingIn = useSelector(
+    (state) => state.user.status === userStatus.loggingIn
   );
-
-  if (!showModal) return null;
 
   const onEmailChanged = function (event) {
     const enteredEmail = event.target.value;
@@ -76,8 +75,7 @@ export const LoginModal = function () {
 
     if (isError) return setTriedFormSubmition(true);
 
-    console.log("logged in successfully...😊");
-    // dispatch(logIn({ email, password }));
+    dispatch(logIn({ email, password }));
   };
 
   return (
@@ -112,7 +110,10 @@ export const LoginModal = function () {
             autoFocus={false}
             status={passwordStatus}
           />
-          <button type="submit">login</button>
+          <button disabled={isLoggingIn} type="submit">
+            {" "}
+            {`${isLoggingIn ? "logging in" : "log in"}`}
+          </button>
         </form>
         <p className={LoginModalStyles.description}>
           Do not have any account ?{" "}

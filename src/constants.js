@@ -4,3 +4,6 @@ export const urls = {
   favourites: { url: "/favourites" },
   userBlogs: { url: "/blogs" },
 };
+
+export const jwtKey = "proBlogger token";
+export const userIdKey = "user id";

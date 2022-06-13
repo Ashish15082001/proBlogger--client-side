@@ -6,8 +6,7 @@ import { store } from "./redux/store";
 import "./index.css";
 import { PageLayout } from "./Pages/PageLayout";
 import reportWebVitals from "./reportWebVitals";
-import { Modals } from "./components/modals/Modal";
-import { BackDropOverlay } from "./components/backdrop overlay/BackDropOverlay";
+import { AuthModal } from "./components/modals/auth modal/AuthModal";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -16,8 +15,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <BackDropOverlay />
-        <Modals />
+        <AuthModal />
         <PageLayout />
       </BrowserRouter>
     </Provider>
