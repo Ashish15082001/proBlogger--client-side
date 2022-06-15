@@ -4,13 +4,13 @@ import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
 import {
   contentsStatus,
-  fetchTrendingContent,
   initiateFetching,
 } from "../../redux/slices/content/contentsSlice";
 import { LoadingSpinner } from "../../components/loading spinner/LoadingSpinner";
 import { useLocation } from "react-router-dom";
 import { PageNumberNavigation } from "../page number navigation/PageNumberNavigation";
 import { motion } from "framer-motion";
+import { fetchTrendingContent } from "../../redux/slices/content/contentsThunk";
 
 export const TrendingContent = function () {
   const dispatch = useDispatch();

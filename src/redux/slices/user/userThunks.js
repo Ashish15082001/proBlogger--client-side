@@ -19,9 +19,7 @@ export const logIn = createAsyncThunk(
 
       const responseData = await response.json();
 
-      console.log(responseData);
-
-      if (responseData.isError) throw new Error(responseData.description);
+      if (!response.ok) throw new Error(responseData.message);
 
       const jwt = responseData.token;
       const userId = responseData.payload._id;
@@ -53,9 +51,8 @@ export const signUp = createAsyncThunk(
       });
 
       const responseData = await response.json();
-      console.log(responseData);
 
-      if (responseData.isError) throw new Error(responseData.description);
+      if (!response.ok) throw new Error(responseData.message);
 
       const jwt = responseData.token;
       const userId = responseData.payload._id;
@@ -75,13 +72,23 @@ export const restoreState = createAsyncThunk("user/restoreState", async () => {
     const jwt = localStorage.getItem(jwtKey);
     if (!jwt) throw new Error("jason web token does not exists.");
 
-    const response = await fetch(`http://localhost:3001/userData`, {
-      headers: {
-        Authentication: "bearer " + jwt,
-      },
-    });
+    const userId = localStorage.getItem(userIdKey);
 
-    return { jwt };
+    const response = await fetch(
+      `http://localhost:3001/userData?id=${userId}`,
+      {
+        headers: {
+          Authorization: "Bearer " + jwt,
+        },
+        method: "GET",
+      }
+    );
+
+    const responseData = await response.json();
+
+    if (!response.ok) throw new Error(responseData.message);
+
+    return responseData.payload;
   } catch (error) {
     return Promise.reject(error);
   }

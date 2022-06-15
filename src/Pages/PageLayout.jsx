@@ -7,8 +7,23 @@ import { FavouritesContent } from "../components/contents/FavouritesContent";
 import { TrendingContent } from "../components/contents/TrendingContent";
 import { MyBlogsContent } from "../components/contents/MyBlogsContent";
 import PageLayoutStyles from "./PageLayout.module.css";
+import { useEffect } from "react";
+import { restoreState } from "../redux/slices/user/userThunks";
+import { userStatus } from "../redux/slices/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export const PageLayout = function () {
+  const dispatch = useDispatch();
+  const isRestoringState = useSelector(
+    (state) => state.user.status === userStatus.restoringState
+  );
+
+  useEffect(() => {
+    dispatch(restoreState());
+  }, []);
+
+  if (isRestoringState === true) return <h1>restoring state...</h1>;
+
   return (
     <div className={PageLayoutStyles.main_container}>
       <MainHeader />

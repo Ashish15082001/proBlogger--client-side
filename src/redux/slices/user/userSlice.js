@@ -23,7 +23,7 @@ const initialCredentials = {
 };
 
 const initialState = {
-  status: userStatus.loggedOut,
+  status: userStatus.restoringState,
   credentials: initialCredentials,
 };
 
@@ -53,20 +53,6 @@ export const userSlice = createSlice({
           email: userData.email,
           _id: userData._id,
         };
-        state.credentials.blogs = {
-          myBlogs: {
-            status: blogStatus.idle,
-            entities: userData.blogs.myBlogs,
-          },
-          trendingBlogs: {
-            status: blogStatus.idle,
-            entities: userData.blogs.trendingBlogs,
-          },
-          favouriteBlogs: {
-            status: blogStatus.idle,
-            entities: userData.blogs.favouriteBlogs,
-          },
-        };
       })
       .addCase(logIn.rejected, (state, action) => {
         state.status = userStatus.loggedOut;
@@ -86,9 +72,19 @@ export const userSlice = createSlice({
       .addCase(restoreState.pending, (state, acttion) => {
         state.status = userStatus.restoringState;
       })
-      .addCase(restoreState.fulfilled, (state, action) => {})
+      .addCase(restoreState.fulfilled, (state, action) => {
+        const userData = action.payload;
+
+        state.status = userStatus.loggedIn;
+        state.credentials.account = {
+          firstName: userData.firstName,
+          lastName: userData.lastName,
+          email: userData.email,
+          _id: userData._id,
+        };
+      })
       .addCase(restoreState.rejected, (state, action) => {
-        alert(action.error.message);
+        state.status = userStatus.loggedOut;
       }),
 });
 

@@ -1,4 +1,6 @@
-const { createSlice, createAsyncThunk } = require("@reduxjs/toolkit");
+import { fetchBlogsContent, fetchTrendingContent } from "./contentsThunk";
+
+const { createSlice } = require("@reduxjs/toolkit");
 
 export const contentsStatus = {
   fetching: "fetching",
@@ -62,63 +64,28 @@ const contentSlice = createSlice({
             contentsStatus.idle;
       })
       .addCase(fetchBlogsContent.pending, (state) => {
-        state.blogsContent.status = contentsStatus.fetching;
+        const fetchingPageNumber = state.blogsContent.fetchingPageNumber;
+        state.blogsContent.pages[fetchingPageNumber].status =
+          contentsStatus.fetching;
       })
       .addCase(fetchBlogsContent.fulfilled, (state, action) => {
         if (action.payload.isError) {
           state.blogsContent.status = contentsStatus.idle;
           return;
         }
-        const { entities } = action.payload;
+        const { entities, totalDocuments } = action.payload;
+        const fetchingPageNumber = state.blogsContent.fetchingPageNumber;
 
-        state.blogsContent.status = contentsStatus.idle;
-        state.blogsContent.entities = entities;
+        state.blogsContent.totalDocuments = totalDocuments;
+        state.blogsContent.pages[fetchingPageNumber].entities = entities;
+        if (Object.keys(entities).length === 0)
+          state.blogsContent.pages[fetchingPageNumber].status =
+            contentsStatus.notFound;
+        else
+          state.blogsContent.pages[fetchingPageNumber].status =
+            contentsStatus.idle;
       }),
 });
-
-export const fetchTrendingContent = createAsyncThunk(
-  "trendingBlogsContent/fetch",
-  async (pageNumber) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3001/trending?pageNumber=${pageNumber}`
-      );
-      const responseData = await response.json();
-      const parsedResponseData = JSON.parse(responseData);
-      const responsePayload = parsedResponseData.payload;
-
-      if (parsedResponseData.isError) throw responsePayload;
-
-      const entities = responsePayload.blogs.entities;
-      const totalDocuments = responsePayload.totalDocuments;
-
-      return { entities, isError: false, totalDocuments };
-    } catch (error) {
-      return { isError: true, error: error.message };
-    }
-  }
-);
-
-export const fetchBlogsContent = createAsyncThunk(
-  "blogs/fetch",
-  async (pageNumber) => {
-    try {
-      const response = await fetch(
-        `http://localhost:3001/blogs?pageNumber=${pageNumber}`
-      );
-      const responseData = await response.json();
-      const parsedResponseData = JSON.parse(responseData);
-      const responsePayload = parsedResponseData.payload;
-
-      if (parsedResponseData.isError) throw responsePayload;
-
-      const entities = responsePayload.blogs.entities;
-      return { entities, isError: false };
-    } catch (error) {
-      return { isError: true, error: error.message };
-    }
-  }
-);
 
 export const { initiateFetching } = contentSlice.actions;
 export const contentSliceReducer = contentSlice.reducer;
