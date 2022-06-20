@@ -18,6 +18,7 @@ import {
 } from "../../../../redux/slices/modals/modalsSlice";
 import { logIn } from "../../../../redux/slices/user/userThunks";
 import { userStatus } from "../../../../redux/slices/user/userSlice";
+import { showToast } from "../../../../redux/slices/toast/toastSlice";
 
 export const LoginModal = function () {
   const dispatch = useDispatch();
@@ -57,25 +58,34 @@ export const LoginModal = function () {
     setPassword(sanitisePassword(enteredPassword));
   };
 
-  const login = function (event) {
-    event.preventDefault();
-    let isError = false;
+  const login = async function (event) {
+    try {
+      event.preventDefault();
+      let isError = false;
 
-    if (validateEmail(email) === false) {
-      isError = true;
-      setEmailStatus({ isError: true, description: "invalid email" });
+      if (validateEmail(email) === false) {
+        isError = true;
+        setEmailStatus({ isError: true, description: "invalid email" });
+      }
+      if (validatePassword(password) === false) {
+        isError = true;
+        setPasswordStatus({
+          isError: true,
+          description: "minimum length is 8",
+        });
+      }
+
+      if (isError && !triedFormSubmition) return setTriedFormSubmition(true);
+
+      const setteledPromise = await dispatch(logIn({ email, password }));
+      if (setteledPromise.error) throw new Error(setteledPromise.error.message);
+
+      dispatch(
+        showToast({ toastType: "success", message: "logged in successfully" })
+      );
+    } catch (error) {
+      dispatch(showToast({ toastType: "error", message: error.message }));
     }
-    if (validatePassword(password) === false) {
-      isError = true;
-      setPasswordStatus({
-        isError: true,
-        description: "minimum length is 8",
-      });
-    }
-
-    if (isError) return setTriedFormSubmition(true);
-
-    dispatch(logIn({ email, password }));
   };
 
   return (

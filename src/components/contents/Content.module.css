@@ -21,25 +21,6 @@ li {
   transform: scale(1.5);
 }
 
-/* li:last-child {
-    display: grid;
-    place-items: center;
-    font-size: 16px;
-    color: var(--color-secondary);
-    font-weight: 500;
-}
-
-li:last-child>div {
-    justify-self: stretch;
-    display: grid;
-    place-items: center;
-    min-height: 10rem;
-}
-
-li:last-child>div>p {
-    cursor: pointer;
-}
-*/
 .placeholder {
   display: grid;
   place-items: center;

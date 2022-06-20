@@ -5,25 +5,6 @@
   box-sizing: border-box;
 
   font-family: "Roboto", sans-serif;
-
-  --color-primary: #f19a75;
-  --color-secondary: #fffbfa;
-  --color-white: #ffffff;
-  --color-dark: #434140;
-  --color-less-dark: #5a5755;
-  --color-fade: #d7d2d0;
-  --color-error: #DA5353;
-  --color-success: #7EDA53,
-  --border: 1px solid rgba(0, 0, 0, 0.09);
-  --box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-
-  --heading-small: 16px;
-  --paragraph-small: 14px;
-  --heading-large: 24px;
-  --heading-small: 20;
-
-  --regular: 500;
-  --semi-bold-text: 700;
 }
 
 body {
@@ -44,12 +25,78 @@ code {
 }
 
 #root {
+  transition: all 0.3s ease-in-out;
+  --color-primary: #f19a75;
+  --color-secondary: #fffbfa;
+  --color-white: #ffffff;
+  --color-dark: #434140;
+  --color-less-dark: #5a5755;
+  --color-fade: #d7d2d0;
+  --color-error: #da5353;
+  --color-success: #7eda53;
+  --border: 1px solid rgba(0, 0, 0, 0.09);
+  --box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+  --heading-large: 24px;
+  --heading-small: 16px;
+  --paragraph-small: 14px;
+  --paragraph-large: 20px;
+
+  --regular: 500;
+  --semi-bold-text: 700;
   width: 100%;
   position: relative;
   min-height: 100vh;
   background-color: var(--color-primary);
   padding-block-end: 5rem;
 }
+
+#root[theme="teal"] {
+  --color-primary: #82d44f;
+  --color-secondary: #fafff8;
+}
+
+/* ocean */
+/* #root[theme="teal"] {
+  --color-primary: #71acca;
+  --color-secondary: #f2f8fa;
+} */
+
+/* dusk */
+/* #root[theme="teal"] {
+  --color-primary: #ca7171;
+  --color-secondary: #fcf6f6;
+} */
+
+/* sandal */
+/* #root[theme="teal"] {
+  --color-primary: #caa971;
+  --color-secondary: #fdfaf5;
+} */
+
+/* berry */
+/* #root[theme="teal"] {
+  --color-primary: #717dca;
+  --color-secondary: #f4f5ff;
+} */
+
+/* brinjal */
+/* #root[theme="teal"] {
+  --color-primary: #b571ca;
+  --color-secondary: #fdf8ff;
+} */
+
+/* vomit */
+/* #root[theme="teal"] {
+  --color-primary: #a2ca71;
+  --color-secondary: #fbfff6;
+} */
+
+/* fade */
+/* #root[theme="teal"] {
+  --color-primary: #8a8a8a;
+  --color-secondary: #ffffff;
+} */
 
 :is(a, span, svg) {
   display: inline-block;

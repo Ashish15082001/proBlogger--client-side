@@ -9,6 +9,9 @@ import reportWebVitals from "./reportWebVitals";
 import { AuthModal } from "./components/modals/auth modal/AuthModal";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+export const setTheme = function (theme) {
+  document.getElementById("root").setAttribute("theme", theme);
+};
 
 // using <ROUTER/> as we are using react routing here.
 root.render(

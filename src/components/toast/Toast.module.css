@@ -1,0 +1,40 @@
+.toastContainer {
+  position: fixed;
+  top: 1rem;
+  z-index: 200;
+  width: 100%;
+}
+
+.toast {
+  width: max-content;
+  background-color: var(--color-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  margin-inline: auto;
+}
+.toast[toasttype="error"] {
+  border: 2px solid var(--color-error);
+}
+
+.toast[toasttype="success"] {
+  border: 2px solid var(--color-success);
+}
+
+.toast > h5 {
+  font-size: var(--heading-small);
+  font-weight: var(--semi-bold-text);
+  text-align: center;
+}
+
+.toast {
+  font-size: var(--paragraph-small);
+  font-weight: var(--regular);
+}
+
+:is(.toast[toasttype="error"] > h5, .toast[toasttype="error"] > p) {
+  color: var(--color-error);
+}
+
+:is(.toast[toasttype="success"] > h5, .toast[toasttype="success"] > p) {
+  color: var(--color-success);
+}

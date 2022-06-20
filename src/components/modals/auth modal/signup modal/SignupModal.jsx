@@ -20,14 +20,18 @@ import {
 } from "../../../../utilities/validate";
 import { userStatus } from "../../../../redux/slices/user/userSlice";
 import { signUp } from "../../../../redux/slices/user/userThunks";
+import { showToast } from "../../../../redux/slices/toast/toastSlice";
+import { useRef } from "react";
 
 export const SignupModal = function (props) {
   const dispatch = useDispatch();
+  const formRef = useRef();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
   const [firstNameStatus, setFirstNameStatus] = useState({ isError: false });
   const [lastNameStatus, setLastNameStatus] = useState({ isError: false });
   const [emailStatus, setEmailStatus] = useState({ isError: false });
@@ -111,43 +115,80 @@ export const SignupModal = function (props) {
     setConfirmedPassword(sanitisePassword(enteredConfirmedPasswotd));
   };
 
-  const signup = function (event) {
-    event.preventDefault();
-    let isError = false;
+  const onProfileImageChanged = function (event) {
+    console.log(event.target.files[0]);
+    setProfileImage(event.target.files[0]);
+  };
 
-    if (validateEmail(email) === false) {
-      isError = true;
-      setEmailStatus({ isError: true, description: "invalid email" });
-    }
-    if (validateName(firstName) === false) {
-      isError = true;
-      setFirstNameStatus({ isError: true, description: "invalid first name" });
-    }
-    if (validateName(lastName) === false) {
-      isError = true;
-      setLastNameStatus({ isError: true, description: "invalid last name" });
-    }
-    if (validatePassword(password) === false) {
-      isError = true;
-      setPasswordStatus({
-        isError: true,
-        description: "minimum length is 8",
-      });
-    }
-    if (confirmedPassword === "" || password !== confirmedPassword) {
-      isError = true;
-      setConfirmedPasswordStatus({
-        isError: true,
-        description: "confirmed password ≠ password",
-      });
-    }
+  const signup = async function (event) {
+    try {
+      event.preventDefault();
+      let isError = false;
 
-    if (isError && !triedFormSubmition) return setTriedFormSubmition(true);
-    if (isError) return;
+      if (validateEmail(email) === false) {
+        isError = true;
+        setEmailStatus({ isError: true, description: "invalid email" });
+      }
+      if (validateName(firstName) === false) {
+        isError = true;
+        setFirstNameStatus({
+          isError: true,
+          description: "invalid first name",
+        });
+      }
+      if (validateName(lastName) === false) {
+        isError = true;
+        setLastNameStatus({ isError: true, description: "invalid last name" });
+      }
+      if (validatePassword(password) === false) {
+        isError = true;
+        setPasswordStatus({
+          isError: true,
+          description: "minimum length is 8",
+        });
+      }
+      if (confirmedPassword === "" || password !== confirmedPassword) {
+        isError = true;
+        setConfirmedPasswordStatus({
+          isError: true,
+          description: "confirmed password ≠ password",
+        });
+      }
 
-    dispatch(
-      signUp({ firstName, lastName, email, password, confirmedPassword })
-    );
+      if (profileImage === null)
+        return dispatch(
+          showToast({
+            toastType: "error",
+            message: "Please select profile picture",
+          })
+        );
+
+      if (isError && !triedFormSubmition) return setTriedFormSubmition(true);
+      if (isError) return;
+
+      const formData = new FormData();
+      formData.set("firstName", firstName);
+      formData.set("lastName", lastName);
+      formData.set("email", email);
+      formData.set("password", password);
+      formData.set("confirmedPassword", confirmedPassword);
+      formData.set("profileImage", profileImage, profileImage.name);
+
+      for (const x of formData.entries()) console.log(x);
+
+      const setteledPromise = await dispatch(signUp(formData));
+
+      if (setteledPromise.error) throw new Error(setteledPromise.error.message);
+
+      dispatch(
+        showToast({
+          toastType: "success",
+          message: "Account is created successfully",
+        })
+      );
+    } catch (error) {
+      dispatch(showToast({ toastType: "error", message: error.message }));
+    }
   };
 
   return (
@@ -163,7 +204,7 @@ export const SignupModal = function (props) {
         <p className={SignupModalStyles.description}>
           Please enter all credentials to create new account
         </p>
-        <form onSubmit={signup}>
+        <form ref={formRef} onSubmit={signup} encType="multipart/form-data">
           <Input
             label="first name"
             inputValue={firstName}
@@ -209,6 +250,11 @@ export const SignupModal = function (props) {
             autoFocus={false}
             status={confirmedPasswordStatus}
           />
+          <input
+            type="file"
+            // accept="image/png, image/jpeg, image/jpg, .png, .jpeg, .jpg"
+            onChange={onProfileImageChanged}
+          ></input>
           <button disabled={isSigningUp} type="submit">
             {`${isSigningUp ? "creating account" : "create account"}`}
           </button>

@@ -34,38 +34,28 @@ export const logIn = createAsyncThunk(
   }
 );
 
-export const signUp = createAsyncThunk(
-  "user/signUp",
-  async ({ firstName, lastName, email, password, confirmedPassword }) => {
-    try {
-      const body = JSON.stringify({
-        user: { firstName, lastName, email, password, confirmedPassword },
-      });
+export const signUp = createAsyncThunk("user/signUp", async (formData) => {
+  try {
+    const response = await fetch(`http://localhost:3001/signUp`, {
+      method: "POST",
+      body: formData,
+    });
 
-      const response = await fetch(`http://localhost:3001/signUp`, {
-        method: "POST",
-        body,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+    const responseData = await response.json();
 
-      const responseData = await response.json();
+    if (!response.ok) throw new Error(responseData.message);
 
-      if (!response.ok) throw new Error(responseData.message);
+    const jwt = responseData.token;
+    const userId = responseData.payload._id;
 
-      const jwt = responseData.token;
-      const userId = responseData.payload._id;
+    localStorage.setItem(jwtKey, jwt);
+    localStorage.setItem(userIdKey, userId);
 
-      localStorage.setItem(jwtKey, jwt);
-      localStorage.setItem(userIdKey, userId);
-
-      return responseData.payload;
-    } catch (error) {
-      return Promise.reject(error);
-    }
+    return responseData.payload;
+  } catch (error) {
+    return Promise.reject(error);
   }
-);
+});
 
 export const restoreState = createAsyncThunk("user/restoreState", async () => {
   try {

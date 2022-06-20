@@ -11,21 +11,50 @@ import { useEffect } from "react";
 import { restoreState } from "../redux/slices/user/userThunks";
 import { userStatus } from "../redux/slices/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { AccountCard } from "../components/account card/AccountCard";
+import { showToast, toastStatus } from "../redux/slices/toast/toastSlice";
+import { Toast } from "../components/toast/Toast";
+import { AnimatePresence } from "framer-motion";
 
 export const PageLayout = function () {
   const dispatch = useDispatch();
+  const toast = useSelector((state) => state.toast);
   const isRestoringState = useSelector(
     (state) => state.user.status === userStatus.restoringState
   );
 
+  const isLoggedIn = useSelector(
+    (state) => state.user.status === userStatus.loggedIn
+  );
+
   useEffect(() => {
-    dispatch(restoreState());
-  }, []);
+    const f = async function () {
+      try {
+        const setteledPromise = await dispatch(restoreState());
+        if (setteledPromise.error)
+          throw new Error(setteledPromise.error.message);
+
+        dispatch(
+          showToast({
+            toastType: "success",
+            message: "Session is restored successfully",
+          })
+        );
+      } catch (error) {
+        dispatch(showToast({ toastType: "error", message: error.message }));
+      }
+    };
+
+    f();
+  }, [dispatch]);
 
   if (isRestoringState === true) return <h1>restoring state...</h1>;
 
   return (
     <div className={PageLayoutStyles.main_container}>
+      <AnimatePresence>
+        {toast.status === toastStatus.visible && <Toast />}
+      </AnimatePresence>
       <MainHeader />
       <MainNavigation />
       <Routes>
@@ -35,11 +64,22 @@ export const PageLayout = function () {
         ></Route>
         <Route path={urls.trending.url} element={<TrendingContent />}></Route>
         <Route path={urls.blogs.url} element={<BlogsContent />}></Route>
+        {isLoggedIn && (
+          <Route path={urls.userBlogs.url} element={<MyBlogsContent />}></Route>
+        )}
+        {isLoggedIn && (
+          <Route
+            path={urls.favourites.url}
+            element={<FavouritesContent />}
+          ></Route>
+        )}
+        {isLoggedIn && (
+          <Route path={urls.account.url} element={<AccountCard />}></Route>
+        )}
         <Route
-          path={urls.favourites.url}
-          element={<FavouritesContent />}
+          path="*"
+          element={<Navigate to={urls.trending.url + "?pageNumber=1"} />}
         ></Route>
-        <Route path={urls.userBlogs.url} element={<MyBlogsContent />}></Route>
       </Routes>
     </div>
   );

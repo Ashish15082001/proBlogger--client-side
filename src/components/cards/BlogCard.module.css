@@ -1,9 +1,7 @@
 .card_container {
-  background-color: var(--color-secondary);
+  background-color: white;
   border-radius: 8px;
-  box-shadow: var(--box-shadow);
   overflow: hidden;
-  border-radius: 8px;
   box-shadow: var(--box-shadow);
   display: block;
   text-decoration: none;
@@ -13,7 +11,7 @@
 .blog_profile_image {
   overflow: hidden;
   height: 12rem;
-  background-image: url("/src/images/md-shahareyar-yunus-n0kJ3EZ9Zbs-unsplash.jpg");
+  background-image: url("/public/images/hanvin-cheong-vyMOmbNKorU-unsplash.jpg");
   background-position: center;
   background-size: cover;
   position: relative;
@@ -42,7 +40,7 @@
   border-radius: 50%;
   background-position: center;
   background-size: cover;
-  background-image: url(/src/images/laura-chouette-__uuuysuybw-unsplash.jpg);
+  background-image: url("/public/images/laura-chouette-__uuuysuybw-unsplash.jpg");
 }
 
 .blog_title {
