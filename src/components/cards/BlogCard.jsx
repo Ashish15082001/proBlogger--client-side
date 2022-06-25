@@ -13,7 +13,7 @@ export const BlogCard = function ({ id, contentType, pageNumber }) {
       <div
         className={BlogCardStyles.blog_profile_image}
         style={{
-          backgroundImage: `url(http://localhost:3001/${selectedBlogData.blogProfileImage.destination}/${selectedBlogData.blogProfileImage.filename})`,
+          backgroundImage: `url(${serverDomain}${selectedBlogData.blogProfileImage.destination}/${selectedBlogData.blogProfileImage.filename})`,
         }}
       ></div>
       <div className={BlogCardStyles.lower_part} grid="true">

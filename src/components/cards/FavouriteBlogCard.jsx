@@ -26,7 +26,7 @@ export const FavouriteBlogCard = function ({ id, pageNumber }) {
         <div
           className={BlogCardStyles.blog_avatar}
           style={{
-            backgroundImage: `url(http://localhost:3001/${selectedBlogData.publisherProfileImage.destination}/${selectedBlogData.publisherProfileImage.filename})`,
+            backgroundImage: `url(${serverDomain}${selectedBlogData.publisherProfileImage.destination}/${selectedBlogData.publisherProfileImage.filename})`,
           }}
         ></div>
         <div className={BlogCardStyles.right_part}>
