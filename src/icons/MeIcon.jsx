@@ -1,4 +1,4 @@
-export const Me = function () {
+export const MeIcon = function () {
   return (
     <svg
       width="30"

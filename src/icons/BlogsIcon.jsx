@@ -1,4 +1,4 @@
-export const Blogs = function () {
+export const BlogsIcon = function () {
   return (
     <svg
       width="30"

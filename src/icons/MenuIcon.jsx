@@ -1,4 +1,4 @@
-export const Menu = function () {
+export const MenuIcon = function () {
   return (
     <svg
       width="30"

@@ -1,18 +1,6 @@
-import ContentStyles from "./Content.module.css";
-import { MyBlogCard } from "../../components/cards/MyBlogCard";
+import { contentTypes } from "../../redux/slices/content/contentsSlice";
+import { ContentUiGenerater } from "./ContentUiGenerater";
 
 export const MyBlogsContent = function () {
-  const arr = [
-    0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14, 15, 16, 17, 18, 19,
-  ];
-
-  return (
-    <ul className={ContentStyles.content_grid}>
-      {arr.map((item) => (
-        <li key={item}>
-          <MyBlogCard />
-        </li>
-      ))}
-    </ul>
-  );
+  return <ContentUiGenerater contentType={contentTypes.myBlogs} />;
 };

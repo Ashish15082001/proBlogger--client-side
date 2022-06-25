@@ -1,4 +1,4 @@
-export const Cancel = function (props) {
+export const CancelIcon = function (props) {
   const { onClick } = props;
 
   return (

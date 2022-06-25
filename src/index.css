@@ -25,12 +25,12 @@ code {
 }
 
 #root {
-  transition: all 0.3s ease-in-out;
+  /* transition: all 0.3s ease-in-out; */
   --color-primary: #f19a75;
   --color-secondary: #fffbfa;
   --color-white: #ffffff;
   --color-dark: #434140;
-  --color-less-dark: #5a5755;
+  --color-less-dark: #434140d5;
   --color-fade: #d7d2d0;
   --color-error: #da5353;
   --color-success: #7eda53;
@@ -100,6 +100,19 @@ code {
 
 :is(a, span, svg) {
   display: inline-block;
+}
+
+button {
+  border-radius: 8px;
+  border: none;
+  padding-inline: 2em;
+  padding-block: 0.5em;
+  background-color: var(--color-dark);
+  color: var(--color-white);
+  font-size: var(--small-heading);
+  font-weight: var(--semi-bold-text);
+  justify-self: center;
+  cursor: pointer;
 }
 
 /* @media screen and (max-width: 669px) {

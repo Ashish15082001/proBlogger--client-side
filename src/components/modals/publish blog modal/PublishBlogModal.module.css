@@ -1,0 +1,13 @@
+.mainContainer {
+  width: 90%;
+  max-width: 50rem;
+  margin-inline: auto;
+}
+
+.formContainer {
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+  border: var(--border);
+  background-color: var(--color-secondary);
+}

@@ -11,10 +11,11 @@ import { useEffect } from "react";
 import { restoreState } from "../redux/slices/user/userThunks";
 import { userStatus } from "../redux/slices/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { AccountCard } from "../components/account card/AccountCard";
+import { AccountCard } from "../components/cards/account card/AccountCard";
 import { showToast, toastStatus } from "../redux/slices/toast/toastSlice";
 import { Toast } from "../components/toast/Toast";
 import { AnimatePresence } from "framer-motion";
+import { PublishBlogModal } from "../components/modals/publish blog modal/PublishBlogModal";
 
 export const PageLayout = function () {
   const dispatch = useDispatch();
@@ -75,6 +76,12 @@ export const PageLayout = function () {
         )}
         {isLoggedIn && (
           <Route path={urls.account.url} element={<AccountCard />}></Route>
+        )}
+        {isLoggedIn && (
+          <Route
+            path={urls.publishBlog.url}
+            element={<PublishBlogModal />}
+          ></Route>
         )}
         <Route
           path="*"

@@ -32,6 +32,20 @@ li {
   color: var(--color-secondary);
 }
 
+.refreshIcon {
+  cursor: pointer;
+  position: fixed;
+  right: 1rem;
+  display: grid;
+  place-items: center;
+  height: 3rem;
+  box-shadow: var(--box-shadow);
+  width: 3rem;
+  background-color: var(--color-secondary);
+  border-radius: 50%;
+  z-index: 10;
+}
+
 @media screen and (max-width: 1610px) {
   .content_grid {
     grid-template-columns: repeat(4, 18rem);

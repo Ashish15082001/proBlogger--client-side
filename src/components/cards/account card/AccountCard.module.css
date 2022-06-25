@@ -1,6 +1,6 @@
 .AccountCardContainer {
   background-color: var(--color-secondary);
-  max-width: 60rem;
+  max-width: 65rem;
   margin-inline: auto;
   border-radius: 8px;
   overflow: hidden;
@@ -16,16 +16,22 @@
   font-weight: var(--semi-bold-text);
 }
 
-/* .AccountCardContainer > img {
-  display: block;
-  margin-inline: auto;
-} */
-
-.AccountCardContainer > h3 {
-  font-size: var(--heading-large);
-  font-weight: var(--semi-bold-text);
+#userName,
+#email {
   color: var(--color-dark);
 }
+
+#userName {
+  font-size: var(--heading-large);
+  font-weight: var(--semi-bold-text);
+}
+
+#email {
+  font-size: var(--heading-small);
+  font-weight: var(--semi-bold-text);
+  margin-bottom: 3rem;
+}
+
 :is(.AccountCardContainer > h3, .AccountCardContainer > p, .AccountCardContainer
     > span) {
   text-align: center;
@@ -34,6 +40,11 @@
 .flexContainer {
   display: flex;
   justify-content: space-between;
+}
+
+.aboutContainer > h5 {
+  font-size: var(--heading-small);
+  font-weight: var(--semi-bold-text);
 }
 
 .aboutItemsContainer {
@@ -60,9 +71,11 @@
 .aboutItemsContainer > div {
   margin-inline: 0.2rem;
 }
+
 .aboutItemsContainer > div:first-child {
   margin-left: 0;
 }
+
 .aboutItemsContainer > div:last-child {
   margin-right: 0;
 }

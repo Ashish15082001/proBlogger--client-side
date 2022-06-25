@@ -1,4 +1,4 @@
-export const EditWithBackground = function () {
+export const EditIcon = function () {
   return (
     <svg
       width="40"

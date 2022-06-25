@@ -1,35 +1,67 @@
-import { NavLink, useLocation } from "react-router-dom";
-import { Favourite } from "../../icons/Favourite";
-import { Blogs } from "../../icons/Blogs";
-import { Me } from "../../icons/Me";
-import { Trending } from "../../icons/Trending";
+import { useLocation, useNavigate } from "react-router-dom";
+import { FavouriteIcon } from "../../icons/FavouriteIcon";
+import { BlogsIcon } from "../../icons/BlogsIcon";
+import { MeIcon } from "../../icons/MeIcon";
+import { TrendingIcon } from "../../icons/TrendingIcon";
+import { PublishIcon } from "../../icons/PublishIcon";
 import MainNavigationStyles from "./MainNavigation.module.css";
 import { urls, userIdKey } from "../../constants";
 import { useSelector } from "react-redux";
 import { userStatus } from "../../redux/slices/user/userSlice";
+import { contentsStatus } from "../../redux/slices/content/contentsSlice";
 
 export const MainNavigation = function () {
+  const navigate = useNavigate();
   const location = useLocation();
   const { pathname } = location;
   const isUserLoggedIn = useSelector(
     (state) => state.user.status === userStatus.loggedIn
   );
+  const isAnyContentLoading = useSelector((state) => {
+    if (state.contents.fetchingContentType.length === 0) return false;
+    const fetchingContentType = state.contents.fetchingContentType;
+    const fetchingPageNumber =
+      state.contents[fetchingContentType].fetchingPageNumber;
+
+    if (
+      state.contents[fetchingContentType].pages[fetchingPageNumber].status ===
+        contentsStatus.fetching ||
+      state.contents[fetchingContentType].pages[fetchingPageNumber].status ===
+        contentsStatus.initiated
+    )
+      return true;
+
+    return false;
+  });
+
+  // console.log(isAnyContentLoading);
 
   return (
     <ul className={MainNavigationStyles.main_navigation}>
       <li active={pathname === urls.trending.url ? "true" : "false"}>
-        <NavLink to="/trending?pageNumber=1" end>
-          <Trending />
+        <div
+          className={MainNavigationStyles.navlink}
+          onClick={() => {
+            if (isAnyContentLoading) return;
+            navigate("/trending?pageNumber=1");
+          }}
+        >
+          <TrendingIcon />
           <span className={MainNavigationStyles.navigation_text}>trending</span>
-        </NavLink>
+        </div>
       </li>
       <li active={pathname === urls.blogs.url ? "true" : "false"}>
-        <NavLink to="/blogs?pageNumber=1" end>
-          <Blogs />
+        <div
+          className={MainNavigationStyles.navlink}
+          onClick={() => {
+            if (isAnyContentLoading) return;
+            navigate("/blogs?pageNumber=1");
+          }}
+        >
+          <BlogsIcon />
           <span className={MainNavigationStyles.navigation_text}>blogs</span>
-        </NavLink>
+        </div>
       </li>
-
       {isUserLoggedIn && (
         <li
           active={
@@ -38,30 +70,68 @@ export const MainNavigation = function () {
               : "false"
           }
         >
-          <NavLink
-            to={`user/${localStorage.getItem(
-              userIdKey
-            )}/favourites?pageNumber=1`}
-            end
+          <div
+            className={MainNavigationStyles.navlink}
+            onClick={() => {
+              if (isAnyContentLoading) return;
+              navigate(
+                `user/${localStorage.getItem(
+                  userIdKey
+                )}/favourites?pageNumber=1`
+              );
+            }}
           >
-            <Favourite />
+            <FavouriteIcon />
             <span className={MainNavigationStyles.navigation_text}>
               favourites
             </span>
-          </NavLink>
+          </div>
         </li>
       )}
       {isUserLoggedIn && (
-        <li active={pathname === "/blogs/user123" ? "true" : "false"}>
-          <NavLink
-            to={`user/${localStorage.getItem(userIdKey)}/blogs?pageNumber=1`}
-            end
+        <li
+          active={
+            pathname === `/user/${localStorage.getItem(userIdKey)}/blogs`
+              ? "true"
+              : "false"
+          }
+        >
+          <div
+            className={MainNavigationStyles.navlink}
+            onClick={() => {
+              if (isAnyContentLoading) return;
+              navigate(
+                `user/${localStorage.getItem(userIdKey)}/blogs?pageNumber=1`
+              );
+            }}
           >
-            <Me />
+            <MeIcon />
             <span className={MainNavigationStyles.navigation_text}>
               my blogs
             </span>
-          </NavLink>
+          </div>
+        </li>
+      )}{" "}
+      {isUserLoggedIn && (
+        <li
+          active={
+            pathname === `/user/${localStorage.getItem(userIdKey)}/publishBlog`
+              ? "true"
+              : "false"
+          }
+        >
+          <div
+            className={MainNavigationStyles.navlink}
+            onClick={() => {
+              if (isAnyContentLoading) return;
+              navigate(`/user/${localStorage.getItem(userIdKey)}/publishBlog`);
+            }}
+          >
+            <PublishIcon />
+            <span className={MainNavigationStyles.navigation_text}>
+              Publish blog
+            </span>
+          </div>
         </li>
       )}
     </ul>

@@ -1,57 +1,21 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { jwtKey, userIdKey } from "../../../constants";
+import { createNewUser } from "../../../api/createNewUser";
+import { loginUser } from "../../../api/loginUser";
+import { restoreUserState } from "../../../api/restoreUserState";
 
-export const logIn = createAsyncThunk(
-  "user/logIn",
-  async ({ email, password }) => {
-    try {
-      const body = JSON.stringify({
-        user: { email, password },
-      });
-
-      const response = await fetch(`http://localhost:3001/logIn`, {
-        method: "POST",
-        body,
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      const responseData = await response.json();
-
-      if (!response.ok) throw new Error(responseData.message);
-
-      const jwt = responseData.token;
-      const userId = responseData.payload._id;
-
-      localStorage.setItem(jwtKey, jwt);
-      localStorage.setItem(userIdKey, userId);
-
-      return responseData.payload;
-    } catch (error) {
-      return Promise.reject(error);
-    }
-  }
-);
-
-export const signUp = createAsyncThunk("user/signUp", async (formData) => {
+export const logIn = createAsyncThunk("user/logIn", async (userData) => {
   try {
-    const response = await fetch(`http://localhost:3001/signUp`, {
-      method: "POST",
-      body: formData,
-    });
+    const response = await loginUser(userData);
+    return Promise.resolve(response);
+  } catch (error) {
+    return Promise.reject(error);
+  }
+});
 
-    const responseData = await response.json();
-
-    if (!response.ok) throw new Error(responseData.message);
-
-    const jwt = responseData.token;
-    const userId = responseData.payload._id;
-
-    localStorage.setItem(jwtKey, jwt);
-    localStorage.setItem(userIdKey, userId);
-
-    return responseData.payload;
+export const signUp = createAsyncThunk("user/signUp", async (userData) => {
+  try {
+    const response = await createNewUser(userData);
+    return Promise.resolve(response);
   } catch (error) {
     return Promise.reject(error);
   }
@@ -59,26 +23,8 @@ export const signUp = createAsyncThunk("user/signUp", async (formData) => {
 
 export const restoreState = createAsyncThunk("user/restoreState", async () => {
   try {
-    const jwt = localStorage.getItem(jwtKey);
-    if (!jwt) throw new Error("jason web token does not exists.");
-
-    const userId = localStorage.getItem(userIdKey);
-
-    const response = await fetch(
-      `http://localhost:3001/userData?id=${userId}`,
-      {
-        headers: {
-          Authorization: "Bearer " + jwt,
-        },
-        method: "GET",
-      }
-    );
-
-    const responseData = await response.json();
-
-    if (!response.ok) throw new Error(responseData.message);
-
-    return responseData.payload;
+    const response = await restoreUserState();
+    return Promise.resolve(response);
   } catch (error) {
     return Promise.reject(error);
   }

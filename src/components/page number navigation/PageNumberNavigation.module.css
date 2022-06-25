@@ -9,7 +9,7 @@
     transform: translateX(-50%);
     background-color: var(--color-secondary);
     padding: 0.5rem;
-    border-radius: 5rem;
+    border-radius: 8px;
     box-shadow: var(--box-shadow);
   }
   .pageNumberNavigationList {

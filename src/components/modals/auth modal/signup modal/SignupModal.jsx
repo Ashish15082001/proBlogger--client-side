@@ -1,20 +1,18 @@
-import { Cancel } from "../../../../icons/Cancel";
+import { CancelIcon } from "../../../../icons/CancelIcon";
 import SignupModalStyles from "../AuthModal.module.css";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Input } from "../../../input/Input";
+import { Input } from "../../../form components/input components/input/Input";
 import {
   hideModal,
-  showLoginModal,
+  showModal,
+  modalNames,
 } from "../../../../redux/slices/modals/modalsSlice";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  sanitiseEmail,
-  sanitiseName,
-  sanitisePassword,
-} from "../../../../utilities/sanitise";
+import { sanitiseInputText } from "../../../../utilities/sanitise";
 import {
   validateEmail,
+  validateImage,
   validateName,
   validatePassword,
 } from "../../../../utilities/validate";
@@ -39,6 +37,9 @@ export const SignupModal = function (props) {
   const [confirmedPasswordStatus, setConfirmedPasswordStatus] = useState({
     isError: false,
   });
+  const [profileImageStatus, setProfileImageStatus] = useState({
+    isError: false,
+  });
   const [triedFormSubmition, setTriedFormSubmition] = useState(false);
 
   const isSigningUp = useSelector(
@@ -46,78 +47,113 @@ export const SignupModal = function (props) {
   );
 
   const onFirstNameChanged = function (event) {
-    const enteredFirstName = event.target.value;
+    try {
+      const enteredFirstName = sanitiseInputText(event.target.value);
 
-    if (triedFormSubmition) {
-      if (validateName(enteredFirstName) === false)
-        setFirstNameStatus({
-          isError: true,
-          description: "invalid first name",
-        });
-      else setFirstNameStatus({ isError: false });
+      if (triedFormSubmition) {
+        if (validateName(enteredFirstName) === false)
+          setFirstNameStatus({
+            isError: true,
+            message: "invalid first name",
+          });
+        else setFirstNameStatus({ isError: false });
+      }
+
+      setFirstName(enteredFirstName);
+    } catch (error) {
+      dispatch(showToast({ toastType: "error", message: error.message }));
     }
-
-    setFirstName(sanitiseName(enteredFirstName));
   };
+
   const onLastNameChanged = function (event) {
-    const enteredLastName = event.target.value;
+    try {
+      const enteredLastName = sanitiseInputText(event.target.value);
 
-    if (triedFormSubmition) {
-      if (validateName(enteredLastName) === false)
-        setLastNameStatus({
-          isError: true,
-          description: "invalid first name",
-        });
-      else setLastNameStatus({ isError: false });
+      if (triedFormSubmition) {
+        if (validateName(enteredLastName) === false)
+          setLastNameStatus({
+            isError: true,
+            message: "invalid first name",
+          });
+        else setLastNameStatus({ isError: false });
+      }
+      setLastName(enteredLastName);
+    } catch (error) {
+      dispatch(showToast({ toastType: "error", message: error.message }));
     }
-    setLastName(sanitiseName(enteredLastName));
   };
-  const onEmailChanged = function (event) {
-    const enteredEmail = event.target.value;
 
-    if (triedFormSubmition) {
-      if (validateEmail(enteredEmail) === false)
-        setEmailStatus({
-          isError: true,
-          description: "invalid email",
-        });
-      else setEmailStatus({ isError: false });
+  const onEmailChanged = function (event) {
+    try {
+      const enteredEmail = sanitiseInputText(event.target.value);
+
+      if (triedFormSubmition) {
+        if (validateEmail(enteredEmail) === false)
+          setEmailStatus({
+            isError: true,
+            message: "invalid email",
+          });
+        else setEmailStatus({ isError: false });
+      }
+      setEmail(enteredEmail);
+    } catch (error) {
+      dispatch(showToast({ toastType: "error", message: error.message }));
     }
-    setEmail(sanitiseEmail(enteredEmail));
   };
   const onPasswordChanged = function (event) {
-    const enteredPassword = event.target.value;
+    try {
+      const enteredPassword = sanitiseInputText(event.target.value);
 
-    if (triedFormSubmition) {
-      if (validatePassword(enteredPassword) === false)
-        setPasswordStatus({
-          isError: true,
-          description: "minimum length is 8",
-        });
-      else setPasswordStatus({ isError: false });
+      if (triedFormSubmition) {
+        if (validatePassword(enteredPassword) === false)
+          setPasswordStatus({
+            isError: true,
+            message: "minimum length is 8",
+          });
+        else setPasswordStatus({ isError: false });
+      }
+      setPassword(enteredPassword);
+    } catch (error) {
+      dispatch(showToast({ toastType: "error", message: error.message }));
     }
-    setPassword(sanitisePassword(enteredPassword));
   };
   const onConfirmedPasswordChanged = function (event) {
-    const enteredConfirmedPasswotd = event.target.value;
+    try {
+      const enteredConfirmedPasswotd = sanitiseInputText(event.target.value);
 
-    if (triedFormSubmition) {
-      if (
-        enteredConfirmedPasswotd === "" ||
-        password !== enteredConfirmedPasswotd
-      )
-        setConfirmedPasswordStatus({
-          isError: true,
-          description: "confirmed password ≠ password",
-        });
-      else setConfirmedPasswordStatus({ isError: false });
+      if (triedFormSubmition) {
+        if (
+          enteredConfirmedPasswotd === "" ||
+          password !== enteredConfirmedPasswotd
+        )
+          setConfirmedPasswordStatus({
+            isError: true,
+            message: "confirmed password ≠ password",
+          });
+        else setConfirmedPasswordStatus({ isError: false });
+      }
+      setConfirmedPassword(enteredConfirmedPasswotd);
+    } catch (error) {
+      dispatch(showToast({ toastType: "error", message: error.message }));
     }
-    setConfirmedPassword(sanitisePassword(enteredConfirmedPasswotd));
   };
 
   const onProfileImageChanged = function (event) {
-    console.log(event.target.files[0]);
-    setProfileImage(event.target.files[0]);
+    try {
+      const selectedProfileImage = event.target.files[0];
+
+      if (triedFormSubmition) {
+        if (validateImage(selectedProfileImage) === false) {
+          setProfileImageStatus({
+            isError: true,
+            message: "please select valid image format",
+          });
+        } else setProfileImageStatus({ isError: false });
+      }
+      setProfileImage(selectedProfileImage);
+    } catch (error) {
+      dispatch(showToast({ toastType: "error", message: error.message }));
+    }
   };
 
   const signup = async function (event) {
@@ -127,46 +163,47 @@ export const SignupModal = function (props) {
 
       if (validateEmail(email) === false) {
         isError = true;
-        setEmailStatus({ isError: true, description: "invalid email" });
+        setEmailStatus({ isError: true, message: "invalid email" });
       }
       if (validateName(firstName) === false) {
         isError = true;
         setFirstNameStatus({
           isError: true,
-          description: "invalid first name",
+          message: "invalid first name",
         });
       }
       if (validateName(lastName) === false) {
         isError = true;
-        setLastNameStatus({ isError: true, description: "invalid last name" });
+        setLastNameStatus({ isError: true, message: "invalid last name" });
       }
       if (validatePassword(password) === false) {
         isError = true;
         setPasswordStatus({
           isError: true,
-          description: "minimum length is 8",
+          message: "minimum length is 8",
         });
       }
       if (confirmedPassword === "" || password !== confirmedPassword) {
         isError = true;
         setConfirmedPasswordStatus({
           isError: true,
-          description: "confirmed password ≠ password",
+          message: "confirmed password ≠ password",
         });
       }
 
-      if (profileImage === null)
-        return dispatch(
-          showToast({
-            toastType: "error",
-            message: "Please select profile picture",
-          })
-        );
+      if (validateImage(profileImage) === false) {
+        isError = true;
+        setProfileImageStatus({
+          isError: true,
+          message: "please select valid image format",
+        });
+      }
 
       if (isError && !triedFormSubmition) return setTriedFormSubmition(true);
       if (isError) return;
 
       const formData = new FormData();
+
       formData.set("firstName", firstName);
       formData.set("lastName", lastName);
       formData.set("email", email);
@@ -199,7 +236,7 @@ export const SignupModal = function (props) {
         transition={{ duration: 0.5 }}
         className={SignupModalStyles.modal}
       >
-        <Cancel onClick={() => dispatch(hideModal())} />
+        <CancelIcon onClick={() => dispatch(hideModal())} />
         <h1 className={SignupModalStyles.title}>Signup</h1>
         <p className={SignupModalStyles.description}>
           Please enter all credentials to create new account
@@ -210,7 +247,6 @@ export const SignupModal = function (props) {
             inputValue={firstName}
             onInputChange={onFirstNameChanged}
             inputType="text"
-            required={true}
             autoFocus={true}
             status={firstNameStatus}
           />
@@ -219,7 +255,6 @@ export const SignupModal = function (props) {
             inputValue={lastName}
             onInputChange={onLastNameChanged}
             inputType="text"
-            required={true}
             autoFocus={false}
             status={lastNameStatus}
           />
@@ -227,8 +262,7 @@ export const SignupModal = function (props) {
             label="email"
             inputValue={email}
             onInputChange={onEmailChanged}
-            inputType="email"
-            required={true}
+            inputType="text"
             autoFocus={false}
             status={emailStatus}
           />
@@ -237,7 +271,6 @@ export const SignupModal = function (props) {
             inputValue={password}
             onInputChange={onPasswordChanged}
             inputType="password"
-            required={true}
             autoFocus={false}
             status={passwordStatus}
           />
@@ -246,15 +279,16 @@ export const SignupModal = function (props) {
             inputValue={confirmedPassword}
             onInputChange={onConfirmedPasswordChanged}
             inputType="password"
-            required={true}
             autoFocus={false}
             status={confirmedPasswordStatus}
           />
-          <input
-            type="file"
-            // accept="image/png, image/jpeg, image/jpg, .png, .jpeg, .jpg"
-            onChange={onProfileImageChanged}
-          ></input>
+          <Input
+            label="profile image"
+            onInputChange={onProfileImageChanged}
+            inputType="file"
+            autoFocus={false}
+            status={profileImageStatus}
+          />
           <button disabled={isSigningUp} type="submit">
             {`${isSigningUp ? "creating account" : "create account"}`}
           </button>
@@ -263,7 +297,7 @@ export const SignupModal = function (props) {
           Already Have account ?{" "}
           <span
             className={SignupModalStyles.clickableText}
-            onClick={() => dispatch(showLoginModal())}
+            onClick={() => dispatch(showModal({ modalName: modalNames.login }))}
           >
             login
           </span>

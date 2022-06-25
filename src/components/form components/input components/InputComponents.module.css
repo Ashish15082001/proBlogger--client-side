@@ -1,0 +1,28 @@
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+:is(.inputContainer > input, .inputContainer > textarea) {
+  padding: 0.5em;
+  border-radius: 8px;
+  border: 1.5px solid var(--color-dark);
+  border: 1.5px solid var(--color-less-dark);
+  background-color: var(--color-white);
+}
+
+:is(.inputContainer > input[iserror="true"], .inputContainer
+    > textarea[iserror="true"]) {
+  border-color: var(--color-error);
+  outline: var(--color-error);
+}
+
+textarea {
+  resize: none;
+  height: 20rem;
+}
+.errorMessage {
+  color: var(--color-error);
+  font-size: 0.8rem;
+}

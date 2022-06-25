@@ -1,4 +1,4 @@
-export const DeleteWithBackgroud = function () {
+export const DeleteIcon = function () {
   return (
     <svg
       width="40"

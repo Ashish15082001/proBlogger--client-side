@@ -12,6 +12,8 @@ export const fetchContent = createAsyncThunk(
           ? "trending"
           : contentType === "favouritesContent"
           ? "favourites"
+          : contentType === "myBlogsContent"
+          ? "myBlogs"
           : "";
 
       let response;
@@ -41,12 +43,15 @@ export const fetchContent = createAsyncThunk(
       }
 
       const responseData = await response.json();
+
+      console.log(contentType);
+      console.log(responseData);
       if (!response.ok) throw new Error(responseData.message);
 
       const entities = responseData.entities;
       const totalDocuments = responseData.totalDocuments;
 
-      return { entities, isError: false, totalDocuments };
+      return Promise.resolve({ entities, isError: false, totalDocuments });
     } catch (error) {
       return Promise.reject(error);
     }

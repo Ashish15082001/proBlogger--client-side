@@ -7,13 +7,10 @@ import {
   resetMyBlogsContent,
 } from "../../redux/slices/content/contentsSlice";
 // import { Navigate } from "react-router-dom";
-import {
-  showLoginModal,
-  showSignupModal,
-} from "../../redux/slices/modals/modalsSlice";
+import { modalNames, showModal } from "../../redux/slices/modals/modalsSlice";
 import { logOut, userStatus } from "../../redux/slices/user/userSlice";
 import MainHeaderStyles from "./MainHeader.module.css";
-import { Menu } from "../../icons/Menu";
+import { MenuIcon } from "../../icons/MenuIcon";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -56,7 +53,7 @@ export const MainHeader = function () {
               className={MainHeaderStyles.menuContainer}
               onClick={toggleShowMenu}
             >
-              <Menu />
+              <MenuIcon />
             </div>
           </div>
         </div>
@@ -70,10 +67,20 @@ export const MainHeader = function () {
               className={MainHeaderStyles.menuItems}
             >
               {currentUserStatus === userStatus.loggedOut && (
-                <p onClick={() => dispatch(showLoginModal())}>Login</p>
+                <p
+                  onClick={() =>
+                    dispatch(showModal({ modalName: modalNames.login }))
+                  }
+                >
+                  Login
+                </p>
               )}
               {currentUserStatus === userStatus.loggedOut && (
-                <p onClick={() => dispatch(showSignupModal())}>
+                <p
+                  onClick={() =>
+                    dispatch(showModal({ modalName: modalNames.signup }))
+                  }
+                >
                   Create account
                 </p>
               )}

@@ -1,4 +1,4 @@
-export const Favourite = function () {
+export const FavouriteIcon = function () {
   return (
     <svg
       width="30"

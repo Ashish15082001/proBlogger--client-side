@@ -11,7 +11,7 @@
 .blog_profile_image {
   overflow: hidden;
   height: 12rem;
-  background-image: url("/public/images/hanvin-cheong-vyMOmbNKorU-unsplash.jpg");
+  /* background-image: url("/public/images/hanvin-cheong-vyMOmbNKorU-unsplash.jpg"); */
   background-position: center;
   background-size: cover;
   position: relative;
@@ -40,7 +40,7 @@
   border-radius: 50%;
   background-position: center;
   background-size: cover;
-  background-image: url("/public/images/laura-chouette-__uuuysuybw-unsplash.jpg");
+  /* background-image: url("/public/images/laura-chouette-__uuuysuybw-unsplash.jpg"); */
 }
 
 .blog_title {

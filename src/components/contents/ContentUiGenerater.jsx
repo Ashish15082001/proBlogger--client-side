@@ -11,8 +11,20 @@ import { useLocation } from "react-router-dom";
 import { PageNumberNavigation } from "../page number navigation/PageNumberNavigation";
 import { motion } from "framer-motion";
 import { fetchContent } from "../../redux/slices/content/contentsThunk";
-import { contentTypes } from "../../constants";
+import { contentTypes } from "../../redux/slices/content/contentsSlice";
 import { FavouriteBlogCard } from "../cards/FavouriteBlogCard";
+import { RefreshIcon } from "../../icons/RefreshIcon";
+import { showToast } from "../../redux/slices/toast/toastSlice";
+import { MyBlogCard } from "../cards/MyBlogCard";
+
+const listItemAnimations = {
+  visible: (index) => ({
+    opacity: 1,
+    y: 0,
+    transition: { delay: index * 0.1 },
+  }),
+  hidden: { opacity: 0, y: 40 },
+};
 
 export const ContentUiGenerater = function (props) {
   const { contentType } = props;
@@ -52,20 +64,43 @@ export const ContentUiGenerater = function (props) {
   // only when trending content data object is not present, we dispatch action for
   // initiate and start fetching
   useEffect(() => {
-    if (isContentUndefined) {
-      dispatch(initiateFetching({ contentType, pageNumber }));
-      dispatch(fetchContent({ contentType, pageNumber }));
-    }
-
+    const fun = async function () {
+      try {
+        if (isContentUndefined) {
+          dispatch(initiateFetching({ contentType, pageNumber }));
+          await dispatch(fetchContent({ contentType, pageNumber }));
+        }
+      } catch (error) {
+        dispatch(showToast({ toastType: "error", message: error.message }));
+      }
+    };
+    fun();
     return;
   }, [dispatch, pageNumber, isContentUndefined, contentType]);
+
+  const refreshContent = async function () {
+    try {
+      if (
+        currentPageContentStatus !== contentsStatus.fetching &&
+        currentPageContentStatus !== contentsStatus.initiated
+      )
+        dispatch(initiateFetching({ contentType, pageNumber }));
+      await dispatch(fetchContent({ contentType, pageNumber }));
+    } catch (error) {
+      dispatch(showToast({ toastType: "error", message: error.message }));
+    }
+    return;
+  };
 
   const arr = [];
   for (let i = 0; i < totalDocuments; i++) arr[i] = i + 1;
 
-  if (selectedContentIds.length === 0 && currentPageContentStatus)
+  if (selectedContentIds.length === 0)
     return (
       <React.Fragment>
+        <span className={ContentStyles.refreshIcon} onClick={refreshContent}>
+          <RefreshIcon />
+        </span>
         <div className={ContentStyles.placeholder}>
           {currentPageContentStatus === contentsStatus.initiated ||
             (currentPageContentStatus === contentsStatus.fetching && (
@@ -74,26 +109,22 @@ export const ContentUiGenerater = function (props) {
           {currentPageContentStatus === contentsStatus.notFound && (
             <p>no items</p>
           )}
-        </div>{" "}
-        <PageNumberNavigation
-          contentType={contentType}
-          pageNumber={pageNumber}
-          currentPageContentStatus={currentPageContentStatus}
-        />
+        </div>
+        {selectedContentIds.length !== 0 && (
+          <PageNumberNavigation
+            contentType={contentType}
+            pageNumber={pageNumber}
+            currentPageContentStatus={currentPageContentStatus}
+          />
+        )}
       </React.Fragment>
     );
 
-  const listItemAnimations = {
-    visible: (index) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: index * 0.1 },
-    }),
-    hidden: { opacity: 0, y: 40 },
-  };
-
   return (
     <React.Fragment>
+      <span className={ContentStyles.refreshIcon} onClick={refreshContent}>
+        <RefreshIcon />
+      </span>
       <ul className={ContentStyles.content_grid}>
         {selectedContentIds.map((id, index) => (
           <motion.li
@@ -114,6 +145,9 @@ export const ContentUiGenerater = function (props) {
             )}
             {contentType === contentTypes.favourites && (
               <FavouriteBlogCard id={id} pageNumber={pageNumber} />
+            )}
+            {contentType === contentTypes.myBlogs && (
+              <MyBlogCard id={id} pageNumber={pageNumber} />
             )}
           </motion.li>
         ))}

@@ -1,4 +1,4 @@
-export const Trending = function () {
+export const TrendingIcon = function () {
   return (
     <svg
       width="30"

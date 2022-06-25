@@ -1,7 +1,8 @@
+import { contentTypes } from "../../redux/slices/content/contentsSlice";
 import { ContentUiGenerater } from "./ContentUiGenerater";
 
 export const BlogsContent = function () {
-  return <ContentUiGenerater contentType="blogsContent" />;
+  return <ContentUiGenerater contentType={contentTypes.blogs} />;
 };
 
 // import ContentStyles from "./Content.module.css";

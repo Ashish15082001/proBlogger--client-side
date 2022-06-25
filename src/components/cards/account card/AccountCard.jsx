@@ -20,10 +20,13 @@ export const AccountCard = function () {
           }}
           className={AccountCardStyles.profilePicture}
         ></div>
-        <h3>{`${user.firstName} ${user.lastName}`}</h3>
+        <h3
+          id={AccountCardStyles.userName}
+        >{`${user.firstName} ${user.lastName}`}</h3>
+        <h3 id={AccountCardStyles.email}>{`${user.email}`}</h3>
         <p>{user.description}</p>
 
-        <span className={AccountCardStyles.clickAble}>edit profile</span>
+        {/* <span className={AccountCardStyles.clickAble}>edit profile</span> */}
 
         <div className={AccountCardStyles.flexContainer}>
           <motion.div
@@ -36,19 +39,15 @@ export const AccountCard = function () {
             <div className={AccountCardStyles.aboutItemsContainer}>
               <div>
                 <span className={AccountCardStyles.clickAble}>
-                  {Object.keys(user.about.followers).length}
+                  {Object.keys(user.aboutUser.followers).length}
                 </span>
                 <p>Followers</p>
               </div>
               <div>
                 <span className={AccountCardStyles.clickAble}>
-                  {Object.keys(user.about.followings).length}
+                  {Object.keys(user.aboutUser.followings).length}
                 </span>
                 <p>Followings</p>
-              </div>
-              <div>
-                <span>{Object.keys(user.about.publishedBlogs).length}</span>
-                <p>Published blogs</p>
               </div>
             </div>
           </motion.div>
@@ -61,20 +60,34 @@ export const AccountCard = function () {
             <h5>About blogs</h5>
             <div className={AccountCardStyles.aboutItemsContainer}>
               <div>
-                <span>{Object.keys(user.about.followers).length}</span>
+                <span>{Object.keys(user.aboutBlogs.totalViews).length}</span>
                 <p>Total views</p>
               </div>
               <div>
-                <span>{Object.keys(user.about.followings).length}</span>
+                <span>{Object.keys(user.aboutBlogs.totalComments).length}</span>
                 <p>Total comments</p>
               </div>
               <div>
-                <span>{Object.keys(user.about.publishedBlogs).length}</span>
+                <span>{Object.keys(user.aboutBlogs.totalLikes).length}</span>
                 <p>Total likes</p>
               </div>
               <div>
-                <span>{Object.keys(user.about.publishedBlogs).length}</span>
-                <p>Trending</p>
+                <span className={AccountCardStyles.clickAble}>
+                  {Object.keys(user.aboutBlogs.trendings).length}
+                </span>
+                <p>Trendings</p>
+              </div>
+              <div>
+                <span className={AccountCardStyles.clickAble}>
+                  {Object.keys(user.aboutBlogs.publishes).length}
+                </span>
+                <p>Publishes</p>
+              </div>
+              <div>
+                <span className={AccountCardStyles.clickAble}>
+                  {Object.keys(user.aboutBlogs.favourites).length}
+                </span>
+                <p>favourites</p>
               </div>
             </div>
           </motion.div>

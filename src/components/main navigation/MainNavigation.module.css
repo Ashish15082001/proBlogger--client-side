@@ -9,7 +9,7 @@
   align-items: center;
   margin-inline: auto;
   width: max-content;
-  border-radius: 2rem;
+  border-radius: 8px;
   border: var(--border);
   box-shadow: var(--box-shadow);
 }
@@ -18,7 +18,7 @@
   margin-inline: 0.25rem;
   list-style: none;
   padding-inline: 0.2rem;
-  border-radius: 5rem;
+  border-radius: 8px;
   transition: all ease-in-out 0.2s;
   cursor: pointer;
 }
@@ -30,14 +30,14 @@
   margin-right: 0;
 }
 
-.main_navigation > li > a {
+.navlink {
   padding: 0.5rem;
   text-decoration: none;
   display: flex;
   align-items: center;
 }
 
-.main_navigation > li > a > svg {
+.navlink > svg {
   margin-right: 0.5rem;
 
   transition: all ease-in-out 0.2s;

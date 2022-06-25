@@ -4,13 +4,8 @@ export const urls = {
   favourites: { url: "/user/:userId/favourites" },
   userBlogs: { url: "/user/:userId/blogs" },
   account: { url: "/user/:userId/account" },
+  publishBlog: { url: "/user/:userId/publishBlog" },
 };
 
 export const jwtKey = "proBlogger token";
 export const userIdKey = "user id";
-export const contentTypes = {
-  blogs: "blogsContent",
-  trending: "trendingContent",
-  favourites: "favouritesContent",
-  myBlogs: "myBlogsContent",
-};

@@ -1,7 +1,8 @@
+import { contentTypes } from "../../redux/slices/content/contentsSlice";
 import { ContentUiGenerater } from "./ContentUiGenerater";
 
 export const TrendingContent = function () {
-  return <ContentUiGenerater contentType="trendingContent" />;
+  return <ContentUiGenerater contentType={contentTypes.trending} />;
 };
 // import ContentStyles from "./Content.module.css";
 // import { BlogCard } from "../../components/cards/BlogCard";

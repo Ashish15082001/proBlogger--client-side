@@ -1,20 +1,18 @@
-import { Cancel } from "../../../../icons/Cancel";
+import { CancelIcon } from "../../../../icons/CancelIcon";
 import LoginModalStyles from "../AuthModal.module.css";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { Input } from "../../../input/Input";
+import { Input } from "../../../form components/input components/input/Input";
 import { useDispatch, useSelector } from "react-redux";
 import {
   validateEmail,
   validatePassword,
 } from "../../../../utilities/validate";
-import {
-  sanitiseEmail,
-  sanitisePassword,
-} from "../../../../utilities/sanitise";
+import { sanitiseInputText } from "../../../../utilities/sanitise";
 import {
   hideModal,
-  showSignupModal,
+  modalNames,
+  showModal,
 } from "../../../../redux/slices/modals/modalsSlice";
 import { logIn } from "../../../../redux/slices/user/userThunks";
 import { userStatus } from "../../../../redux/slices/user/userSlice";
@@ -33,29 +31,37 @@ export const LoginModal = function () {
   );
 
   const onEmailChanged = function (event) {
-    const enteredEmail = event.target.value;
+    try {
+      const enteredEmail = sanitiseInputText(event.target.value);
 
-    if (triedFormSubmition) {
-      if (validateEmail(enteredEmail) === false)
-        setEmailStatus({ isError: true, description: "invalid email" });
-      else setEmailStatus({ isError: false });
+      if (triedFormSubmition) {
+        if (validateEmail(enteredEmail) === false)
+          setEmailStatus({ isError: true, message: "invalid email" });
+        else setEmailStatus({ isError: false });
+      }
+
+      setEmail(enteredEmail);
+    } catch (error) {
+      dispatch(showToast({ toastType: "error", message: error.message }));
     }
-
-    setEmail(sanitiseEmail(enteredEmail));
   };
   const onPasswordChanged = function (event) {
-    const enteredPassword = event.target.value;
+    try {
+      const enteredPassword = sanitiseInputText(event.target.value);
 
-    if (triedFormSubmition) {
-      if (validatePassword(enteredPassword) === false)
-        setPasswordStatus({
-          isError: true,
-          description: "minimum length is 8",
-        });
-      else setPasswordStatus({ isError: false });
+      if (triedFormSubmition) {
+        if (validatePassword(enteredPassword) === false)
+          setPasswordStatus({
+            isError: true,
+            message: "minimum length is 8",
+          });
+        else setPasswordStatus({ isError: false });
+      }
+
+      setPassword(enteredPassword);
+    } catch (error) {
+      dispatch(showToast({ toastType: "error", message: error.message }));
     }
-
-    setPassword(sanitisePassword(enteredPassword));
   };
 
   const login = async function (event) {
@@ -65,19 +71,25 @@ export const LoginModal = function () {
 
       if (validateEmail(email) === false) {
         isError = true;
-        setEmailStatus({ isError: true, description: "invalid email" });
+        setEmailStatus({ isError: true, message: "invalid email" });
       }
       if (validatePassword(password) === false) {
         isError = true;
         setPasswordStatus({
           isError: true,
-          description: "minimum length is 8",
+          message: "minimum length is 8",
         });
       }
 
       if (isError && !triedFormSubmition) return setTriedFormSubmition(true);
+      if (isError) return;
 
-      const setteledPromise = await dispatch(logIn({ email, password }));
+      const formData = new FormData();
+
+      formData.set("email", email);
+      formData.set("password", password);
+
+      const setteledPromise = await dispatch(logIn(formData));
       if (setteledPromise.error) throw new Error(setteledPromise.error.message);
 
       dispatch(
@@ -96,7 +108,7 @@ export const LoginModal = function () {
         transition={{ duration: 0.5 }}
         className={LoginModalStyles.modal}
       >
-        <Cancel onClick={() => dispatch(hideModal())} />
+        <CancelIcon onClick={() => dispatch(hideModal())} />
         <h1 className={LoginModalStyles.title}>login</h1>
         <p className={LoginModalStyles.description}>
           Please enter all credentials to login into your account
@@ -129,7 +141,9 @@ export const LoginModal = function () {
           Do not have any account ?{" "}
           <span
             className={LoginModalStyles.clickableText}
-            onClick={() => dispatch(showSignupModal())}
+            onClick={() =>
+              dispatch(showModal({ modalName: modalNames.signup }))
+            }
           >
             create account
           </span>

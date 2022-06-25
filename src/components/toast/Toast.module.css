@@ -3,6 +3,7 @@
   top: 1rem;
   z-index: 200;
   width: 100%;
+  pointer-events: none;
 }
 
 .toast {

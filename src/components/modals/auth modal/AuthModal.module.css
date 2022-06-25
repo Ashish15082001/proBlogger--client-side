@@ -52,18 +52,6 @@ form {
   /* border: 1px solid red; */
 }
 
-button {
-  border-radius: 8px;
-  border: none;
-  padding-inline: 1em;
-  padding-block: 0.5em;
-  background-color: var(--color-dark);
-  color: var(--color-white);
-  font-size: var(--small-heading);
-  font-weight: var(--semi-bold-text);
-  justify-self: center;
-  cursor: pointer;
-}
 
 button:disabled {
   opacity: 0.6;

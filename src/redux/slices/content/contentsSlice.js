@@ -6,6 +6,13 @@ import {
 
 const { createSlice } = require("@reduxjs/toolkit");
 
+export const contentTypes = {
+  blogs: "blogsContent",
+  trending: "trendingContent",
+  favourites: "favouritesContent",
+  myBlogs: "myBlogsContent",
+};
+
 export const contentsStatus = {
   fetching: "fetching",
   idle: "idle",
