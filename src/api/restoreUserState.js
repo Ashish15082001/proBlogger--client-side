@@ -1,4 +1,4 @@
-import { jwtKey, userIdKey } from "../constants";
+import { jwtKey, userIdKey, serverDomain } from "../constants";
 
 export const restoreUserState = async function () {
   try {
@@ -6,15 +6,12 @@ export const restoreUserState = async function () {
 
     if (!jwt) throw new Error("jason web token does not exists.");
     const userId = localStorage.getItem(userIdKey);
-    const response = await fetch(
-      `http://localhost:3001/userData?id=${userId}`,
-      {
-        headers: {
-          Authorization: "Bearer " + jwt,
-        },
-        method: "GET",
-      }
-    );
+    const response = await fetch(`${serverDomain}userData?id=${userId}`, {
+      headers: {
+        Authorization: "Bearer " + jwt,
+      },
+      method: "GET",
+    });
 
     const responseData = await response.json();
 

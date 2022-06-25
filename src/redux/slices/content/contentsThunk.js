@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { jwtKey, userIdKey } from "../../../constants";
+import { jwtKey, userIdKey, serverDomain } from "../../../constants";
 
 export const fetchContent = createAsyncThunk(
   "blogs/fetch",
@@ -23,14 +23,14 @@ export const fetchContent = createAsyncThunk(
         contentTypePlaceHolder === "trending"
       ) {
         response = await fetch(
-          `http://localhost:3001/${contentTypePlaceHolder}?pageNumber=${pageNumber}`
+          `${serverDomain}${contentTypePlaceHolder}?pageNumber=${pageNumber}`
         );
       } else if (
         contentTypePlaceHolder === "favourites" ||
         contentTypePlaceHolder === "myBlogs"
       ) {
         response = await fetch(
-          `http://localhost:3001/user/${localStorage.getItem(
+          `${serverDomain}user/${localStorage.getItem(
             userIdKey
           )}/${contentTypePlaceHolder}?pageNumber=${pageNumber}`,
           {

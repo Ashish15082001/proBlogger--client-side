@@ -9,3 +9,5 @@ export const urls = {
 
 export const jwtKey = "proBlogger token";
 export const userIdKey = "user id";
+
+export const serverDomain = "https://problogger-by-ashish.herokuapp.com/";

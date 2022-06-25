@@ -1,4 +1,4 @@
-import { jwtKey, userIdKey } from "../constants";
+import { jwtKey, serverDomain, userIdKey } from "../constants";
 
 export const publishUserBlog = async function (blogData) {
   try {
@@ -6,7 +6,7 @@ export const publishUserBlog = async function (blogData) {
     const token = localStorage.getItem(jwtKey);
 
     const response = await fetch(
-      `http://localhost:3001/user/${userId}/publishBlog`,
+      `${serverDomain}user/${userId}/publishBlog`,
       {
         method: "POST",
         body: blogData,
