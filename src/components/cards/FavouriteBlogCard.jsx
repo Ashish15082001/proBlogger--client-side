@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { serverDomain } from "../../constants";
 import { DeleteIcon } from "../../icons/DeleteIcon";
 import BlogCardStyles from "./BlogCard.module.css";
 
@@ -14,7 +15,7 @@ export const FavouriteBlogCard = function ({ id, pageNumber }) {
       <div
         className={BlogCardStyles.blog_profile_image}
         style={{
-          backgroundImage: `url(http://localhost:3001/${selectedBlogData.blogProfileImage.destination}/${selectedBlogData.blogProfileImage.filename})`,
+          backgroundImage: `url(${serverDomain}${selectedBlogData.blogProfileImage.destination}/${selectedBlogData.blogProfileImage.filename})`,
         }}
       >
         <div className={BlogCardStyles.overlay}>

@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { serverDomain } from "../../constants";
 import BlogCardStyles from "./BlogCard.module.css";
 
 export const BlogCard = function ({ id, contentType, pageNumber }) {
@@ -19,7 +20,7 @@ export const BlogCard = function ({ id, contentType, pageNumber }) {
         <div
           className={BlogCardStyles.blog_avatar}
           style={{
-            backgroundImage: `url(http://localhost:3001/${selectedBlogData.publisherProfileImage.destination}/${selectedBlogData.publisherProfileImage.filename})`,
+            backgroundImage: `url(${serverDomain}${selectedBlogData.publisherProfileImage.destination}/${selectedBlogData.publisherProfileImage.filename})`,
           }}
         ></div>
         <div className={BlogCardStyles.right_part}>

@@ -3,6 +3,7 @@ import { DeleteIcon } from "../../icons/DeleteIcon";
 import { EditIcon } from "../../icons/EditIcon";
 import BlogCardStyles from "./BlogCard.module.css";
 import { useSelector } from "react-redux";
+import { serverDomain } from "../../constants";
 
 export const MyBlogCard = function ({ id, pageNumber }) {
   const selectedBlogData = useSelector(
@@ -15,7 +16,7 @@ export const MyBlogCard = function ({ id, pageNumber }) {
       <div
         className={BlogCardStyles.blog_profile_image}
         style={{
-          backgroundImage: `url(http://localhost:3001/${selectedBlogData.blogProfileImage.destination}/${selectedBlogData.blogProfileImage.filename})`,
+          backgroundImage: `url(${serverDomain}${selectedBlogData.blogProfileImage.destination}/${selectedBlogData.blogProfileImage.filename})`,
         }}
       >
         <div className={BlogCardStyles.overlay}>
