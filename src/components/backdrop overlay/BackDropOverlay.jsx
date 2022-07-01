@@ -14,7 +14,7 @@ export const BackDropOverlay = function () {
     <motion.div
       animate={{ opacity: 1 }}
       initial={{ opacity: 0 }}
-      transition={{ duration: 0.2 }}
+      transition={{ duration: 0.3 }}
       className={BackDropOverlayStyles.backdrop}
     ></motion.div>
   );

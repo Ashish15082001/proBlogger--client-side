@@ -1,6 +1,6 @@
 import { jwtKey, userIdKey, serverDomain } from "../constants";
 
-export const loginUser = async function (userData) {
+export const loginUserApi = async function (userData) {
   try {
     const response = await fetch(`${serverDomain}logIn`, {
       method: "POST",

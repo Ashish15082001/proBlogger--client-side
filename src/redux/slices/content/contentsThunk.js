@@ -43,8 +43,6 @@ export const fetchContent = createAsyncThunk(
       }
 
       const responseData = await response.json();
-
-      console.log(contentType);
       console.log(responseData);
       if (!response.ok) throw new Error(responseData.message);
 

@@ -31,37 +31,29 @@ export const LoginModal = function () {
   );
 
   const onEmailChanged = function (event) {
-    try {
-      const enteredEmail = sanitiseInputText(event.target.value);
+    const enteredEmail = sanitiseInputText(event.target.value);
 
-      if (triedFormSubmition) {
-        if (validateEmail(enteredEmail) === false)
-          setEmailStatus({ isError: true, message: "invalid email" });
-        else setEmailStatus({ isError: false });
-      }
-
-      setEmail(enteredEmail);
-    } catch (error) {
-      dispatch(showToast({ toastType: "error", message: error.message }));
+    if (triedFormSubmition) {
+      if (validateEmail(enteredEmail) === false)
+        setEmailStatus({ isError: true, message: "invalid email" });
+      else setEmailStatus({ isError: false });
     }
+
+    setEmail(enteredEmail);
   };
   const onPasswordChanged = function (event) {
-    try {
-      const enteredPassword = sanitiseInputText(event.target.value);
+    const enteredPassword = sanitiseInputText(event.target.value);
 
-      if (triedFormSubmition) {
-        if (validatePassword(enteredPassword) === false)
-          setPasswordStatus({
-            isError: true,
-            message: "minimum length is 8",
-          });
-        else setPasswordStatus({ isError: false });
-      }
-
-      setPassword(enteredPassword);
-    } catch (error) {
-      dispatch(showToast({ toastType: "error", message: error.message }));
+    if (triedFormSubmition) {
+      if (validatePassword(enteredPassword) === false)
+        setPasswordStatus({
+          isError: true,
+          message: "minimum length is 8",
+        });
+      else setPasswordStatus({ isError: false });
     }
+
+    setPassword(enteredPassword);
   };
 
   const login = async function (event) {

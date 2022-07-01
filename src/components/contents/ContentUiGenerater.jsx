@@ -52,8 +52,10 @@ export const ContentUiGenerater = function (props) {
         contentsStatus.idle
     )
       return [];
-    return Object.keys(state.contents[contentType].pages[pageNumber].entities);
+    return state.contents[contentType].pages[pageNumber].entities;
   });
+
+  // console.log(selectedContentIds);
 
   const currentPageContentStatus = useSelector((state) =>
     isContentUndefined
@@ -144,11 +146,9 @@ export const ContentUiGenerater = function (props) {
               />
             )}
             {contentType === contentTypes.favourites && (
-              <FavouriteBlogCard id={id} pageNumber={pageNumber} />
+              <FavouriteBlogCard id={id} />
             )}
-            {contentType === contentTypes.myBlogs && (
-              <MyBlogCard id={id} pageNumber={pageNumber} />
-            )}
+            {contentType === contentTypes.myBlogs && <MyBlogCard id={id} />}
           </motion.li>
         ))}
       </ul>

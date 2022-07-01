@@ -32,21 +32,19 @@ const initialState = {
   blogsContent: {
     totalDocuments: -1,
     fetchingPageNumber: -1,
-    // pages: {1: {status, entities}}
     pages: {},
   },
   favouritesContent: {
     totalDocuments: -1,
     fetchingPageNumber: -1,
-    // pages: {1: {status, entities}}
     pages: {},
   },
   myBlogsContent: {
     totalDocuments: -1,
     fetchingPageNumber: -1,
-    // pages: {1: {status, entities}}
     pages: {},
   },
+  contentCache: {},
 };
 
 const contentSlice = createSlice({
@@ -63,6 +61,20 @@ const contentSlice = createSlice({
         entities: {},
       };
     },
+    resetTrendingContent(state, action) {
+      state.trendingContent = {
+        totalDocuments: -1,
+        fetchingPageNumber: -1,
+        pages: {},
+      };
+    },
+    resetBlogsContent(state, action) {
+      state.blogsContent = {
+        totalDocuments: -1,
+        fetchingPageNumber: -1,
+        pages: {},
+      };
+    },
     resetFavouritesContent(state, action) {
       state.favouritesContent = {
         totalDocuments: -1,
@@ -76,6 +88,13 @@ const contentSlice = createSlice({
         fetchingPageNumber: -1,
         pages: {},
       };
+    },
+    likeBlog(state, action) {
+      const { blogId, userId, date } = action.payload;
+
+      if (state.contentCache[blogId].likes[userId])
+        delete state.contentCache[blogId].likes[userId];
+      else state.contentCache[blogId].likes[userId] = { date };
     },
   },
   extraReducers: (builder) =>
@@ -100,8 +119,15 @@ const contentSlice = createSlice({
         const { entities, totalDocuments } = action.payload;
 
         state[fetchingContentType].totalDocuments = totalDocuments;
+
+        state.contentCache = { ...state.contentCache, ...entities };
+
         state[fetchingContentType].pages[fetchingPageNumber].entities =
-          entities;
+          Object.keys(entities);
+
+        // state[fetchingContentType].pages[fetchingPageNumber].entities =
+        //   entities;
+
         if (Object.keys(entities).length === 0)
           state[fetchingContentType].pages[fetchingPageNumber].status =
             contentsStatus.notFound;
@@ -119,6 +145,12 @@ const contentSlice = createSlice({
   // }),
 });
 
-export const { initiateFetching, resetFavouritesContent, resetMyBlogsContent } =
-  contentSlice.actions;
+export const {
+  initiateFetching,
+  resetBlogsContent,
+  resetTrendingContent,
+  resetFavouritesContent,
+  resetMyBlogsContent,
+  likeBlog,
+} = contentSlice.actions;
 export const contentSliceReducer = contentSlice.reducer;

@@ -1,16 +1,16 @@
 import React from "react";
-import PublishBlogModalStyles from "./PublishBlogModal.module.css";
-import { Input } from "../../form components/input components/input/Input";
+import PublishBlogModalStyles from "./PublishBlogForm.module.css";
+import { Input } from "../form components/input components/input/Input";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { TextArea } from "../../form components/input components/text area/TextArea";
-import { showToast } from "../../../redux/slices/toast/toastSlice";
+import { TextArea } from "../form components/input components/text area/TextArea";
+import { showToast } from "../../redux/slices/toast/toastSlice";
 import { useDispatch } from "react-redux";
-import { validateImage, validateInputText } from "../../../utilities/validate";
-import { sanitiseInputText } from "../../../utilities/sanitise";
-import { publishUserBlog } from "../../../api/publishUserBlog";
+import { validateImage, validateInputText } from "../../utilities/validate";
+import { sanitiseInputText } from "../../utilities/sanitise";
+import { publishUserBlogApi } from "../../api/publishUserBlogApi";
 
-export const PublishBlogModal = function () {
+export const PublishBlogForm = function () {
   const dispatch = useDispatch();
   const [blogTitle, setBlogTitle] = useState("");
   const [blogTitleStatus, setBlogTitleStatus] = useState({ isError: false });
@@ -23,55 +23,53 @@ export const PublishBlogModal = function () {
   const [triedFormSubmition, setTriedFormSubmition] = useState(false);
 
   const onBlogTitleChanged = function (event) {
-    try {
-      const enteredBlogTitle = event.target.value;
-      if (triedFormSubmition) {
-        if (validateInputText(enteredBlogTitle) === false)
-          setBlogTitleStatus({
-            isError: true,
-            message: "invalid blog title",
-          });
-        else setBlogTitleStatus({ isError: false });
-      }
-      setBlogTitle(enteredBlogTitle);
-    } catch (error) {
-      dispatch(showToast({ toastType: "error", message: error.message }));
+    const enteredBlogTitle = event.target.value;
+    if (triedFormSubmition) {
+      if (validateInputText(enteredBlogTitle) === false)
+        setBlogTitleStatus({
+          isError: true,
+          message: "invalid blog title",
+        });
+      else setBlogTitleStatus({ isError: false });
     }
+    setBlogTitle(enteredBlogTitle);
   };
 
   const onBlogProfileImageChanged = function (event) {
-    try {
-      const selectedBlogProfileImage = event.target.files[0];
+    const selectedBlogProfileImage = event.target.files[0];
 
-      if (triedFormSubmition) {
-        if (validateImage(selectedBlogProfileImage) === false) {
-          setBlogProfileImageStatus({
-            isError: true,
-            message: "please select valid image format",
-          });
-        } else setBlogProfileImageStatus({ isError: false });
-      }
-      setBlogProfileImage(selectedBlogProfileImage);
-    } catch (error) {
-      dispatch(showToast({ toastType: "error", message: error.message }));
+    if (triedFormSubmition) {
+      if (validateImage(selectedBlogProfileImage) === false) {
+        setBlogProfileImageStatus({
+          isError: true,
+          message: "please select valid image format",
+        });
+      } else setBlogProfileImageStatus({ isError: false });
     }
+    setBlogProfileImage(selectedBlogProfileImage);
   };
 
   const onAboutBlogChanged = function (event) {
-    try {
-      const enteredAboutBlog = event.target.value;
-      if (triedFormSubmition) {
-        if (validateInputText(enteredAboutBlog) === false)
-          setAboutBlogStatus({
-            isError: true,
-            message: "invalid about blog",
-          });
-        else setAboutBlogStatus({ isError: false });
-      }
-      setAboutBlog(enteredAboutBlog);
-    } catch (error) {
-      dispatch(showToast({ toastType: "error", message: error.message }));
+    const enteredAboutBlog = event.target.value;
+    if (triedFormSubmition) {
+      if (validateInputText(enteredAboutBlog) === false)
+        setAboutBlogStatus({
+          isError: true,
+          message: "invalid about blog",
+        });
+      else setAboutBlogStatus({ isError: false });
     }
+    setAboutBlog(enteredAboutBlog);
+  };
+
+  const resetPublishBlogFormState = function () {
+    setBlogTitle("");
+    setBlogProfileImage(null);
+    setAboutBlog("");
+    setBlogTitleStatus({ isError: false });
+    setBlogProfileImageStatus({ isError: false });
+    setAboutBlogStatus({ isError: false });
+    setTriedFormSubmition(false);
   };
 
   const onPublish = async function (event) {
@@ -110,8 +108,8 @@ export const PublishBlogModal = function () {
       blogData.set("aboutBlog", sanitiseInputText(aboutBlog));
       blogData.set("blogProfileImage", blogProfileImage);
 
-      await publishUserBlog(blogData);
-
+      await publishUserBlogApi(blogData);
+      resetPublishBlogFormState();
       dispatch(
         showToast({
           toastType: "success",
@@ -148,6 +146,7 @@ export const PublishBlogModal = function () {
             status={blogProfileImageStatus}
           />
           <TextArea
+            style={{ height: "20rem" }}
             label="write about blog"
             textValue={aboutBlog}
             onTextValueChange={onAboutBlogChanged}

@@ -1,18 +1,16 @@
-import { Link } from "react-router-dom";
 import { DeleteIcon } from "../../icons/DeleteIcon";
 import { EditIcon } from "../../icons/EditIcon";
 import BlogCardStyles from "./BlogCard.module.css";
 import { useSelector } from "react-redux";
 import { serverDomain } from "../../constants";
 
-export const MyBlogCard = function ({ id, pageNumber }) {
+export const MyBlogCard = function ({ id }) {
   const selectedBlogData = useSelector(
-    (state) => state.contents.myBlogsContent.pages[pageNumber].entities[id]
+    (state) => state.contents.contentCache[id]
   );
 
-  console.log("MyBlogCard...", selectedBlogData);
   return (
-    <Link to="#" className={BlogCardStyles.card_container}>
+    <div to="#" className={BlogCardStyles.card_container}>
       <div
         className={BlogCardStyles.blog_profile_image}
         style={{
@@ -47,6 +45,6 @@ export const MyBlogCard = function ({ id, pageNumber }) {
           </p>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };

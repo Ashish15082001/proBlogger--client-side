@@ -33,7 +33,7 @@ code {
   --color-less-dark: #434140d5;
   --color-fade: #d7d2d0;
   --color-error: #da5353;
-  --color-success: #7eda53;
+  --color-success: #4dad21;
   --border: 1px solid rgba(0, 0, 0, 0.09);
   --box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 
@@ -47,8 +47,8 @@ code {
   width: 100%;
   position: relative;
   min-height: 100vh;
+  /* border: 5px solid greenyellow; */
   background-color: var(--color-primary);
-  padding-block-end: 5rem;
 }
 
 #root[theme="teal"] {
@@ -104,15 +104,37 @@ code {
 
 button {
   border-radius: 8px;
-  border: none;
-  padding-inline: 2em;
+  border: 1px solid var(--color-dark);
+  padding-inline: 1em;
   padding-block: 0.5em;
   background-color: var(--color-dark);
-  color: var(--color-white);
+  color: var(--color-secondary);
   font-size: var(--small-heading);
   font-weight: var(--semi-bold-text);
   justify-self: center;
   cursor: pointer;
+}
+
+button:active {
+  background-color: var(--color-less-dark);
+}
+
+button:disabled {
+  background-color: var(--color-secondary);
+  color: var var(--color-dark);
+  cursor: auto;
+}
+
+svg {
+  transition: all 0.2s ease-in-out;
+}
+
+svg:hover {
+  transform: scale(1.1);
+}
+
+svg:active {
+  transform: scale(0.7);
 }
 
 /* @media screen and (max-width: 669px) {

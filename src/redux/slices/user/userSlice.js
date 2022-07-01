@@ -15,11 +15,14 @@ export const blogStatus = { fetching: "fetching", idle: "idle" };
 
 const initialCredentials = {
   account: {},
-  // blogs: {
-  //   myBlogs: { status: blogStatus.idle, entities: {} },
-  //   trendingBlogs: { status: blogStatus.idle, entities: {} },
-  //   favouriteBlogs: { status: blogStatus.idle, entities: {} },
-  // },
+  aboutUser: { followers: {}, followings: {} },
+  aboutBlogs: {
+    totalViews: {},
+    totalComments: {},
+    totalLikes: {},
+    trendings: {},
+    publishes: {},
+  },
 };
 
 const initialState = {

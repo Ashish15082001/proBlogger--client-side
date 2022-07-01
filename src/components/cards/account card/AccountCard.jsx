@@ -1,6 +1,7 @@
 import AccountCardStyles from "./AccountCard.module.css";
 import { useSelector } from "react-redux";
 import { motion, AnimatePresence } from "framer-motion";
+import { serverDomain } from "../../../constants";
 
 export const AccountCard = function () {
   const user = useSelector((state) => state.user.credentials.account);
@@ -10,13 +11,12 @@ export const AccountCard = function () {
       <motion.div
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        // exit={{ y: -30, opacity: 0 }}
         transition={{ duration: 0.5, delay: 0.2 }}
         className={AccountCardStyles.AccountCardContainer}
       >
         <div
           style={{
-            backgroundImage: `url(http://localhost:3001/${user.profileImage.destination}/${user.profileImage.filename})`,
+            backgroundImage: `url(${serverDomain}${user.profileImage.destination}/${user.profileImage.filename})`,
           }}
           className={AccountCardStyles.profilePicture}
         ></div>
@@ -35,7 +35,9 @@ export const AccountCard = function () {
             transition={{ duration: 0.5, delay: 0.5 }}
             className={AccountCardStyles.aboutContainer}
           >
-            <h5>About</h5>
+            <h5 className={AccountCardStyles.aboutItemsContainerTitle}>
+              About
+            </h5>
             <div className={AccountCardStyles.aboutItemsContainer}>
               <div>
                 <span className={AccountCardStyles.clickAble}>
@@ -57,7 +59,9 @@ export const AccountCard = function () {
             transition={{ duration: 0.5, delay: 0.5 }}
             className={AccountCardStyles.aboutContainer}
           >
-            <h5>About blogs</h5>
+            <h5 className={AccountCardStyles.aboutItemsContainerTitle}>
+              About blogs
+            </h5>
             <div className={AccountCardStyles.aboutItemsContainer}>
               <div>
                 <span>{Object.keys(user.aboutBlogs.totalViews).length}</span>

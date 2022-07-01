@@ -34,8 +34,6 @@ export const MainNavigation = function () {
     return false;
   });
 
-  // console.log(isAnyContentLoading);
-
   return (
     <ul className={MainNavigationStyles.main_navigation}>
       <li active={pathname === urls.trending.url ? "true" : "false"}>

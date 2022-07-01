@@ -1,17 +1,16 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
 import { serverDomain } from "../../constants";
 import { DeleteIcon } from "../../icons/DeleteIcon";
 import BlogCardStyles from "./BlogCard.module.css";
+import { Avatar } from "../Avatar/Avatar";
 
-export const FavouriteBlogCard = function ({ id, pageNumber }) {
+export const FavouriteBlogCard = function ({ id }) {
   const selectedBlogData = useSelector(
-    (state) => state.contents.favouritesContent.pages[pageNumber].entities[id]
+    (state) => (state) => state.contents.contentCache[id]
   );
 
-  console.log("FavouriteBlogCard...", selectedBlogData);
   return (
-    <Link to="#" className={BlogCardStyles.card_container}>
+    <div to="#" className={BlogCardStyles.card_container}>
       <div
         className={BlogCardStyles.blog_profile_image}
         style={{
@@ -23,12 +22,9 @@ export const FavouriteBlogCard = function ({ id, pageNumber }) {
         </div>
       </div>
       <div className={BlogCardStyles.lower_part} grid="true">
-        <div
-          className={BlogCardStyles.blog_avatar}
-          style={{
-            backgroundImage: `url(${serverDomain}${selectedBlogData.publisherProfileImage.destination}/${selectedBlogData.publisherProfileImage.filename})`,
-          }}
-        ></div>
+        <Avatar
+          imageUrl={`${serverDomain}${selectedBlogData.publisherProfileImage.destination}/${selectedBlogData.publisherProfileImage.filename}`}
+        />
         <div className={BlogCardStyles.right_part}>
           <h2 className={BlogCardStyles.blog_title}>
             {selectedBlogData.blogTitle}
@@ -46,6 +42,6 @@ export const FavouriteBlogCard = function ({ id, pageNumber }) {
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };

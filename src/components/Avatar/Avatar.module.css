@@ -1,0 +1,8 @@
+.avatar {
+  height: 3rem;
+  width: 3rem;
+  border-radius: 50%;
+  background-position: center;
+  background-size: cover;
+  /* background-image: url("/public/images/laura-chouette-__uuuysuybw-unsplash.jpg"); */
+}

@@ -1,15 +1,33 @@
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import { serverDomain } from "../../constants";
 import BlogCardStyles from "./BlogCard.module.css";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Avatar } from "../Avatar/Avatar";
+import { userStatus } from "../../redux/slices/user/userSlice";
+import { showToast } from "../../redux/slices/toast/toastSlice";
 
 export const BlogCard = function ({ id, contentType, pageNumber }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const selectedBlogData = useSelector(
-    (state) => state.contents[contentType].pages[pageNumber].entities[id]
+    (state) => state.contents.contentCache[id]
   );
+  const isLoggedIn = useSelector((state) => state.user.status);
 
   return (
-    <Link to="#" className={BlogCardStyles.card_container}>
+    <div
+      onClick={() => {
+        if (isLoggedIn !== userStatus.loggedIn)
+          return dispatch(
+            showToast({ toastType: "error", message: "login to view blog" })
+          );
+        navigate(`/blog/${selectedBlogData._id}`, {
+          state: { navigatedFrom: location.pathname, pageNumber, contentType },
+        });
+      }}
+      className={BlogCardStyles.card_container}
+    >
       <div
         className={BlogCardStyles.blog_profile_image}
         style={{
@@ -17,12 +35,9 @@ export const BlogCard = function ({ id, contentType, pageNumber }) {
         }}
       ></div>
       <div className={BlogCardStyles.lower_part} grid="true">
-        <div
-          className={BlogCardStyles.blog_avatar}
-          style={{
-            backgroundImage: `url(${serverDomain}${selectedBlogData.publisherProfileImage.destination}/${selectedBlogData.publisherProfileImage.filename})`,
-          }}
-        ></div>
+        <Avatar
+          imageUrl={`${serverDomain}${selectedBlogData.publisherProfileImage.destination}/${selectedBlogData.publisherProfileImage.filename}`}
+        />
         <div className={BlogCardStyles.right_part}>
           <h2 className={BlogCardStyles.blog_title}>
             {selectedBlogData.blogTitle}
@@ -35,11 +50,11 @@ export const BlogCard = function ({ id, contentType, pageNumber }) {
               {`${Object.keys(selectedBlogData.views).length} views`}
             </p>
             <p className={BlogCardStyles.blog_info}>
-              {new Date(selectedBlogData.timeOfPublish).toLocaleDateString()}
+              {new Date(selectedBlogData.timeOfPublish).toDateString()}
             </p>
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };

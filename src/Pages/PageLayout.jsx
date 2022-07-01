@@ -12,14 +12,14 @@ import { restoreState } from "../redux/slices/user/userThunks";
 import { userStatus } from "../redux/slices/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AccountCard } from "../components/cards/account card/AccountCard";
-import { showToast, toastStatus } from "../redux/slices/toast/toastSlice";
+import { showToast } from "../redux/slices/toast/toastSlice";
 import { Toast } from "../components/toast/Toast";
-import { AnimatePresence } from "framer-motion";
-import { PublishBlogModal } from "../components/modals/publish blog modal/PublishBlogModal";
+import { AnimatePresence, motion } from "framer-motion";
+import { PublishBlogForm } from "../components/publish blog form/PublishBlogForm";
+import { BlogModal } from "../components/modals/blog modal/BlogModal";
 
 export const PageLayout = function () {
   const dispatch = useDispatch();
-  const toast = useSelector((state) => state.toast);
   const isRestoringState = useSelector(
     (state) => state.user.status === userStatus.restoringState
   );
@@ -49,12 +49,29 @@ export const PageLayout = function () {
     f();
   }, [dispatch]);
 
-  if (isRestoringState === true) return <h1>restoring state...</h1>;
+  if (isRestoringState === true)
+    return (
+      <div className={PageLayoutStyles.loadingTextContainer}>
+        <motion.h1
+          animate={{ y: 0 }}
+          initial={{ y: -10 }}
+          transition={{
+            duration: 1,
+            repeat: Infinity,
+            repeatType: "reverse",
+            type: "spring",
+            stiffness: 100,
+          }}
+        >
+          ProBlogger
+        </motion.h1>
+      </div>
+    );
 
   return (
     <div className={PageLayoutStyles.main_container}>
       <AnimatePresence>
-        {toast.status === toastStatus.visible && <Toast />}
+        <Toast />
       </AnimatePresence>
       <MainHeader />
       <MainNavigation />
@@ -80,9 +97,11 @@ export const PageLayout = function () {
         {isLoggedIn && (
           <Route
             path={urls.publishBlog.url}
-            element={<PublishBlogModal />}
+            element={<PublishBlogForm />}
           ></Route>
         )}
+        <Route path={urls.blog.url} element={<BlogModal />}></Route>
+
         <Route
           path="*"
           element={<Navigate to={urls.trending.url + "?pageNumber=1"} />}

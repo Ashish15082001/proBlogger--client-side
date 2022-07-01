@@ -6,7 +6,6 @@ import {
   resetFavouritesContent,
   resetMyBlogsContent,
 } from "../../redux/slices/content/contentsSlice";
-// import { Navigate } from "react-router-dom";
 import { modalNames, showModal } from "../../redux/slices/modals/modalsSlice";
 import { logOut, userStatus } from "../../redux/slices/user/userSlice";
 import MainHeaderStyles from "./MainHeader.module.css";

@@ -1,0 +1,120 @@
+.parentContainer {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  height: 100vh;
+  /* border: 5px solid white; */
+  display: grid;
+  place-items: center;
+  z-index: 100;
+  padding: 2rem 1rem;
+  overflow-y: scroll;
+}
+
+.blogContainer {
+  width: 95%;
+  height: 100%;
+  max-width: 50rem;
+  border-radius: 8px;
+  background-color: var(--color-secondary);
+}
+
+.blogProfieImage {
+  height: 25rem;
+  /* background-image: url("/public/images/hanvin-cheong-vyMOmbNKorU-unsplash.jpg"); */
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  border-radius: 8px 8px 0 0;
+}
+
+.blogProfieImage > p {
+  font-size: var(--paragraph-small);
+  font-weight: var(--semi-bold-text);
+  cursor: pointer;
+}
+
+.blogProfieImage > p:first-child {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  color: var(--color-secondary);
+}
+
+.blogProfieImage > p:last-child {
+  position: absolute;
+  right: 1rem;
+  top: 105%;
+  color: var(--color-primary);
+}
+
+.blogLowerPart {
+  padding: 2rem;
+}
+
+.blogTitle {
+  font-size: var(--heading-large);
+  font-weight: var(--semi-bold-text);
+  color: var(--color-dark);
+}
+
+.description {
+  margin-bottom: 2rem;
+  font-size: var(--paragraph-small);
+  color: var(--color-dark);
+}
+
+.publisherName,
+.timeOfPublish {
+  font-weight: var(--semi-bold-text);
+}
+
+.aboutBlog {
+  font-size: var(--paragraph-small);
+  color: var(--color-dark);
+  text-align: justify;
+}
+
+.statsContainer {
+  margin: 1rem 0;
+  display: flex;
+  /* border: 1px solid red; */
+  align-items: center;
+}
+.statsContainer > p {
+  font-size: var(--paragraph-small);
+}
+.statsContainer > p:first-child {
+  margin-right: 1rem;
+  color: var(--color-dark);
+}
+
+.statsContainer > p {
+  display: flex;
+  align-items: flex-end;
+}
+
+.statsContainer > p:last-child svg {
+  margin-left: 0.3rem;
+}
+
+.statsContainer > p:last-child {
+  cursor: pointer;
+  color: var(--color-primary);
+}
+
+.statsContainer > p:last-child path {
+  fill: var(--color-primary);
+}
+
+.commentTitle {
+  font-weight: var(--semi-bold-text);
+  font-size: var(--heading-small);
+  margin-bottom: 1rem;
+  color: var(--color-dark);
+}
+
+.publishCommentPlaceholder {
+  font-size: var(--heading-small);
+  font-weight: var(--semi-bold-text);
+}

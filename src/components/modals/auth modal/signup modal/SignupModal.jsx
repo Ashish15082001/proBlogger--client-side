@@ -47,113 +47,89 @@ export const SignupModal = function (props) {
   );
 
   const onFirstNameChanged = function (event) {
-    try {
-      const enteredFirstName = sanitiseInputText(event.target.value);
+    const enteredFirstName = sanitiseInputText(event.target.value);
 
-      if (triedFormSubmition) {
-        if (validateName(enteredFirstName) === false)
-          setFirstNameStatus({
-            isError: true,
-            message: "invalid first name",
-          });
-        else setFirstNameStatus({ isError: false });
-      }
-
-      setFirstName(enteredFirstName);
-    } catch (error) {
-      dispatch(showToast({ toastType: "error", message: error.message }));
+    if (triedFormSubmition) {
+      if (validateName(enteredFirstName) === false)
+        setFirstNameStatus({
+          isError: true,
+          message: "invalid first name",
+        });
+      else setFirstNameStatus({ isError: false });
     }
+
+    setFirstName(enteredFirstName);
   };
 
   const onLastNameChanged = function (event) {
-    try {
-      const enteredLastName = sanitiseInputText(event.target.value);
+    const enteredLastName = sanitiseInputText(event.target.value);
 
-      if (triedFormSubmition) {
-        if (validateName(enteredLastName) === false)
-          setLastNameStatus({
-            isError: true,
-            message: "invalid first name",
-          });
-        else setLastNameStatus({ isError: false });
-      }
-      setLastName(enteredLastName);
-    } catch (error) {
-      dispatch(showToast({ toastType: "error", message: error.message }));
+    if (triedFormSubmition) {
+      if (validateName(enteredLastName) === false)
+        setLastNameStatus({
+          isError: true,
+          message: "invalid first name",
+        });
+      else setLastNameStatus({ isError: false });
     }
+    setLastName(enteredLastName);
   };
 
   const onEmailChanged = function (event) {
-    try {
-      const enteredEmail = sanitiseInputText(event.target.value);
+    const enteredEmail = sanitiseInputText(event.target.value);
 
-      if (triedFormSubmition) {
-        if (validateEmail(enteredEmail) === false)
-          setEmailStatus({
-            isError: true,
-            message: "invalid email",
-          });
-        else setEmailStatus({ isError: false });
-      }
-      setEmail(enteredEmail);
-    } catch (error) {
-      dispatch(showToast({ toastType: "error", message: error.message }));
+    if (triedFormSubmition) {
+      if (validateEmail(enteredEmail) === false)
+        setEmailStatus({
+          isError: true,
+          message: "invalid email",
+        });
+      else setEmailStatus({ isError: false });
     }
+    setEmail(enteredEmail);
   };
   const onPasswordChanged = function (event) {
-    try {
-      const enteredPassword = sanitiseInputText(event.target.value);
+    const enteredPassword = sanitiseInputText(event.target.value);
 
-      if (triedFormSubmition) {
-        if (validatePassword(enteredPassword) === false)
-          setPasswordStatus({
-            isError: true,
-            message: "minimum length is 8",
-          });
-        else setPasswordStatus({ isError: false });
-      }
-      setPassword(enteredPassword);
-    } catch (error) {
-      dispatch(showToast({ toastType: "error", message: error.message }));
+    if (triedFormSubmition) {
+      if (validatePassword(enteredPassword) === false)
+        setPasswordStatus({
+          isError: true,
+          message: "minimum length is 8",
+        });
+      else setPasswordStatus({ isError: false });
     }
+    setPassword(enteredPassword);
   };
   const onConfirmedPasswordChanged = function (event) {
-    try {
-      const enteredConfirmedPasswotd = sanitiseInputText(event.target.value);
+    const enteredConfirmedPasswotd = sanitiseInputText(event.target.value);
 
-      if (triedFormSubmition) {
-        if (
-          enteredConfirmedPasswotd === "" ||
-          password !== enteredConfirmedPasswotd
-        )
-          setConfirmedPasswordStatus({
-            isError: true,
-            message: "confirmed password ≠ password",
-          });
-        else setConfirmedPasswordStatus({ isError: false });
-      }
-      setConfirmedPassword(enteredConfirmedPasswotd);
-    } catch (error) {
-      dispatch(showToast({ toastType: "error", message: error.message }));
+    if (triedFormSubmition) {
+      if (
+        enteredConfirmedPasswotd === "" ||
+        password !== enteredConfirmedPasswotd
+      )
+        setConfirmedPasswordStatus({
+          isError: true,
+          message: "confirmed password ≠ password",
+        });
+      else setConfirmedPasswordStatus({ isError: false });
     }
+    setConfirmedPassword(enteredConfirmedPasswotd);
   };
 
   const onProfileImageChanged = function (event) {
-    try {
-      const selectedProfileImage = event.target.files[0];
+    const selectedProfileImage = event.target.files[0];
 
-      if (triedFormSubmition) {
-        if (validateImage(selectedProfileImage) === false) {
-          setProfileImageStatus({
-            isError: true,
-            message: "please select valid image format",
-          });
-        } else setProfileImageStatus({ isError: false });
-      }
-      setProfileImage(selectedProfileImage);
-    } catch (error) {
-      dispatch(showToast({ toastType: "error", message: error.message }));
+    if (triedFormSubmition) {
+      if (validateImage(selectedProfileImage) === false) {
+        setProfileImageStatus({
+          isError: true,
+          message: "please select valid image format",
+        });
+      } else setProfileImageStatus({ isError: false });
     }
+    setProfileImage(selectedProfileImage);
   };
 
   const signup = async function (event) {
@@ -203,16 +179,12 @@ export const SignupModal = function (props) {
       if (isError) return;
 
       const formData = new FormData();
-
       formData.set("firstName", firstName);
       formData.set("lastName", lastName);
       formData.set("email", email);
       formData.set("password", password);
       formData.set("confirmedPassword", confirmedPassword);
       formData.set("profileImage", profileImage, profileImage.name);
-
-      for (const x of formData.entries()) console.log(x);
-
       const setteledPromise = await dispatch(signUp(formData));
 
       if (setteledPromise.error) throw new Error(setteledPromise.error.message);

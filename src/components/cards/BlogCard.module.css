@@ -6,6 +6,7 @@
   display: block;
   text-decoration: none;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
 }
 
 .blog_profile_image {
@@ -32,15 +33,6 @@
 .stats_container {
   display: flex;
   justify-content: space-between;
-}
-
-.blog_avatar {
-  height: 3rem;
-  width: 3rem;
-  border-radius: 50%;
-  background-position: center;
-  background-size: cover;
-  /* background-image: url("/public/images/laura-chouette-__uuuysuybw-unsplash.jpg"); */
 }
 
 .blog_title {

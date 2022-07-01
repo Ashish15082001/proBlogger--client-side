@@ -11,23 +11,21 @@ export const toastType = {
   alert: "alert",
 };
 
-const initialState = {
-  status: toastStatus.hidden,
-  message: "",
-  toastType: "",
-};
+const initialState = [];
 
 export const toastSlice = createSlice({
   name: "toast",
   initialState,
   reducers: {
     showToast(state, action) {
-      state.status = toastStatus.visible;
-      state.toastType = action.payload.toastType;
-      state.message = action.payload.message;
+      state[state.length] = {
+        status: toastStatus.visible,
+        toastType: action.payload.toastType,
+        message: action.payload.message,
+      };
     },
     hideToast(state, action) {
-      state.status = toastStatus.hidden;
+      // state.status = toastStatus.hidden;
     },
   },
 });

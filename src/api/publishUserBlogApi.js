@@ -1,6 +1,6 @@
 import { jwtKey, serverDomain, userIdKey } from "../constants";
 
-export const publishUserBlog = async function (blogData) {
+export const publishUserBlogApi = async function (blogData) {
   try {
     const userId = localStorage.getItem(userIdKey);
     const token = localStorage.getItem(jwtKey);

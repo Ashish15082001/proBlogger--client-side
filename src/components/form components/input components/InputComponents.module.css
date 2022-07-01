@@ -18,10 +18,6 @@
   outline: var(--color-error);
 }
 
-textarea {
-  resize: none;
-  height: 20rem;
-}
 .errorMessage {
   color: var(--color-error);
   font-size: 0.8rem;
