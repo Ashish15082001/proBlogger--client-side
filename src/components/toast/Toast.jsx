@@ -5,20 +5,6 @@ import React from "react";
 
 export const Toast = function () {
   const toasts = useSelector((state) => state.toast);
-  // const dispatch = useDispatch();
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => {
-  //     // console.log("inside timer");
-  //     dispatch(hideToast());
-  //   }, 3000);
-  //   return () => {
-  //     // console.log("clearing timeout");
-  //     clearTimeout(timer);
-  //   };
-  // }, [dispatch]);
-
-  // console.log(toasts);
 
   return (
     <React.Fragment>

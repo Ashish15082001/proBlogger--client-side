@@ -1,4 +1,5 @@
 .commentCard {
+  position: relative;
   border-radius: 8px;
   /* border: 1px solid red; */
   padding: 1rem;
@@ -6,6 +7,7 @@
 }
 
 .upperPart {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -26,9 +28,73 @@
   margin-left: 1rem;
 }
 
+.date {
+  margin-right: 1rem;
+}
+
+.menuContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.MenuIconContainer {
+  cursor: pointer;
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+}
+
+.MenuIconContainer:hover {
+  background-color: var(--color-dark);
+  transition: all 0.2s ease-in-out;
+}
+
+.MenuIconContainer:hover > svg > path {
+  fill: var(--color-secondary);
+}
+
+.MenuIconContainer > svg {
+  transform: scale(0.66);
+}
+
 .comment {
   padding-left: 4rem;
   color: var(--color-dark);
   font-size: var(--paragraph-small);
   font-weight: var(--regular);
+}
+
+.menuOptionsContainer {
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+  z-index: 10;
+  background-color: var(--color-secondary);
+  border-radius: 8px;
+  box-shadow: var(--box-shadow);
+}
+.menuOption {
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  padding: 0.4rem 1em;
+  color: var(--color-dark);
+  font-size: var(--paragraph-small);
+  font-weight: var(--semi-bold-text);
+}
+
+.menuOption:first-child {
+  padding-top: 0.2rem;
+}
+
+.menuOption:last-child {
+  padding-bottom: 0.2rem;
+}
+
+.menuOption:hover {
+  background-color: var(--color-dark);
+  color: var(--color-secondary);
 }

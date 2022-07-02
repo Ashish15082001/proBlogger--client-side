@@ -6,27 +6,40 @@ import { ThumbUpIcon } from "../../../icons/ThumbUpIcon";
 import { BackDropOverlay } from "../../backdrop overlay/BackDropOverlay";
 import { PublishCommentForm } from "../../publish comment form/PublishCommentForm";
 import BlogModalStyles from "./BlogModal.module.css";
-import { userStatus } from "../../../redux/slices/user/userSlice";
+import {
+  addBlogToFavourites,
+  removeBlogFromFavourites,
+  userStatus,
+} from "../../../redux/slices/user/userSlice";
 import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { likeBlog } from "../../../redux/slices/content/contentsSlice";
+import {
+  likeBlog,
+  viewBlog,
+} from "../../../redux/slices/content/contentsSlice";
 import { likeBlogsApi } from "../../../api/likeBlogsApi";
 import { viewBlogApi } from "../../../api/viewBlogApi";
 import { showToast } from "../../../redux/slices/toast/toastSlice";
 import { CommentCard } from "../../cards/comment card/CommentCard";
+import { addBlogToFavouritesApi } from "../../../api/addBlogToFavouritesApi";
+import { FavouriteIcon } from "../../../icons/FavouriteIcon";
+import { ArrowBackIcon } from "../../../icons/ArrowBackIcon";
+import { removeBlogFromFavouritesApi } from "../../../api/removeBlogFromFavouritesApi";
 
 export const BlogModal = function () {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
   const { blogId } = useParams();
-  const userId = useSelector((state) => state.user.credentials.account._id);
+  const userCredentials = useSelector((state) => state.user.credentials);
   const user = useSelector((state) => state.user);
-  const userAccount = useSelector((state) => state.user.credentials.account);
   const blogData = useSelector((state) => state.contents.contentCache[blogId]);
   const [isBlogLiked, setIsBlogLiked] = useState(
-    blogData?.likes[userId] ? true : false
+    blogData?.likes[userCredentials._id] ? true : false
+  );
+  const [isBlogFavourite, setIsBlogFavourite] = useState(
+    user.statistics.aboutBlogs.favourites[blogId] ? true : false
   );
 
   useEffect(() => {
@@ -36,10 +49,12 @@ export const BlogModal = function () {
   useEffect(() => {
     const f = async function () {
       try {
+        const date = new Date().toISOString();
+        dispatch(viewBlog({ userId: userCredentials._id, blogId, date }));
         await viewBlogApi({
-          userId,
+          userId: userCredentials._id,
           blogId,
-          date: new Date().toISOString(),
+          date,
         });
       } catch (error) {
         console.error(error);
@@ -48,7 +63,7 @@ export const BlogModal = function () {
     };
 
     f();
-  }, [blogId, userId, dispatch]);
+  }, [blogId, userCredentials, dispatch]);
 
   if (!blogData) return <div></div>;
 
@@ -57,8 +72,34 @@ export const BlogModal = function () {
       const date = new Date().toISOString();
 
       setIsBlogLiked((oldState) => !oldState);
-      dispatch(likeBlog({ date, userId, blogId }));
-      await likeBlogsApi({ userId, blogId, date });
+      dispatch(likeBlog({ date, userId: userCredentials._id, blogId }));
+      await likeBlogsApi({ userId: userCredentials._id, blogId, date });
+    } catch (error) {
+      dispatch(showToast({ toastType: "error", message: error.message }));
+    }
+  };
+
+  const toggleIsBlogFavourite = async function () {
+    try {
+      const date = new Date().toISOString();
+
+      setIsBlogFavourite((oldState) => !oldState);
+
+      if (!isBlogFavourite) {
+        dispatch(addBlogToFavourites({ blogId, date }));
+        await addBlogToFavouritesApi({
+          blogId,
+          userId: userCredentials._id,
+          date,
+        });
+      } else if (isBlogFavourite) {
+        dispatch(removeBlogFromFavourites({ blogId, date }));
+        await removeBlogFromFavouritesApi({
+          blogId,
+          userId: userCredentials._id,
+          date,
+        });
+      }
     } catch (error) {
       dispatch(showToast({ toastType: "error", message: error.message }));
     }
@@ -88,9 +129,11 @@ export const BlogModal = function () {
                 );
               }}
             >
-              back
+              <ArrowBackIcon />
             </p>
-            <p>add to favourites</p>
+            <p onClick={toggleIsBlogFavourite}>
+              <FavouriteIcon isFilled={isBlogFavourite} />
+            </p>
           </div>
           <div className={BlogModalStyles.blogLowerPart}>
             <h5 className={BlogModalStyles.blogTitle}>{blogData.blogTitle}</h5>
@@ -98,7 +141,7 @@ export const BlogModal = function () {
               {"posted by "}
               <span className={BlogModalStyles.publisherName}>
                 {blogData.publisherName ===
-                `${user.credentials.account.firstName} ${user.credentials.account.lastName}`
+                `${userCredentials.firstName} ${userCredentials.lastName}`
                   ? "you"
                   : blogData.publisherName}
               </span>
@@ -130,7 +173,7 @@ export const BlogModal = function () {
               <React.Fragment>
                 <PublishCommentForm
                   blogId={blogId}
-                  avatarImageUrl={`${serverDomain}${userAccount.profileImage.destination}/${userAccount.profileImage.filename}`}
+                  avatarImageUrl={`${serverDomain}${userCredentials.profileImage.destination}/${userCredentials.profileImage.filename}`}
                 />
               </React.Fragment>
             )}

@@ -13,21 +13,20 @@ export const userStatus = {
 
 export const blogStatus = { fetching: "fetching", idle: "idle" };
 
-const initialCredentials = {
-  account: {},
-  aboutUser: { followers: {}, followings: {} },
-  aboutBlogs: {
-    totalViews: {},
-    totalComments: {},
-    totalLikes: {},
-    trendings: {},
-    publishes: {},
-  },
-};
-
 const initialState = {
   status: userStatus.restoringState,
-  credentials: initialCredentials,
+  credentials: {},
+  statistics: {
+    aboutUser: { followers: {}, followings: {} },
+    aboutBlogs: {
+      totalViews: {},
+      totalComments: {},
+      totalLikes: {},
+      trendings: {},
+      publishes: {},
+      favourites: {},
+    },
+  },
 };
 
 export const userSlice = createSlice({
@@ -36,9 +35,18 @@ export const userSlice = createSlice({
   reducers: {
     logOut(state, action) {
       state.status = userStatus.loggedOut;
-      state.credentials = initialCredentials;
+      state.credentials = {};
+      state.statistics = {};
       localStorage.removeItem(jwtKey);
       localStorage.removeItem(userIdKey);
+    },
+    addBlogToFavourites(state, action) {
+      const { blogId, date } = action.payload;
+      state.statistics.aboutBlogs.favourites[blogId] = { date };
+    },
+    removeBlogFromFavourites(state, action) {
+      const { blogId } = action.payload;
+      delete state.statistics.aboutBlogs.favourites[blogId];
     },
   },
   extraReducers: (builder) =>
@@ -48,7 +56,7 @@ export const userSlice = createSlice({
       })
       .addCase(logIn.fulfilled, (state, action) => {
         state.status = userStatus.loggedIn;
-        state.credentials.account = action.payload;
+        state.credentials = action.payload;
       })
       .addCase(logIn.rejected, (state, action) => {
         state.status = userStatus.loggedOut;
@@ -58,7 +66,7 @@ export const userSlice = createSlice({
         state.status = userStatus.signingUp;
       })
       .addCase(signUp.fulfilled, (state, action) => {
-        state.credentials.account = action.payload;
+        state.credentials = action.payload;
         state.status = userStatus.loggedIn;
       })
       .addCase(signUp.rejected, (state, action) => {
@@ -70,7 +78,7 @@ export const userSlice = createSlice({
       })
       .addCase(restoreState.fulfilled, (state, action) => {
         state.status = userStatus.loggedIn;
-        state.credentials.account = action.payload;
+        state.credentials = action.payload;
       })
       .addCase(restoreState.rejected, (state, action) => {
         state.status = userStatus.loggedOut;
@@ -78,4 +86,5 @@ export const userSlice = createSlice({
 });
 
 export const userSliceReducer = userSlice.reducer;
-export const { logOut } = userSlice.actions;
+export const { logOut, addBlogToFavourites, removeBlogFromFavourites } =
+  userSlice.actions;

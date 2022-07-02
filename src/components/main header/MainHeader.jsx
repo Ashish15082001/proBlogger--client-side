@@ -19,11 +19,9 @@ export const MainHeader = function () {
   const currentUserStatus = useSelector((state) => state.user.status);
   const userName = useSelector(
     (state) =>
-      state.user.credentials.account.firstName +
-      " " +
-      state.user.credentials.account.lastName
+      state.user.credentials.firstName + " " + state.user.credentials.lastName
   );
-  const userId = useSelector((state) => state.user.credentials.account._id);
+  const userId = useSelector((state) => state.user.credentials._id);
   const [showMenu, setShowMenu] = useState(false);
 
   const toggleShowMenu = function () {

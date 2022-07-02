@@ -89,12 +89,35 @@ const contentSlice = createSlice({
         pages: {},
       };
     },
+    viewBlog(state, action) {
+      const { blogId, userId, date } = action.payload;
+      state.contentCache[blogId].views[userId] = { date };
+    },
     likeBlog(state, action) {
       const { blogId, userId, date } = action.payload;
-
       if (state.contentCache[blogId].likes[userId])
         delete state.contentCache[blogId].likes[userId];
       else state.contentCache[blogId].likes[userId] = { date };
+    },
+    commentOnBlog(state, action) {
+      const {
+        blogId,
+        userId,
+        commenterName,
+        commenterProfileImage,
+        comment,
+        date,
+      } = action.payload;
+
+      if (state.contentCache[blogId].comments[userId])
+        state.contentCache[blogId].comments[userId].comment += " " + comment;
+      else
+        state.contentCache[blogId].comments[userId] = {
+          date,
+          comment,
+          commenterName,
+          commenterProfileImage,
+        };
     },
   },
   extraReducers: (builder) =>
@@ -117,16 +140,10 @@ const contentSlice = createSlice({
           return;
         }
         const { entities, totalDocuments } = action.payload;
-
         state[fetchingContentType].totalDocuments = totalDocuments;
-
         state.contentCache = { ...state.contentCache, ...entities };
-
         state[fetchingContentType].pages[fetchingPageNumber].entities =
           Object.keys(entities);
-
-        // state[fetchingContentType].pages[fetchingPageNumber].entities =
-        //   entities;
 
         if (Object.keys(entities).length === 0)
           state[fetchingContentType].pages[fetchingPageNumber].status =
@@ -135,14 +152,6 @@ const contentSlice = createSlice({
           state[fetchingContentType].pages[fetchingPageNumber].status =
             contentsStatus.idle;
       }),
-  // .addCase(fetchContent.rejected, (state, action) => {
-  //   const fetchingContentType = "";
-  //   const fetchingPageNumber = "-1";
-  //   state[fetchingContentType].pages[fetchingPageNumber].status =
-  //     contentsStatus.idle;
-
-  //   alert(action.error.message);
-  // }),
 });
 
 export const {
@@ -152,5 +161,7 @@ export const {
   resetFavouritesContent,
   resetMyBlogsContent,
   likeBlog,
+  commentOnBlog,
+  viewBlog,
 } = contentSlice.actions;
 export const contentSliceReducer = contentSlice.reducer;

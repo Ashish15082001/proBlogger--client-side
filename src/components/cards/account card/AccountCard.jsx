@@ -4,7 +4,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { serverDomain } from "../../../constants";
 
 export const AccountCard = function () {
-  const user = useSelector((state) => state.user.credentials.account);
+  const userCredentials = useSelector((state) => state.user.credentials);
+  const userStatistics = useSelector((state) => state.user.statistics);
+
+  const aboutUser = userStatistics.aboutUser;
+  const aboutBlogs = userStatistics.aboutBlogs;
 
   return (
     <AnimatePresence>
@@ -16,15 +20,15 @@ export const AccountCard = function () {
       >
         <div
           style={{
-            backgroundImage: `url(${serverDomain}${user.profileImage.destination}/${user.profileImage.filename})`,
+            backgroundImage: `url(${serverDomain}${userCredentials.profileImage.destination}/${userCredentials.profileImage.filename})`,
           }}
           className={AccountCardStyles.profilePicture}
         ></div>
         <h3
           id={AccountCardStyles.userName}
-        >{`${user.firstName} ${user.lastName}`}</h3>
-        <h3 id={AccountCardStyles.email}>{`${user.email}`}</h3>
-        <p>{user.description}</p>
+        >{`${userCredentials.firstName} ${userCredentials.lastName}`}</h3>
+        <h3 id={AccountCardStyles.email}>{`${userCredentials.email}`}</h3>
+        <p>{userCredentials.description}</p>
 
         {/* <span className={AccountCardStyles.clickAble}>edit profile</span> */}
 
@@ -41,13 +45,13 @@ export const AccountCard = function () {
             <div className={AccountCardStyles.aboutItemsContainer}>
               <div>
                 <span className={AccountCardStyles.clickAble}>
-                  {Object.keys(user.aboutUser.followers).length}
+                  {Object.keys(aboutUser.followers).length}
                 </span>
                 <p>Followers</p>
               </div>
               <div>
                 <span className={AccountCardStyles.clickAble}>
-                  {Object.keys(user.aboutUser.followings).length}
+                  {Object.keys(aboutUser.followings).length}
                 </span>
                 <p>Followings</p>
               </div>
@@ -64,32 +68,32 @@ export const AccountCard = function () {
             </h5>
             <div className={AccountCardStyles.aboutItemsContainer}>
               <div>
-                <span>{Object.keys(user.aboutBlogs.totalViews).length}</span>
+                <span>{Object.keys(aboutBlogs.totalViews).length}</span>
                 <p>Total views</p>
               </div>
               <div>
-                <span>{Object.keys(user.aboutBlogs.totalComments).length}</span>
+                <span>{Object.keys(aboutBlogs.totalComments).length}</span>
                 <p>Total comments</p>
               </div>
               <div>
-                <span>{Object.keys(user.aboutBlogs.totalLikes).length}</span>
+                <span>{Object.keys(aboutBlogs.totalLikes).length}</span>
                 <p>Total likes</p>
               </div>
               <div>
                 <span className={AccountCardStyles.clickAble}>
-                  {Object.keys(user.aboutBlogs.trendings).length}
+                  {Object.keys(aboutBlogs.trendings).length}
                 </span>
                 <p>Trendings</p>
               </div>
               <div>
                 <span className={AccountCardStyles.clickAble}>
-                  {Object.keys(user.aboutBlogs.publishes).length}
+                  {Object.keys(aboutBlogs.publishes).length}
                 </span>
                 <p>Publishes</p>
               </div>
               <div>
                 <span className={AccountCardStyles.clickAble}>
-                  {Object.keys(user.aboutBlogs.favourites).length}
+                  {Object.keys(aboutBlogs.favourites).length}
                 </span>
                 <p>favourites</p>
               </div>

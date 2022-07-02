@@ -7,12 +7,13 @@ import { validateInputText } from "../../utilities/validate";
 import { publishCommentApi } from "../../api/publishCommentApi";
 import { useDispatch, useSelector } from "react-redux";
 import { showToast } from "../../redux/slices/toast/toastSlice";
+import { commentOnBlog } from "../../redux/slices/content/contentsSlice";
 
 export const PublishCommentForm = function (props) {
   const { avatarImageUrl, blogId } = props;
   const dispatch = useDispatch();
+  const userCredentials = useSelector((state) => state.user.credentials);
   const [comment, setComment] = useState("");
-  const userId = useSelector((state) => state.user.credentials.account._id);
   const [isPublishingComment, setIsPublishingComment] = useState(false);
   const onCommentChange = function (event) {
     setComment(event.target.value);
@@ -23,13 +24,22 @@ export const PublishCommentForm = function (props) {
       setIsPublishingComment(true);
       const enteredComment = sanitiseInputText(comment);
       const date = new Date().toISOString();
-
-      await publishCommentApi({
+      const commentData = {
         comment: enteredComment,
-        userId,
+        userId: userCredentials._id,
         blogId,
         date,
-      });
+      };
+
+      await publishCommentApi(commentData);
+      dispatch(
+        commentOnBlog({
+          ...commentData,
+          commenterName:
+            userCredentials.firstName + " " + userCredentials.lastName,
+          commenterProfileImage: userCredentials.profileImage,
+        })
+      );
 
       setComment("");
     } catch (error) {

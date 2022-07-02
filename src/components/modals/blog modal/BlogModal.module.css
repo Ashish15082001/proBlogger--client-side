@@ -37,15 +37,18 @@
 .blogProfieImage > p:first-child {
   position: absolute;
   right: 1rem;
-  top: 1rem;
-  color: var(--color-secondary);
+  top: 110%;
 }
 
 .blogProfieImage > p:last-child {
   position: absolute;
   right: 1rem;
   top: 105%;
-  color: var(--color-primary);
+}
+:is(.blogProfieImage > p:first-child path, .blogProfieImage
+    > p:last-child
+    path) {
+  fill: var(--color-primary);
 }
 
 .blogLowerPart {
