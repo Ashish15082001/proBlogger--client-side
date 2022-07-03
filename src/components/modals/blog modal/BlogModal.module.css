@@ -37,12 +37,12 @@
 .blogProfieImage > p:first-child {
   position: absolute;
   right: 1rem;
-  top: 110%;
+  top: 105%;
 }
 
 .blogProfieImage > p:last-child {
   position: absolute;
-  right: 1rem;
+  right: 3rem;
   top: 105%;
 }
 :is(.blogProfieImage > p:first-child path, .blogProfieImage

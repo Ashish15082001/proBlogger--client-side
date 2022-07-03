@@ -6,7 +6,7 @@ import { Avatar } from "../Avatar/Avatar";
 import { userStatus } from "../../redux/slices/user/userSlice";
 import { showToast } from "../../redux/slices/toast/toastSlice";
 
-export const BlogCard = function ({ id, contentType, pageNumber }) {
+export const BlogCard = function ({ id, contentType }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -14,6 +14,9 @@ export const BlogCard = function ({ id, contentType, pageNumber }) {
     (state) => state.contents.contentCache[id]
   );
   const isLoggedIn = useSelector((state) => state.user.status);
+  const pageNumber = new URLSearchParams(location.search).get("pageNumber")
+    ? new URLSearchParams(location.search).get("pageNumber")
+    : 1;
 
   return (
     <div

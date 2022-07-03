@@ -1,16 +1,42 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { serverDomain } from "../../constants";
 import { DeleteIcon } from "../../icons/DeleteIcon";
 import BlogCardStyles from "./BlogCard.module.css";
 import { Avatar } from "../Avatar/Avatar";
+import { showToast } from "../../redux/slices/toast/toastSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+import { userStatus } from "../../redux/slices/user/userSlice";
+import { contentTypes } from "../../redux/slices/content/contentsSlice";
 
 export const FavouriteBlogCard = function ({ id }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const selectedBlogData = useSelector(
     (state) => state.contents.contentCache[id]
   );
+  const isLoggedIn = useSelector((state) => state.user.status);
+  const pageNumber = new URLSearchParams(location.search).get("pageNumber")
+    ? new URLSearchParams(location.search).get("pageNumber")
+    : 1;
 
   return (
-    <div to="#" className={BlogCardStyles.card_container}>
+    <div
+      onClick={() => {
+        if (isLoggedIn !== userStatus.loggedIn)
+          return dispatch(
+            showToast({ toastType: "error", message: "login to view blog" })
+          );
+        navigate(`/blog/${selectedBlogData._id}`, {
+          state: {
+            navigatedFrom: location.pathname,
+            pageNumber,
+            contentType: contentTypes.favourites,
+          },
+        });
+      }}
+      className={BlogCardStyles.card_container}
+    >
       <div
         className={BlogCardStyles.blog_profile_image}
         style={{

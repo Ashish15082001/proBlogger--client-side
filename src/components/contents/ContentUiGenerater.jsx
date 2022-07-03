@@ -144,11 +144,7 @@ export const ContentUiGenerater = function (props) {
           >
             {(contentType === contentTypes.blogs ||
               contentType === contentTypes.trending) && (
-              <BlogCard
-                id={id}
-                contentType={contentType}
-                pageNumber={pageNumber}
-              />
+              <BlogCard id={id} contentType={contentType} />
             )}
             {contentType === contentTypes.favourites && (
               <FavouriteBlogCard id={id} />
