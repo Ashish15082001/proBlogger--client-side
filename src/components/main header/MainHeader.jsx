@@ -9,6 +9,11 @@ import MainHeaderStyles from "./MainHeader.module.css";
 import { MenuIcon } from "../../icons/MenuIcon";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { AccountIcon } from "../../icons/AccountIcon";
+import { LogoutIcon } from "../../icons/LogoutIcon";
+import { ThemeIcon } from "../../icons/ThemeIcon";
+import { CreateAccountIcon } from "../../icons/CreateAccountIcon";
+import { LoginIcon } from "../../icons/LoginIcon";
 
 export const MainHeader = function () {
   const dispatch = useDispatch();
@@ -61,30 +66,45 @@ export const MainHeader = function () {
               className={MainHeaderStyles.menuItems}
             >
               {currentUserStatus === userStatus.loggedOut && (
-                <p
+                <div
+                  className={MainHeaderStyles.menuOption}
                   onClick={() =>
                     dispatch(showModal({ modalName: modalNames.login }))
                   }
                 >
-                  Login
-                </p>
+                  <span>
+                    <LoginIcon/>
+                  </span>
+                  <p>Login</p>
+                </div>
               )}
               {currentUserStatus === userStatus.loggedOut && (
-                <p
+                <div
+                  className={MainHeaderStyles.menuOption}
                   onClick={() =>
                     dispatch(showModal({ modalName: modalNames.signup }))
                   }
                 >
-                  Create account
-                </p>
+                  <span>
+                    <CreateAccountIcon />
+                  </span>
+                  <p>Create account</p>
+                </div>
               )}
               {currentUserStatus === userStatus.loggedIn && (
-                <p onClick={() => navigate(`/user/${userId}/account`)}>
-                  Account
-                </p>
+                <div
+                  className={MainHeaderStyles.menuOption}
+                  onClick={() => navigate(`/user/${userId}/account`)}
+                >
+                  <span>
+                    <AccountIcon />
+                  </span>
+                  <p>Account</p>
+                </div>
               )}
               {currentUserStatus === userStatus.loggedIn && (
-                <p
+                <div
+                  className={MainHeaderStyles.menuOption}
                   onClick={() => {
                     dispatch(logOut());
                     dispatch(resetContent());
@@ -92,11 +112,19 @@ export const MainHeader = function () {
                     navigate("/");
                   }}
                 >
-                  Logout
-                </p>
+                  <span>
+                    <LogoutIcon />
+                  </span>
+                  <p>Logout</p>
+                </div>
               )}
-              <div className={MainHeaderStyles.seperator}></div>
-              <p>Theme</p>
+              {/* <div className={MainHeaderStyles.seperator}></div> */}
+              <div className={MainHeaderStyles.menuOption}>
+                <span>
+                  <ThemeIcon />
+                </span>
+                <p>Theme</p>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>

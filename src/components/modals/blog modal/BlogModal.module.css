@@ -121,3 +121,7 @@
   font-size: var(--heading-small);
   font-weight: var(--semi-bold-text);
 }
+
+.blogContainer svg:hover {
+  transform: scale(1.2);
+}

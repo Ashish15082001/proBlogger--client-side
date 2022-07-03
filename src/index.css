@@ -125,18 +125,6 @@ button:disabled {
   cursor: auto;
 }
 
-svg {
-  transition: all 0.2s ease-in-out;
-}
-
-svg:hover {
-  transform: scale(1.1);
-}
-
-svg:active {
-  transform: scale(0.7);
-}
-
 /* @media screen and (max-width: 669px) {
   #root{font-size: 10px;}
 } */

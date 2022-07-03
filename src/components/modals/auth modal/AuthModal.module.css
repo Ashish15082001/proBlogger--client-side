@@ -16,10 +16,14 @@
   margin: 1rem;
 }
 
-.modal > svg {
+.modal > span {
   justify-self: flex-end;
   margin-bottom: 1rem;
   cursor: pointer;
+}
+
+.modal > span:hover {
+  transform: scale(1.2);
 }
 
 .title {
@@ -51,7 +55,6 @@ form {
   margin-block: 1rem;
   /* border: 1px solid red; */
 }
-
 
 button:disabled {
   opacity: 0.6;

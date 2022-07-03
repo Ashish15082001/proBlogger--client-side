@@ -17,7 +17,6 @@
 .main_navigation > li {
   margin-inline: 0.25rem;
   list-style: none;
-  padding-inline: 0.2rem;
   border-radius: 8px;
   transition: all ease-in-out 0.2s;
   cursor: pointer;
@@ -31,15 +30,16 @@
 }
 
 .navlink {
-  padding: 0.5rem;
+  padding: 0.5rem 1rem;
   text-decoration: none;
   display: flex;
   align-items: center;
 }
 
-.navlink > svg {
+.navlink > span {
+  display: grid;
+  place-items: center;
   margin-right: 0.5rem;
-
   transition: all ease-in-out 0.2s;
 }
 
@@ -47,7 +47,6 @@
   font-size: var(--heading-small);
   font-weight: var(--semi-bold-text);
   color: var(--color-dark);
-
   transition: all ease-in-out 0.2s;
 }
 

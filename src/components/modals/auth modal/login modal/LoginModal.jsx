@@ -100,7 +100,9 @@ export const LoginModal = function () {
         transition={{ duration: 0.5 }}
         className={LoginModalStyles.modal}
       >
-        <CancelIcon onClick={() => dispatch(hideModal())} />
+        <span onClick={() => dispatch(hideModal())}>
+          <CancelIcon />
+        </span>
         <h1 className={LoginModalStyles.title}>login</h1>
         <p className={LoginModalStyles.description}>
           Please enter all credentials to login into your account

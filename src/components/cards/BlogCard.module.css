@@ -53,22 +53,27 @@
   width: 100%;
 }
 
-.overlay svg {
-  transition: all 0.2s ease-in-out;
+.overlay > span {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 1rem;
+  display: grid;
+  place-items: center;
+  background-color: var(--color-secondary);
 }
 
-.overlay svg:hover {
-  transform: scale(1.1);
+.overlay > span:hover {
+  transform: scale(1.2);
 }
 
-.overlay svg:nth-child(1) {
+.overlay > span:nth-child(1) {
   position: absolute;
   top: 1rem;
   right: 1rem;
 }
 
-.overlay svg:nth-child(2) {
+.overlay span:nth-child(2) {
   position: absolute;
   top: 1rem;
-  right: 4rem;
+  right: 3.5rem;
 }

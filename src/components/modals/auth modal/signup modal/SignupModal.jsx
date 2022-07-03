@@ -208,7 +208,9 @@ export const SignupModal = function (props) {
         transition={{ duration: 0.5 }}
         className={SignupModalStyles.modal}
       >
-        <CancelIcon onClick={() => dispatch(hideModal())} />
+        <span onClick={() => dispatch(hideModal())}>
+          <CancelIcon />
+        </span>
         <h1 className={SignupModalStyles.title}>Signup</h1>
         <p className={SignupModalStyles.description}>
           Please enter all credentials to create new account

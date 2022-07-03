@@ -44,8 +44,12 @@ export const MyBlogCard = function ({ id }) {
         }}
       >
         <div className={BlogCardStyles.overlay}>
-          <DeleteIcon />
-          <EditIcon />
+          <span>
+            <DeleteIcon />
+          </span>
+          <span>
+            <EditIcon />
+          </span>
         </div>
       </div>
       <div className={BlogCardStyles.lower_part} grid="false">

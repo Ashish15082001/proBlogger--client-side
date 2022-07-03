@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { FavouriteIcon } from "../../icons/FavouriteIcon";
 import { BlogsIcon } from "../../icons/BlogsIcon";
-import { MeIcon } from "../../icons/MeIcon";
+import { MyBlogsIcon } from "../../icons/MyBlogsIcon";
 import { TrendingIcon } from "../../icons/TrendingIcon";
 import { PublishIcon } from "../../icons/PublishIcon";
 import MainNavigationStyles from "./MainNavigation.module.css";
@@ -44,8 +44,10 @@ export const MainNavigation = function () {
             navigate("/trending?pageNumber=1");
           }}
         >
-          <TrendingIcon />
-          <span className={MainNavigationStyles.navigation_text}>trending</span>
+          <span>
+            <TrendingIcon />
+          </span>
+          <p className={MainNavigationStyles.navigation_text}>trending</p>
         </div>
       </li>
       <li active={pathname === urls.blogs.url ? "true" : "false"}>
@@ -56,8 +58,10 @@ export const MainNavigation = function () {
             navigate("/blogs?pageNumber=1");
           }}
         >
-          <BlogsIcon />
-          <span className={MainNavigationStyles.navigation_text}>blogs</span>
+          <span>
+            <BlogsIcon />
+          </span>
+          <p className={MainNavigationStyles.navigation_text}>blogs</p>
         </div>
       </li>
       {isUserLoggedIn && (
@@ -79,10 +83,10 @@ export const MainNavigation = function () {
               );
             }}
           >
-            <FavouriteIcon />
-            <span className={MainNavigationStyles.navigation_text}>
-              favourites
+            <span>
+              <FavouriteIcon />
             </span>
+            <p className={MainNavigationStyles.navigation_text}>favourites</p>
           </div>
         </li>
       )}
@@ -103,10 +107,10 @@ export const MainNavigation = function () {
               );
             }}
           >
-            <MeIcon />
-            <span className={MainNavigationStyles.navigation_text}>
-              my blogs
+            <span>
+              <MyBlogsIcon />
             </span>
+            <p className={MainNavigationStyles.navigation_text}>my blogs</p>
           </div>
         </li>
       )}{" "}
@@ -125,10 +129,10 @@ export const MainNavigation = function () {
               navigate(`/user/${localStorage.getItem(userIdKey)}/publishBlog`);
             }}
           >
-            <PublishIcon />
-            <span className={MainNavigationStyles.navigation_text}>
-              Publish blog
+            <span>
+              <PublishIcon />
             </span>
+            <p className={MainNavigationStyles.navigation_text}>Publish blog</p>
           </div>
         </li>
       )}

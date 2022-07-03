@@ -1,6 +1,5 @@
 .mainHeaderContainer {
   background-color: var(--color-secondary);
-  border: var(--border);
   box-shadow: var(--box-shadow);
   position: relative;
 }
@@ -21,7 +20,7 @@
   font-weight: var(--semi-bold-text);
 }
 
-.menuItems > p {
+.menuOption {
   color: var(--color-primary);
   font-size: var(--heading-small);
   font-weight: var(--semi-bold-text);
@@ -29,19 +28,30 @@
   padding: 0.5rem 1rem;
   color: var(--color-dark);
   transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+}
+.menuOption > span {
+  margin-right: 1rem;
 }
 
-.menuItems > p:hover {
+.menuOption:hover {
   color: var(--color-secondary);
   background-color: var(--color-dark);
 }
 
+.menuOption path {
+  transition: all 0.2s ease-in-out;
+}
+.menuOption:hover path {
+  fill: var(--color-secondary);
+}
 .menuItems {
   z-index: 15;
   display: flex;
   position: absolute;
   flex-direction: column;
-  width: 10rem;
+  width: 12rem;
   top: 110%;
   right: 1rem;
   background-color: var(--color-secondary);
@@ -52,7 +62,6 @@
 }
 
 .menuContainer {
-  /* border: 1px solid red; */
   position: relative;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
