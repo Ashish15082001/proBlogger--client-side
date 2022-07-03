@@ -16,17 +16,7 @@ export const blogStatus = { fetching: "fetching", idle: "idle" };
 const initialState = {
   status: userStatus.restoringState,
   credentials: {},
-  statistics: {
-    aboutUser: { followers: {}, followings: {} },
-    aboutBlogs: {
-      totalViews: {},
-      totalComments: {},
-      totalLikes: {},
-      trendings: {},
-      publishes: {},
-      favourites: {},
-    },
-  },
+  statistics: {},
 };
 
 export const userSlice = createSlice({
@@ -42,7 +32,7 @@ export const userSlice = createSlice({
     },
     addBlogToFavourites(state, action) {
       const { blogId, date } = action.payload;
-      state.statistics.aboutBlogs.favourites[blogId] = { date };
+      state.statistics.aboutBlogs.favourites[blogId] = { blogId, date };
     },
     removeBlogFromFavourites(state, action) {
       const { blogId } = action.payload;
@@ -71,7 +61,8 @@ export const userSlice = createSlice({
         state.status = userStatus.signingUp;
       })
       .addCase(signUp.fulfilled, (state, action) => {
-        state.credentials = action.payload;
+        state.credentials = action.payload.credentials;
+        state.statistics = action.payload.statistics;
         state.status = userStatus.loggedIn;
       })
       .addCase(signUp.rejected, (state, action) => {

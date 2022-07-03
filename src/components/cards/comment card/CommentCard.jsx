@@ -11,7 +11,7 @@ export const CommentCard = function (props) {
     (state) => state.contents.contentCache[blogId].comments[commenterUserId]
   );
 
-  console.log(comment);
+  // console.log(comment);
 
   return (
     <div className={CommentCardStyles.commentCard}>

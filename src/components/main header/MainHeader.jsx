@@ -2,10 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setTheme } from "../..";
-// import {
-//   resetFavouritesContent,
-//   resetMyBlogsContent,
-// } from "../../redux/slices/content/contentsSlice";
+import { resetContent } from "../../redux/slices/content/contentsSlice";
 import { modalNames, showModal } from "../../redux/slices/modals/modalsSlice";
 import { logOut, userStatus } from "../../redux/slices/user/userSlice";
 import MainHeaderStyles from "./MainHeader.module.css";
@@ -90,8 +87,8 @@ export const MainHeader = function () {
                 <p
                   onClick={() => {
                     dispatch(logOut());
-                    // dispatch(resetFavouritesContent());
-                    // dispatch(resetMyBlogsContent());
+                    dispatch(resetContent());
+
                     navigate("/");
                   }}
                 >

@@ -1,11 +1,11 @@
 import { jwtKey, serverDomain } from "../constants";
 
-export const likeBlogsApi = async function (dataObject) {
+export const unLikeBlogApi = async function (dataObject) {
   try {
     const jwt = localStorage.getItem(jwtKey);
     if (!jwt) throw new Error("jason web token does not exists.");
 
-    const response = await fetch(`${serverDomain}likeBlog`, {
+    const response = await fetch(`${serverDomain}unLikeBlog`, {
       method: "POST",
       headers: {
         Authorization: "Bearer " + jwt,

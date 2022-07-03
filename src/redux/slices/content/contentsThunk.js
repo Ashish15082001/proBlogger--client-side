@@ -17,7 +17,7 @@ export const fetchContent = createAsyncThunk(
           : "";
 
       let response;
-      console.log(contentType);
+      // console.log(contentType);
       if (
         contentTypePlaceHolder === "blogs" ||
         contentTypePlaceHolder === "trending"
@@ -42,7 +42,7 @@ export const fetchContent = createAsyncThunk(
         );
       }
 
-      console.log(response);
+      // console.log(response);
       const responseData = await response.json();
       if (!response.ok) throw new Error(responseData.message);
 

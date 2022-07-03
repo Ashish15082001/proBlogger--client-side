@@ -16,9 +16,9 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import {
   likeBlog,
+  unLikeBlog,
   viewBlog,
 } from "../../../redux/slices/content/contentsSlice";
-import { likeBlogsApi } from "../../../api/likeBlogsApi";
 import { viewBlogApi } from "../../../api/viewBlogApi";
 import { showToast } from "../../../redux/slices/toast/toastSlice";
 import { CommentCard } from "../../cards/comment card/CommentCard";
@@ -26,6 +26,8 @@ import { addBlogToFavouritesApi } from "../../../api/addBlogToFavouritesApi";
 import { FavouriteIcon } from "../../../icons/FavouriteIcon";
 import { ArrowBackIcon } from "../../../icons/ArrowBackIcon";
 import { removeBlogFromFavouritesApi } from "../../../api/removeBlogFromFavouritesApi";
+import { likeBlogApi } from "../../../api/likeBlogApi";
+import { unLikeBlogApi } from "../../../api/unLikeBlogApi";
 
 export const BlogModal = function () {
   const dispatch = useDispatch();
@@ -43,14 +45,14 @@ export const BlogModal = function () {
   );
 
   useEffect(() => {
-    console.log("first useEffect...");
+    // console.log("first useEffect...");
     if (!blogData) navigate("/", { replace: true });
   }, [blogData, navigate]);
 
   useEffect(() => {
     const f = async function () {
       try {
-        console.log("second useEffect...");
+        // console.log("second useEffect...");
         const date = new Date().toISOString();
         dispatch(viewBlog({ userId: userCredentials._id, blogId, date }));
         await viewBlogApi({
@@ -68,13 +70,19 @@ export const BlogModal = function () {
 
   if (!blogData) return <div></div>;
 
-  const onLikeBlog = async function () {
+  const toggleIsBlogLiked = async function () {
     try {
       const date = new Date().toISOString();
 
       setIsBlogLiked((oldState) => !oldState);
-      dispatch(likeBlog({ date, userId: userCredentials._id, blogId }));
-      await likeBlogsApi({ userId: userCredentials._id, blogId, date });
+
+      if (!isBlogLiked) {
+        dispatch(likeBlog({ date, userId: userCredentials._id, blogId }));
+        await likeBlogApi({ userId: userCredentials._id, blogId, date });
+      } else if (isBlogLiked) {
+        dispatch(unLikeBlog({ blogId, userId: userCredentials._id }));
+        await unLikeBlogApi({ blogId, userId: userCredentials._id });
+      }
     } catch (error) {
       dispatch(showToast({ toastType: "error", message: error.message }));
     }
@@ -94,11 +102,10 @@ export const BlogModal = function () {
           date,
         });
       } else if (isBlogFavourite) {
-        dispatch(removeBlogFromFavourites({ blogId, date }));
+        dispatch(removeBlogFromFavourites({ blogId }));
         await removeBlogFromFavouritesApi({
           blogId,
           userId: userCredentials._id,
-          date,
         });
       }
     } catch (error) {
@@ -160,7 +167,10 @@ export const BlogModal = function () {
               <p>{`${Object.keys(blogData.views).length} views`}</p>
               <p>
                 {Object.keys(blogData.likes).length}
-                <ThumbUpIcon onClick={onLikeBlog} isFilled={isBlogLiked} />
+                <ThumbUpIcon
+                  onClick={toggleIsBlogLiked}
+                  isFilled={isBlogLiked}
+                />
               </p>
             </div>
             <h5 className={BlogModalStyles.commentTitle}>{`${

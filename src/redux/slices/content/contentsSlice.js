@@ -61,43 +61,42 @@ const contentSlice = createSlice({
         entities: [],
       };
     },
-    resetTrendingContent(state, action) {
+    resetContent(state, action) {
       state.trendingContent = {
         totalDocuments: -1,
         fetchingPageNumber: -1,
         pages: {},
       };
-    },
-    resetBlogsContent(state, action) {
       state.blogsContent = {
         totalDocuments: -1,
         fetchingPageNumber: -1,
         pages: {},
       };
-    },
-    resetFavouritesContent(state, action) {
       state.favouritesContent = {
         totalDocuments: -1,
         fetchingPageNumber: -1,
         pages: {},
       };
-    },
-    resetMyBlogsContent(state, action) {
       state.myBlogsContent = {
         totalDocuments: -1,
         fetchingPageNumber: -1,
         pages: {},
       };
+      state.fetchingContentType = "";
+      state.contentCache = {};
     },
+
     viewBlog(state, action) {
       const { blogId, userId, date } = action.payload;
-      state.contentCache[blogId].views[userId] = { date };
+      state.contentCache[blogId].views[userId] = { userId, date };
     },
     likeBlog(state, action) {
       const { blogId, userId, date } = action.payload;
-      if (state.contentCache[blogId].likes[userId])
-        delete state.contentCache[blogId].likes[userId];
-      else state.contentCache[blogId].likes[userId] = { date };
+      state.contentCache[blogId].likes[userId] = { userId, date };
+    },
+    unLikeBlog(state, action) {
+      const { blogId, userId } = action.payload;
+      delete state.contentCache[blogId].likes[userId];
     },
     commentOnBlog(state, action) {
       const {
@@ -123,7 +122,7 @@ const contentSlice = createSlice({
   extraReducers: (builder) =>
     builder
       .addCase(fetchContent.pending, (state, action) => {
-        console.log("pending...");
+        // console.log("pending...");
         const fetchingContentType = state.fetchingContentType;
         const fetchingPageNumber =
           state[fetchingContentType].fetchingPageNumber;
@@ -132,7 +131,7 @@ const contentSlice = createSlice({
           contentsStatus.fetching;
       })
       .addCase(fetchContent.fulfilled, (state, action) => {
-        console.log("fulfilled...");
+        // console.log("fulfilled...");
         const fetchingContentType = state.fetchingContentType;
         const fetchingPageNumber =
           state[fetchingContentType].fetchingPageNumber;
@@ -155,7 +154,7 @@ const contentSlice = createSlice({
             contentsStatus.idle;
       })
       .addCase(fetchContent.rejected, (state, action) => {
-        console.log("rejected...");
+        // console.log("rejected...");
         const fetchingContentType = state.fetchingContentType;
         const fetchingPageNumber =
           state[fetchingContentType].fetchingPageNumber;
@@ -168,11 +167,9 @@ const contentSlice = createSlice({
 
 export const {
   initiateFetching,
-  resetBlogsContent,
-  resetTrendingContent,
-  resetFavouritesContent,
-  resetMyBlogsContent,
+  resetContent,
   likeBlog,
+  unLikeBlog,
   commentOnBlog,
   viewBlog,
 } = contentSlice.actions;
