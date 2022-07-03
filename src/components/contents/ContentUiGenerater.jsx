@@ -55,8 +55,6 @@ export const ContentUiGenerater = function (props) {
     return state.contents[contentType].pages[pageNumber].entities;
   });
 
-  // console.log(selectedContentIds);
-
   const currentPageContentStatus = useSelector((state) =>
     isContentUndefined
       ? isContentUndefined
@@ -114,8 +112,10 @@ export const ContentUiGenerater = function (props) {
               <LoadingSpinner />
             ))}
           {currentPageContentStatus === contentsStatus.notFound && (
-            <p>no items</p>
+            <p>no items 😑</p>
           )}
+          {currentPageContentStatus === contentsStatus.idle &&
+            selectedContentIds.length === 0 && <p>something went wrong 🙄🤔</p>}
         </div>
         {selectedContentIds.length !== 0 && (
           <PageNumberNavigation

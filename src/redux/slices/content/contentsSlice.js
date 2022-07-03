@@ -58,7 +58,7 @@ const contentSlice = createSlice({
       state[contentType].fetchingPageNumber = pageNumber;
       state[contentType].pages[pageNumber] = {
         status: contentsStatus.initiated,
-        entities: {},
+        entities: [],
       };
     },
     resetTrendingContent(state, action) {
@@ -153,20 +153,17 @@ const contentSlice = createSlice({
         else
           state[fetchingContentType].pages[fetchingPageNumber].status =
             contentsStatus.idle;
-      }),
-  // .addCase(fetchContent.rejected, (state, action) => {
-  //   console.log("rejected...");
-  //   const fetchingContentType = state.fetchingContentType;
-  //   if (fetchingContentType === "") return;
-  //   const fetchingPageNumber =
-  //     state[fetchingContentType].fetchingPageNumber;
+      })
+      .addCase(fetchContent.rejected, (state, action) => {
+        console.log("rejected...");
+        const fetchingContentType = state.fetchingContentType;
+        const fetchingPageNumber =
+          state[fetchingContentType].fetchingPageNumber;
 
-  //   console.log(fetchingContentType);
-  //   console.log(fetchingPageNumber);
-  //   state[fetchingContentType] = "";
-  //   state[fetchingContentType].pages[fetchingPageNumber].status = "idle";
-  //   state[fetchingContentType].fetchingPageNumber = -1;
-  // }),
+        // console.log(fetchingContentType);
+        // console.log(fetchingPageNumber);
+        state[fetchingContentType].pages[fetchingPageNumber].status = "idle";
+      }),
 });
 
 export const {
