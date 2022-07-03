@@ -11,13 +11,13 @@ export const fetchContent = createAsyncThunk(
           : contentType === "trendingContent"
           ? "trending"
           : contentType === "favouritesContent"
-          ? "favourites"
+          ? "favouritesBlogs"
           : contentType === "myBlogsContent"
           ? "myBlogs"
           : "";
 
       let response;
-
+      console.log(contentType);
       if (
         contentTypePlaceHolder === "blogs" ||
         contentTypePlaceHolder === "trending"
@@ -26,7 +26,7 @@ export const fetchContent = createAsyncThunk(
           `${serverDomain}${contentTypePlaceHolder}?pageNumber=${pageNumber}`
         );
       } else if (
-        contentTypePlaceHolder === "favourites" ||
+        contentTypePlaceHolder === "favouritesBlogs" ||
         contentTypePlaceHolder === "myBlogs"
       ) {
         response = await fetch(
@@ -42,8 +42,8 @@ export const fetchContent = createAsyncThunk(
         );
       }
 
+      console.log(response);
       const responseData = await response.json();
-      console.log(responseData);
       if (!response.ok) throw new Error(responseData.message);
 
       const entities = responseData.entities;

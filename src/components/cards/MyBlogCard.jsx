@@ -41,7 +41,7 @@ export const MyBlogCard = function ({ id }) {
             Object.keys(selectedBlogData.comments).length
           } comments`}</p>
           <p className={BlogCardStyles.blog_info}>
-            {new Date(selectedBlogData.timeOfPublish).toLocaleDateString()}
+            {new Date(selectedBlogData.timeOfPublish).toDateString()}
           </p>
         </div>
       </div>

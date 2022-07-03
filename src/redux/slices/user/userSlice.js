@@ -48,6 +48,10 @@ export const userSlice = createSlice({
       const { blogId } = action.payload;
       delete state.statistics.aboutBlogs.favourites[blogId];
     },
+    publishBlog(state, action) {
+      const { blogId } = action.payload;
+      state.statistics.aboutBlogs.publishes[blogId] = blogId;
+    },
   },
   extraReducers: (builder) =>
     builder
@@ -56,7 +60,8 @@ export const userSlice = createSlice({
       })
       .addCase(logIn.fulfilled, (state, action) => {
         state.status = userStatus.loggedIn;
-        state.credentials = action.payload;
+        state.credentials = action.payload.credentials;
+        state.statistics = action.payload.statistics;
       })
       .addCase(logIn.rejected, (state, action) => {
         state.status = userStatus.loggedOut;
@@ -78,7 +83,8 @@ export const userSlice = createSlice({
       })
       .addCase(restoreState.fulfilled, (state, action) => {
         state.status = userStatus.loggedIn;
-        state.credentials = action.payload;
+        state.credentials = action.payload.credentials;
+        state.statistics = action.payload.statistics;
       })
       .addCase(restoreState.rejected, (state, action) => {
         state.status = userStatus.loggedOut;
@@ -86,5 +92,9 @@ export const userSlice = createSlice({
 });
 
 export const userSliceReducer = userSlice.reducer;
-export const { logOut, addBlogToFavourites, removeBlogFromFavourites } =
-  userSlice.actions;
+export const {
+  logOut,
+  addBlogToFavourites,
+  removeBlogFromFavourites,
+  publishBlog,
+} = userSlice.actions;

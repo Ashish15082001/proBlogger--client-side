@@ -43,12 +43,14 @@ export const BlogModal = function () {
   );
 
   useEffect(() => {
+    console.log("first useEffect...");
     if (!blogData) navigate("/", { replace: true });
   }, [blogData, navigate]);
 
   useEffect(() => {
     const f = async function () {
       try {
+        console.log("second useEffect...");
         const date = new Date().toISOString();
         dispatch(viewBlog({ userId: userCredentials._id, blogId, date }));
         await viewBlogApi({
@@ -61,7 +63,6 @@ export const BlogModal = function () {
         dispatch(showToast({ toastType: "error", message: error.message }));
       }
     };
-
     f();
   }, [blogId, userCredentials, dispatch]);
 

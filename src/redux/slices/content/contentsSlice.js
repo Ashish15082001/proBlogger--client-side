@@ -123,6 +123,7 @@ const contentSlice = createSlice({
   extraReducers: (builder) =>
     builder
       .addCase(fetchContent.pending, (state, action) => {
+        console.log("pending...");
         const fetchingContentType = state.fetchingContentType;
         const fetchingPageNumber =
           state[fetchingContentType].fetchingPageNumber;
@@ -131,6 +132,7 @@ const contentSlice = createSlice({
           contentsStatus.fetching;
       })
       .addCase(fetchContent.fulfilled, (state, action) => {
+        console.log("fulfilled...");
         const fetchingContentType = state.fetchingContentType;
         const fetchingPageNumber =
           state[fetchingContentType].fetchingPageNumber;
@@ -152,6 +154,19 @@ const contentSlice = createSlice({
           state[fetchingContentType].pages[fetchingPageNumber].status =
             contentsStatus.idle;
       }),
+  // .addCase(fetchContent.rejected, (state, action) => {
+  //   console.log("rejected...");
+  //   const fetchingContentType = state.fetchingContentType;
+  //   if (fetchingContentType === "") return;
+  //   const fetchingPageNumber =
+  //     state[fetchingContentType].fetchingPageNumber;
+
+  //   console.log(fetchingContentType);
+  //   console.log(fetchingPageNumber);
+  //   state[fetchingContentType] = "";
+  //   state[fetchingContentType].pages[fetchingPageNumber].status = "idle";
+  //   state[fetchingContentType].fetchingPageNumber = -1;
+  // }),
 });
 
 export const {

@@ -10,6 +10,9 @@ export const CommentCard = function (props) {
   const comment = useSelector(
     (state) => state.contents.contentCache[blogId].comments[commenterUserId]
   );
+
+  console.log(comment);
+
   return (
     <div className={CommentCardStyles.commentCard}>
       <div className={CommentCardStyles.upperPart}>

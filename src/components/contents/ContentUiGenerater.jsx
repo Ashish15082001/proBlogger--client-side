@@ -21,7 +21,7 @@ const listItemAnimations = {
   visible: (index) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: index * 0.1 },
+    transition: { delay: index * 0.2 },
   }),
   hidden: { opacity: 0, y: 40 },
 };
@@ -87,8 +87,13 @@ export const ContentUiGenerater = function (props) {
         currentPageContentStatus !== contentsStatus.initiated
       )
         dispatch(initiateFetching({ contentType, pageNumber }));
-      await dispatch(fetchContent({ contentType, pageNumber }));
+      const setteledPromise = await dispatch(
+        fetchContent({ contentType, pageNumber })
+      );
+
+      if (setteledPromise.error) throw new Error(setteledPromise.error.message);
     } catch (error) {
+      console.log(error);
       dispatch(showToast({ toastType: "error", message: error.message }));
     }
     return;

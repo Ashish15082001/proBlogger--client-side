@@ -2,7 +2,7 @@ import { jwtKey, serverDomain } from "../constants";
 
 export const addBlogToFavouritesApi = async function (dataObject) {
   try {
-    const { userId, blogId } = dataObject;
+    const { userId, blogId, date } = dataObject;
     const jwt = localStorage.getItem(jwtKey);
     const response = await fetch(
       `${serverDomain}user/${userId}/blog/${blogId}/addBlogToFavourites`,
@@ -12,6 +12,7 @@ export const addBlogToFavouritesApi = async function (dataObject) {
           Authorization: "Bearer " + jwt,
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({ date }),
       }
     );
     const responseData = await response.json();

@@ -100,7 +100,9 @@ export const PageLayout = function () {
             element={<PublishBlogForm />}
           ></Route>
         )}
-        <Route path={urls.blog.url} element={<BlogModal />}></Route>
+        {isLoggedIn && (
+          <Route path={urls.blog.url} element={<BlogModal />}></Route>
+        )}
 
         <Route
           path="*"

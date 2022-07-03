@@ -17,7 +17,10 @@ export const loginUserApi = async function (userData) {
     localStorage.setItem(jwtKey, jwt);
     localStorage.setItem(userIdKey, userId);
 
-    return Promise.resolve(responseData.credentials);
+    return Promise.resolve({
+      credentials: responseData.credentials,
+      statistics: responseData.statistics,
+    });
   } catch (error) {
     return Promise.reject(error);
   }

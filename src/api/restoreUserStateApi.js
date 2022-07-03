@@ -19,7 +19,10 @@ export const restoreUserStateApi = async function () {
 
     if (!response.ok) throw new Error(responseData.message);
 
-    return Promise.resolve(responseData.credentials);
+    return Promise.resolve({
+      credentials: responseData.credentials,
+      statistics: responseData.statistics,
+    });
   } catch (error) {
     return Promise.reject(error);
   }

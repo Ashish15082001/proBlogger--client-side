@@ -6,7 +6,7 @@ import { Avatar } from "../Avatar/Avatar";
 
 export const FavouriteBlogCard = function ({ id }) {
   const selectedBlogData = useSelector(
-    (state) => (state) => state.contents.contentCache[id]
+    (state) => state.contents.contentCache[id]
   );
 
   return (
@@ -37,7 +37,7 @@ export const FavouriteBlogCard = function ({ id }) {
               {`${Object.keys(selectedBlogData.views).length} views`}
             </p>
             <p className={BlogCardStyles.blog_info}>
-              {new Date(selectedBlogData.timeOfPublish).toLocaleDateString()}
+              {new Date(selectedBlogData.timeOfPublish).toDateString()}
             </p>
           </div>
         </div>
