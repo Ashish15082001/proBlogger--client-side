@@ -2,9 +2,14 @@ import { Label } from "../../label/Label";
 import InputComponentsStyles from "../InputComponents.module.css";
 import { motion } from "framer-motion";
 
-export const Input = function (props) {
-  const { label, inputValue, onInputChange, inputType, autoFocus, status } =
-    props;
+export const Input = function ({
+  label,
+  inputValue,
+  onInputChange,
+  inputType,
+  autoFocus,
+  status,
+}) {
   return (
     <motion.div className={InputComponentsStyles.inputContainer}>
       <Label label={label} status={status} />

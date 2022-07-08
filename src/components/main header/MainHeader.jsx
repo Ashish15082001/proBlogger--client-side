@@ -18,13 +18,12 @@ import { LoginIcon } from "../../icons/LoginIcon";
 export const MainHeader = function () {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const currentUserStatus = useSelector((state) => state.user.status);
-  const userName = useSelector(
-    (state) =>
-      state.user.credentials.firstName + " " + state.user.credentials.lastName
-  );
-  const userId = useSelector((state) => state.user.credentials._id);
   const [showMenu, setShowMenu] = useState(false);
+  const userData = useSelector((state) => state.user);
+  const userCredentials = userData.credentials;
+  const currentUserStatus = userData.status;
+  const userName = userCredentials.firstName + " " + userCredentials.lastName;
+  const userId = userCredentials._id;
 
   const toggleShowMenu = function () {
     setShowMenu((oldState) => !oldState);
@@ -73,7 +72,7 @@ export const MainHeader = function () {
                   }
                 >
                   <span>
-                    <LoginIcon/>
+                    <LoginIcon />
                   </span>
                   <p>Login</p>
                 </div>

@@ -1,20 +1,21 @@
-import { DeleteIcon } from "../../icons/DeleteIcon";
-import { EditIcon } from "../../icons/EditIcon";
+import { DeleteIcon } from "../../../icons/DeleteIcon";
+import { EditIcon } from "../../../icons/EditIcon";
 import BlogCardStyles from "./BlogCard.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { serverDomain } from "../../constants";
+import { serverDomain } from "../../../constants";
 import { useLocation, useNavigate } from "react-router-dom";
-import { contentTypes } from "../../redux/slices/content/contentsSlice";
-import { userStatus } from "../../redux/slices/user/userSlice";
-import { showToast } from "../../redux/slices/toast/toastSlice";
+import { contentTypes } from "../../../redux/slices/content/contentsSlice";
+import { userStatus } from "../../../redux/slices/user/userSlice";
+import { showToast } from "../../../redux/slices/toast/toastSlice";
 
-export const MyBlogCard = function ({ id }) {
+export const MyBlogCard = function ({ blogId }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const selectedBlogData = useSelector(
-    (state) => state.contents.contentCache[id]
+    (state) => state.contents.contentCache[blogId]
   );
+
   const isLoggedIn = useSelector((state) => state.user.status);
   const pageNumber = new URLSearchParams(location.search).get("pageNumber")
     ? new URLSearchParams(location.search).get("pageNumber")
@@ -60,18 +61,26 @@ export const MyBlogCard = function ({ id }) {
           {" "}
           {selectedBlogData.publisherName}
         </p>
-        <p className={BlogCardStyles.blog_info}>{`${
-          Object.keys(selectedBlogData.views).length
-        } views`}</p>
-        <p className={BlogCardStyles.blog_info}>{`${
-          Object.keys(selectedBlogData.likes).length
-        } likes`}</p>
+        <p className={BlogCardStyles.blog_info}>
+          {`${Object.keys(selectedBlogData.views).length} ${
+            Object.keys(selectedBlogData.views).length === 1 ? "view" : "views"
+          }`}
+        </p>
+        <p className={BlogCardStyles.blog_info}>
+          {`${Object.keys(selectedBlogData.likes).length} ${
+            Object.keys(selectedBlogData.likes).length === 1 ? "like" : "likes"
+          }`}
+        </p>
         <div className={BlogCardStyles.stats_container}>
-          <p className={BlogCardStyles.blog_info}>{`${
-            Object.keys(selectedBlogData.comments).length
-          } comments`}</p>
           <p className={BlogCardStyles.blog_info}>
-            {new Date(selectedBlogData.timeOfPublish).toDateString()}
+            {`${Object.keys(selectedBlogData.comments).length} ${
+              Object.keys(selectedBlogData.comments).length === 1
+                ? "comment"
+                : "comments"
+            }`}
+          </p>
+          <p className={BlogCardStyles.blog_info}>
+            {new Date(selectedBlogData.date).toDateString()}
           </p>
         </div>
       </div>

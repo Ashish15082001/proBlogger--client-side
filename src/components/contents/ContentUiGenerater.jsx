@@ -1,5 +1,4 @@
 import ContentStyles from "./Content.module.css";
-import { BlogCard } from "../cards/BlogCard";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useEffect } from "react";
 import {
@@ -12,16 +11,17 @@ import { PageNumberNavigation } from "../page number navigation/PageNumberNaviga
 import { motion } from "framer-motion";
 import { fetchContent } from "../../redux/slices/content/contentsThunk";
 import { contentTypes } from "../../redux/slices/content/contentsSlice";
-import { FavouriteBlogCard } from "../cards/FavouriteBlogCard";
 import { RefreshIcon } from "../../icons/RefreshIcon";
 import { showToast } from "../../redux/slices/toast/toastSlice";
-import { MyBlogCard } from "../cards/MyBlogCard";
+import { BlogCard } from "../cards/blog cards/BlogCard";
+import { MyBlogCard } from "../cards/blog cards/MyBlogCard";
+import { FavouriteBlogCard } from "../cards/blog cards/FavouriteBlogCard";
 
 const listItemAnimations = {
   visible: (index) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: index * 0.2 },
+    transition: { delay: index * 0.1 },
   }),
   hidden: { opacity: 0, y: 40 },
 };
@@ -52,7 +52,14 @@ export const ContentUiGenerater = function (props) {
         contentsStatus.idle
     )
       return [];
-    return state.contents[contentType].pages[pageNumber].entities;
+
+    const startingIndex = (pageNumber - 1) * 10;
+    const endingIndex = startingIndex + 10;
+
+    return Object.keys(state.contents[contentType].entities).slice(
+      startingIndex,
+      endingIndex
+    );
   });
 
   const currentPageContentStatus = useSelector((state) =>
@@ -133,23 +140,25 @@ export const ContentUiGenerater = function (props) {
         <RefreshIcon />
       </span>
       <ul className={ContentStyles.content_grid}>
-        {selectedContentIds.map((id, index) => (
+        {selectedContentIds.map((blogId, index) => (
           <motion.li
             initial="hidden"
             animate="visible"
             // exit="hidden"
             custom={index}
             variants={listItemAnimations}
-            key={id}
+            key={blogId}
           >
             {(contentType === contentTypes.blogs ||
               contentType === contentTypes.trending) && (
-              <BlogCard id={id} contentType={contentType} />
+              <BlogCard blogId={blogId} contentType={contentType} />
             )}
             {contentType === contentTypes.favourites && (
-              <FavouriteBlogCard id={id} />
+              <FavouriteBlogCard blogId={blogId} />
             )}
-            {contentType === contentTypes.myBlogs && <MyBlogCard id={id} />}
+            {contentType === contentTypes.myBlogs && (
+              <MyBlogCard blogId={blogId} />
+            )}
           </motion.li>
         ))}
       </ul>

@@ -1,19 +1,17 @@
-import { useDispatch, useSelector } from "react-redux";
-import { serverDomain } from "../../constants";
-import { DeleteIcon } from "../../icons/DeleteIcon";
+import { useSelector, useDispatch } from "react-redux";
+import { serverDomain } from "../../../constants";
 import BlogCardStyles from "./BlogCard.module.css";
-import { Avatar } from "../Avatar/Avatar";
-import { showToast } from "../../redux/slices/toast/toastSlice";
 import { useLocation, useNavigate } from "react-router-dom";
-import { userStatus } from "../../redux/slices/user/userSlice";
-import { contentTypes } from "../../redux/slices/content/contentsSlice";
+import { Avatar } from "../../Avatar/Avatar";
+import { userStatus } from "../../../redux/slices/user/userSlice";
+import { showToast } from "../../../redux/slices/toast/toastSlice";
 
-export const FavouriteBlogCard = function ({ id }) {
+export const BlogCard = function ({ blogId, contentType }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const selectedBlogData = useSelector(
-    (state) => state.contents.contentCache[id]
+    (state) => state.contents.contentCache[blogId]
   );
   const isLoggedIn = useSelector((state) => state.user.status);
   const pageNumber = new URLSearchParams(location.search).get("pageNumber")
@@ -28,11 +26,7 @@ export const FavouriteBlogCard = function ({ id }) {
             showToast({ toastType: "error", message: "login to view blog" })
           );
         navigate(`/blog/${selectedBlogData._id}`, {
-          state: {
-            navigatedFrom: location.pathname,
-            pageNumber,
-            contentType: contentTypes.favourites,
-          },
+          state: { navigatedFrom: location.pathname, pageNumber, contentType },
         });
       }}
       className={BlogCardStyles.card_container}
@@ -42,13 +36,7 @@ export const FavouriteBlogCard = function ({ id }) {
         style={{
           backgroundImage: `url(${serverDomain}${selectedBlogData.blogProfileImage.destination}/${selectedBlogData.blogProfileImage.filename})`,
         }}
-      >
-        <div className={BlogCardStyles.overlay}>
-          <span>
-            <DeleteIcon />
-          </span>
-        </div>
-      </div>
+      ></div>
       <div className={BlogCardStyles.lower_part} grid="true">
         <Avatar
           imageUrl={`${serverDomain}${selectedBlogData.publisherProfileImage.destination}/${selectedBlogData.publisherProfileImage.filename}`}
@@ -65,7 +53,7 @@ export const FavouriteBlogCard = function ({ id }) {
               {`${Object.keys(selectedBlogData.views).length} views`}
             </p>
             <p className={BlogCardStyles.blog_info}>
-              {new Date(selectedBlogData.timeOfPublish).toDateString()}
+              {new Date(selectedBlogData.date).toDateString()}
             </p>
           </div>
         </div>

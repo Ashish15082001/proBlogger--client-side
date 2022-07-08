@@ -4,33 +4,31 @@ import CommentCardStyles from "./CommentCard.module.css";
 import { serverDomain } from "../../../constants";
 import { MenuIcon } from "../../../icons/MenuIcon";
 
-export const CommentCard = function (props) {
-  const { commenterUserId, blogId } = props;
-  const user = useSelector((state) => state.user.credentials);
-  const comment = useSelector(
+export const CommentCard = function ({ commenterUserId, blogId }) {
+  const userData = useSelector((state) => state.user);
+  const commentData = useSelector(
     (state) => state.contents.contentCache[blogId].comments[commenterUserId]
   );
-
-  // console.log(comment);
+  const userId = userData.credentials._id;
 
   return (
     <div className={CommentCardStyles.commentCard}>
       <div className={CommentCardStyles.upperPart}>
         <div className={CommentCardStyles.commenterInfoContainer}>
           <Avatar
-            imageUrl={`${serverDomain}${comment.commenterProfileImage.destination}/${comment.commenterProfileImage.filename}`}
+            imageUrl={`${serverDomain}${commentData.commenterProfileImage.destination}/${commentData.commenterProfileImage.filename}`}
           />
           <span className={CommentCardStyles.commenterName}>
-            {comment.commenterName}
+            {commentData.commenterName}
           </span>
         </div>
         <div className={CommentCardStyles.upperLeftPart}>
           <span className={CommentCardStyles.date}>
-            {`${new Date(comment.date).toDateString()} at ${new Date(
-              comment.date
+            {`${new Date(commentData.date).toDateString()} at ${new Date(
+              commentData.date
             ).toLocaleTimeString()}`}
           </span>
-          {user._id === commenterUserId && false && (
+          {userId === commenterUserId && false && (
             <div className={CommentCardStyles.menuContainer}>
               <span className={CommentCardStyles.MenuIconContainer}>
                 <MenuIcon />
@@ -43,7 +41,7 @@ export const CommentCard = function (props) {
           )}
         </div>
       </div>
-      <p className={CommentCardStyles.comment}>{comment.comment}</p>
+      <p className={CommentCardStyles.comment}>{commentData.comment}</p>
     </div>
   );
 };

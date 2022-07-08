@@ -30,29 +30,28 @@ import { likeBlogApi } from "../../../api/likeBlogApi";
 import { unLikeBlogApi } from "../../../api/unLikeBlogApi";
 
 export const BlogModal = function () {
+  const { blogId } = useParams();
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
-  const { blogId } = useParams();
-  const userCredentials = useSelector((state) => state.user.credentials);
-  const user = useSelector((state) => state.user);
-  const blogData = useSelector((state) => state.contents.contentCache[blogId]);
+  const userData = useSelector((state) => state.user);
+  const contentData = useSelector((state) => state.contents);
+  const userCredentials = userData.credentials;
+  const blogData = contentData.contentCache[blogId];
   const [isBlogLiked, setIsBlogLiked] = useState(
     blogData?.likes[userCredentials._id] ? true : false
   );
   const [isBlogFavourite, setIsBlogFavourite] = useState(
-    user.statistics.aboutBlogs.favourites[blogId] ? true : false
+    userData.statistics.aboutBlogs.favourites[blogId] ? true : false
   );
 
   useEffect(() => {
-    // console.log("first useEffect...");
     if (!blogData) navigate("/", { replace: true });
   }, [blogData, navigate]);
 
   useEffect(() => {
     const f = async function () {
       try {
-        // console.log("second useEffect...");
         const date = new Date().toISOString();
         dispatch(viewBlog({ userId: userCredentials._id, blogId, date }));
         await viewBlogApi({
@@ -159,12 +158,14 @@ export const BlogModal = function () {
               </span>
               {" at "}
               <span className={BlogModalStyles.timeOfPublish}>
-                {new Date(blogData.timeOfPublish).toLocaleTimeString()}
+                {new Date(blogData.date).toLocaleTimeString()}
               </span>
             </p>
             <p className={BlogModalStyles.aboutBlog}>{blogData.aboutBlog}</p>
             <div className={BlogModalStyles.statsContainer}>
-              <p>{`${Object.keys(blogData.views).length} views`}</p>
+              <p>{`${Object.keys(blogData.views).length} ${
+                Object.keys(blogData.views).length === 1 ? "view" : "views"
+              }`}</p>
               <p>
                 {Object.keys(blogData.likes).length}
                 <ThumbUpIcon
@@ -180,7 +181,7 @@ export const BlogModal = function () {
                 ? "comment"
                 : "comments"
             }`}</h5>
-            {user.status === userStatus.loggedIn && (
+            {userData.status === userStatus.loggedIn && (
               <React.Fragment>
                 <PublishCommentForm
                   blogId={blogId}
@@ -188,7 +189,7 @@ export const BlogModal = function () {
                 />
               </React.Fragment>
             )}
-            {user.status !== userStatus.loggedIn && (
+            {userData.status !== userStatus.loggedIn && (
               <h5 className={BlogModalStyles.publishCommentPlaceholder}>
                 login to publish comment
               </h5>

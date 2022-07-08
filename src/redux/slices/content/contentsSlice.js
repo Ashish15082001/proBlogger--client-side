@@ -28,21 +28,25 @@ const initialState = {
     fetchingPageNumber: -1,
     // pages: {1: {status, entities}}
     pages: {},
+    entities: {},
   },
   blogsContent: {
     totalDocuments: -1,
     fetchingPageNumber: -1,
     pages: {},
+    entities: {},
   },
   favouritesContent: {
     totalDocuments: -1,
     fetchingPageNumber: -1,
     pages: {},
+    entities: {},
   },
   myBlogsContent: {
     totalDocuments: -1,
     fetchingPageNumber: -1,
     pages: {},
+    entities: {},
   },
   contentCache: {},
 };
@@ -58,7 +62,6 @@ const contentSlice = createSlice({
       state[contentType].fetchingPageNumber = pageNumber;
       state[contentType].pages[pageNumber] = {
         status: contentsStatus.initiated,
-        entities: [],
       };
     },
     resetContent(state, action) {
@@ -66,21 +69,25 @@ const contentSlice = createSlice({
         totalDocuments: -1,
         fetchingPageNumber: -1,
         pages: {},
+        entities: {},
       };
       state.blogsContent = {
         totalDocuments: -1,
         fetchingPageNumber: -1,
         pages: {},
+        entities: {},
       };
       state.favouritesContent = {
         totalDocuments: -1,
         fetchingPageNumber: -1,
         pages: {},
+        entities: {},
       };
       state.myBlogsContent = {
         totalDocuments: -1,
         fetchingPageNumber: -1,
         pages: {},
+        entities: {},
       };
       state.fetchingContentType = "";
       state.contentCache = {};
@@ -143,8 +150,13 @@ const contentSlice = createSlice({
         const { entities, totalDocuments } = action.payload;
         state[fetchingContentType].totalDocuments = totalDocuments;
         state.contentCache = { ...state.contentCache, ...entities };
-        state[fetchingContentType].pages[fetchingPageNumber].entities =
-          Object.keys(entities);
+
+        console.log(entities);
+        for (const entityId in entities) {
+          state[fetchingContentType].entities[entityId] = entityId;
+        }
+        // state[fetchingContentType].pages[fetchingPageNumber].entities =
+        //   Object.keys(entities);
 
         if (Object.keys(entities).length === 0)
           state[fetchingContentType].pages[fetchingPageNumber].status =

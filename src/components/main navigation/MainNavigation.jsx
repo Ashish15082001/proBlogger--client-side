@@ -13,16 +13,13 @@ import { contentsStatus } from "../../redux/slices/content/contentsSlice";
 export const MainNavigation = function () {
   const navigate = useNavigate();
   const location = useLocation();
-  const { pathname } = location;
-  const isUserLoggedIn = useSelector(
-    (state) => state.user.status === userStatus.loggedIn
-  );
+  const userData = useSelector((state) => state.user);
+  const isUserLoggedIn = userData.status === userStatus.loggedIn;
   const isAnyContentLoading = useSelector((state) => {
     if (state.contents.fetchingContentType.length === 0) return false;
     const fetchingContentType = state.contents.fetchingContentType;
     const fetchingPageNumber =
       state.contents[fetchingContentType].fetchingPageNumber;
-
     if (
       state.contents[fetchingContentType].pages[fetchingPageNumber].status ===
         contentsStatus.fetching ||
@@ -33,6 +30,7 @@ export const MainNavigation = function () {
 
     return false;
   });
+  const { pathname } = location;
 
   return (
     <ul className={MainNavigationStyles.main_navigation}>
@@ -47,7 +45,7 @@ export const MainNavigation = function () {
           <span>
             <TrendingIcon />
           </span>
-          <p className={MainNavigationStyles.navigation_text}>trending</p>
+          <p className={MainNavigationStyles.navigation_text}>trendings</p>
         </div>
       </li>
       <li active={pathname === urls.blogs.url ? "true" : "false"}>

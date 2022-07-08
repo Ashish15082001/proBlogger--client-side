@@ -5,7 +5,7 @@ import { modalNames } from "../../redux/slices/modals/modalsSlice";
 
 export const BackDropOverlay = function () {
   const showBackdrop = useSelector(
-    (state) => state.modals.showModal !== modalNames.none
+    (state) => state.modal.showModal !== modalNames.none
   );
 
   if (showBackdrop === false) return null;

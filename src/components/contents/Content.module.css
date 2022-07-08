@@ -1,8 +1,8 @@
 .content_grid {
   padding: 1rem;
   display: grid;
-  grid-template-columns: repeat(5, 18rem);
-  gap: 2rem;
+  grid-template-columns: repeat(5, 19rem);
+  gap: 1rem;
   width: max-content;
   margin-inline: auto;
   margin-bottom: 1rem;
@@ -52,24 +52,24 @@ li {
 
 @media screen and (max-width: 1610px) {
   .content_grid {
-    grid-template-columns: repeat(4, 18rem);
+    grid-template-columns: repeat(4, 19rem);
   }
 }
 
 @media screen and (max-width: 1310px) {
   .content_grid {
-    grid-template-columns: repeat(3, 18rem);
+    grid-template-columns: repeat(3, 19rem);
   }
 }
 
 @media screen and (max-width: 1010px) {
   .content_grid {
-    grid-template-columns: repeat(2, 18rem);
+    grid-template-columns: repeat(2, 19rem);
   }
 }
 
 @media screen and (max-width: 669px) {
   .content_grid {
-    grid-template-columns: repeat(1, 18rem);
+    grid-template-columns: repeat(1, 19rem);
   }
 }

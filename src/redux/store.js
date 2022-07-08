@@ -8,7 +8,7 @@ export const store = configureStore({
   reducer: {
     user: userSliceReducer,
     contents: contentSliceReducer,
-    modals: modalsSliceReducer,
+    modal: modalsSliceReducer,
     toast: toastSliceReducer,
   },
 });

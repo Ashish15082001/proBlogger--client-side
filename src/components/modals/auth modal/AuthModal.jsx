@@ -11,23 +11,23 @@ import { userStatus } from "../../../redux/slices/user/userSlice";
 
 export const AuthModal = function () {
   const dispatch = useDispatch();
-  const currentModalName = useSelector((state) => state.modals.modalName);
-  const isLoggedIn = useSelector(
-    (state) => state.user.status === userStatus.loggedIn
-  );
+  const modal = useSelector((state) => state.modal);
+  const userData = useSelector((state) => state.user);
+  const isLoggedIn = userData.status === userStatus.loggedIn;
+  const modalName = modal.modalName;
 
   useEffect(() => {
     if (isLoggedIn) dispatch(hideModal());
   }, [dispatch, isLoggedIn]);
 
-  if (currentModalName === modalNames.login)
+  if (modalName === modalNames.login)
     return (
       <React.Fragment>
         <BackDropOverlay />
         <LoginModal />
       </React.Fragment>
     );
-  if (currentModalName === modalNames.signup)
+  if (modalName === modalNames.signup)
     return (
       <React.Fragment>
         <BackDropOverlay />

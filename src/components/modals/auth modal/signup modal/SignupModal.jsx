@@ -41,11 +41,9 @@ export const SignupModal = function (props) {
     isError: false,
   });
   const [triedFormSubmition, setTriedFormSubmition] = useState(false);
-
-  const isSigningUp = useSelector(
-    (state) => state.user.status === userStatus.signingUp
-  );
-
+  const userData = useSelector((state) => state.user);
+  const isSigningUp = userData.status === userStatus.signingUp;
+  
   const onFirstNameChanged = function (event) {
     const enteredFirstName = sanitiseInputText(event.target.value);
 

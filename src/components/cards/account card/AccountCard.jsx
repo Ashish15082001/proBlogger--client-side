@@ -4,9 +4,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { serverDomain } from "../../../constants";
 
 export const AccountCard = function () {
-  const userCredentials = useSelector((state) => state.user.credentials);
-  const userStatistics = useSelector((state) => state.user.statistics);
-
+  const userData = useSelector((state) => state.user);
+  const userCredentials = userData.credentials;
+  const userStatistics = userData.statistics;
   const aboutUser = userStatistics.aboutUser;
   const aboutBlogs = userStatistics.aboutBlogs;
 

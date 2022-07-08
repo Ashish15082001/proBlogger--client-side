@@ -1,23 +1,43 @@
-import { useSelector, useDispatch } from "react-redux";
-import { serverDomain } from "../../constants";
+import { useDispatch, useSelector } from "react-redux";
+import { serverDomain } from "../../../constants";
+import { DeleteIcon } from "../../../icons/DeleteIcon";
 import BlogCardStyles from "./BlogCard.module.css";
+import { Avatar } from "../../Avatar/Avatar";
+import { showToast } from "../../../redux/slices/toast/toastSlice";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Avatar } from "../Avatar/Avatar";
-import { userStatus } from "../../redux/slices/user/userSlice";
-import { showToast } from "../../redux/slices/toast/toastSlice";
+import {
+  removeBlogFromFavourites,
+  userStatus,
+} from "../../../redux/slices/user/userSlice";
+import { contentTypes } from "../../../redux/slices/content/contentsSlice";
+import { removeBlogFromFavouritesApi } from "../../../api/removeBlogFromFavouritesApi";
 
-export const BlogCard = function ({ id, contentType }) {
+export const FavouriteBlogCard = function ({ blogId }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const selectedBlogData = useSelector(
-    (state) => state.contents.contentCache[id]
+    (state) => state.contents.contentCache[blogId]
   );
+  const userData = useSelector((state) => state.user);
   const isLoggedIn = useSelector((state) => state.user.status);
+  const userCredentials = userData.credentials;
   const pageNumber = new URLSearchParams(location.search).get("pageNumber")
     ? new URLSearchParams(location.search).get("pageNumber")
     : 1;
 
+  const removeFromFavourites = async function (event) {
+    try {
+      event.stopPropagation();
+      dispatch(removeBlogFromFavourites({ blogId }));
+      await removeBlogFromFavouritesApi({
+        blogId,
+        userId: userCredentials._id,
+      });
+    } catch (error) {
+      dispatch(showToast({ toastType: "error", message: error.message }));
+    }
+  };
   return (
     <div
       onClick={() => {
@@ -26,7 +46,11 @@ export const BlogCard = function ({ id, contentType }) {
             showToast({ toastType: "error", message: "login to view blog" })
           );
         navigate(`/blog/${selectedBlogData._id}`, {
-          state: { navigatedFrom: location.pathname, pageNumber, contentType },
+          state: {
+            navigatedFrom: location.pathname,
+            pageNumber,
+            contentType: contentTypes.favourites,
+          },
         });
       }}
       className={BlogCardStyles.card_container}
@@ -36,7 +60,13 @@ export const BlogCard = function ({ id, contentType }) {
         style={{
           backgroundImage: `url(${serverDomain}${selectedBlogData.blogProfileImage.destination}/${selectedBlogData.blogProfileImage.filename})`,
         }}
-      ></div>
+      >
+        <div className={BlogCardStyles.overlay}>
+          <span onClick={removeFromFavourites}>
+            <DeleteIcon />
+          </span>
+        </div>
+      </div>
       <div className={BlogCardStyles.lower_part} grid="true">
         <Avatar
           imageUrl={`${serverDomain}${selectedBlogData.publisherProfileImage.destination}/${selectedBlogData.publisherProfileImage.filename}`}
@@ -53,7 +83,7 @@ export const BlogCard = function ({ id, contentType }) {
               {`${Object.keys(selectedBlogData.views).length} views`}
             </p>
             <p className={BlogCardStyles.blog_info}>
-              {new Date(selectedBlogData.timeOfPublish).toDateString()}
+              {new Date(selectedBlogData.date).toDateString()}
             </p>
           </div>
         </div>

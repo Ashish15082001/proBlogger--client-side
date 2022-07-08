@@ -25,10 +25,8 @@ export const LoginModal = function () {
   const [emailStatus, setEmailStatus] = useState({ isError: false });
   const [passwordStatus, setPasswordStatus] = useState({ isError: false });
   const [triedFormSubmition, setTriedFormSubmition] = useState(false);
-
-  const isLoggingIn = useSelector(
-    (state) => state.user.status === userStatus.loggingIn
-  );
+  const userdata = useSelector((state) => state.user);
+  const isLoggingIn = userdata.status === userStatus.loggingIn;
 
   const onEmailChanged = function (event) {
     const enteredEmail = sanitiseInputText(event.target.value);

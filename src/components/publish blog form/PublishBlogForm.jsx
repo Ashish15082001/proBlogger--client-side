@@ -8,7 +8,7 @@ import { showToast } from "../../redux/slices/toast/toastSlice";
 import { useDispatch } from "react-redux";
 import { validateImage, validateInputText } from "../../utilities/validate";
 import { sanitiseInputText } from "../../utilities/sanitise";
-import { publishUserBlogApi } from "../../api/publishUserBlogApi";
+import { publishBlogApi } from "../../api/publishBlogApi";
 
 export const PublishBlogForm = function () {
   const dispatch = useDispatch();
@@ -103,12 +103,14 @@ export const PublishBlogForm = function () {
       if (isError) return;
 
       const blogData = new FormData();
-
+      const date = new Date().toISOString();
+      
       blogData.set("blogTitle", sanitiseInputText(blogTitle));
       blogData.set("aboutBlog", sanitiseInputText(aboutBlog));
       blogData.set("blogProfileImage", blogProfileImage);
+      blogData.set("date", date);
 
-      await publishUserBlogApi(blogData);
+      await publishBlogApi(blogData);
       resetPublishBlogFormState();
       dispatch(
         showToast({

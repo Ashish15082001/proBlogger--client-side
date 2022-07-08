@@ -1,8 +1,6 @@
 import LabelStyles from "./Label.module.css";
 
-export const Label = function (props) {
-  const { label, status } = props;
-
+export const Label = function ({ label, status }) {
   return (
     <div className={LabelStyles.labelContainer}>
       <label htmlFor={label}>{label}</label>

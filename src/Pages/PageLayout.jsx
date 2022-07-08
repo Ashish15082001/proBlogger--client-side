@@ -23,7 +23,6 @@ export const PageLayout = function () {
   const isRestoringState = useSelector(
     (state) => state.user.status === userStatus.restoringState
   );
-
   const isLoggedIn = useSelector(
     (state) => state.user.status === userStatus.loggedIn
   );
