@@ -125,6 +125,14 @@ const contentSlice = createSlice({
           commenterProfileImage,
         };
     },
+    addBlogToFavouritesContent(state, action) {
+      const { blogId } = action.payload;
+      state.favouritesContent.entities[blogId] = blogId;
+    },
+    removeBlogFromFavouritesContent(state, action) {
+      const { blogId } = action.payload;
+      delete state.favouritesContent.entities[blogId];
+    },
   },
   extraReducers: (builder) =>
     builder
@@ -147,23 +155,23 @@ const contentSlice = createSlice({
           state[fetchingContentType].status = contentsStatus.idle;
           return;
         }
+
         const { entities, totalDocuments } = action.payload;
         state[fetchingContentType].totalDocuments = totalDocuments;
         state.contentCache = { ...state.contentCache, ...entities };
 
-        console.log(entities);
         for (const entityId in entities) {
           state[fetchingContentType].entities[entityId] = entityId;
         }
         // state[fetchingContentType].pages[fetchingPageNumber].entities =
         //   Object.keys(entities);
 
-        if (Object.keys(entities).length === 0)
-          state[fetchingContentType].pages[fetchingPageNumber].status =
-            contentsStatus.notFound;
-        else
-          state[fetchingContentType].pages[fetchingPageNumber].status =
-            contentsStatus.idle;
+        // if (Object.keys(entities).length === 0)
+        //   state[fetchingContentType].pages[fetchingPageNumber].status =
+        //     contentsStatus.notFound;
+        // else
+        state[fetchingContentType].pages[fetchingPageNumber].status =
+          contentsStatus.idle;
       })
       .addCase(fetchContent.rejected, (state, action) => {
         // console.log("rejected...");
@@ -184,5 +192,7 @@ export const {
   unLikeBlog,
   commentOnBlog,
   viewBlog,
+  addBlogToFavouritesContent,
+  removeBlogFromFavouritesContent,
 } = contentSlice.actions;
 export const contentSliceReducer = contentSlice.reducer;

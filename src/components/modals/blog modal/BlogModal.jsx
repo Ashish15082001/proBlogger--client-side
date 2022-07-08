@@ -15,7 +15,9 @@ import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import {
+  addBlogToFavouritesContent,
   likeBlog,
+  removeBlogFromFavouritesContent,
   unLikeBlog,
   viewBlog,
 } from "../../../redux/slices/content/contentsSlice";
@@ -94,6 +96,7 @@ export const BlogModal = function () {
       setIsBlogFavourite((oldState) => !oldState);
 
       if (!isBlogFavourite) {
+        dispatch(addBlogToFavouritesContent({ blogId }));
         dispatch(addBlogToFavourites({ blogId, date }));
         await addBlogToFavouritesApi({
           blogId,
@@ -101,6 +104,7 @@ export const BlogModal = function () {
           date,
         });
       } else if (isBlogFavourite) {
+        dispatch(removeBlogFromFavouritesContent({ blogId }));
         dispatch(removeBlogFromFavourites({ blogId }));
         await removeBlogFromFavouritesApi({
           blogId,

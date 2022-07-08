@@ -9,7 +9,10 @@ import {
   removeBlogFromFavourites,
   userStatus,
 } from "../../../redux/slices/user/userSlice";
-import { contentTypes } from "../../../redux/slices/content/contentsSlice";
+import {
+  contentTypes,
+  removeBlogFromFavouritesContent,
+} from "../../../redux/slices/content/contentsSlice";
 import { removeBlogFromFavouritesApi } from "../../../api/removeBlogFromFavouritesApi";
 
 export const FavouriteBlogCard = function ({ blogId }) {
@@ -29,6 +32,7 @@ export const FavouriteBlogCard = function ({ blogId }) {
   const removeFromFavourites = async function (event) {
     try {
       event.stopPropagation();
+      dispatch(removeBlogFromFavouritesContent({ blogId }));
       dispatch(removeBlogFromFavourites({ blogId }));
       await removeBlogFromFavouritesApi({
         blogId,
