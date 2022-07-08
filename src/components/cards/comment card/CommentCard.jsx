@@ -9,10 +9,14 @@ export const CommentCard = function ({ commenterUserId, blogId }) {
   const commentData = useSelector(
     (state) => state.contents.contentCache[blogId].comments[commenterUserId]
   );
+  const commenterComments = commentData?.commenterComments;
+  const commenterCommentsIds = commenterComments
+    ? Object.keys(commenterComments)
+    : [];
   const userId = userData.credentials._id;
 
-  return (
-    <div className={CommentCardStyles.commentCard}>
+  return commenterCommentsIds.map((commentId) => (
+    <div key={commentId} className={CommentCardStyles.commentCard}>
       <div className={CommentCardStyles.upperPart}>
         <div className={CommentCardStyles.commenterInfoContainer}>
           <Avatar
@@ -24,8 +28,10 @@ export const CommentCard = function ({ commenterUserId, blogId }) {
         </div>
         <div className={CommentCardStyles.upperLeftPart}>
           <span className={CommentCardStyles.date}>
-            {`${new Date(commentData.date).toDateString()} at ${new Date(
-              commentData.date
+            {`${new Date(
+              commenterComments[commentId].date
+            ).toDateString()} at ${new Date(
+              commenterComments[commentId].date
             ).toLocaleTimeString()}`}
           </span>
           {userId === commenterUserId && false && (
@@ -41,7 +47,9 @@ export const CommentCard = function ({ commenterUserId, blogId }) {
           )}
         </div>
       </div>
-      <p className={CommentCardStyles.comment}>{commentData.comment}</p>
+      <p className={CommentCardStyles.comment}>
+        {commenterComments[commentId].comment}
+      </p>
     </div>
-  );
+  ));
 };

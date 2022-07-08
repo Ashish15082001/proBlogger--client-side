@@ -116,6 +116,15 @@ export const BlogModal = function () {
     }
   };
 
+  let totalNumberOfComments = 0;
+
+  console.log(blogData.comments);
+  for (const commenterId in blogData.comments) {
+    totalNumberOfComments += Object.keys(
+      blogData.comments[commenterId].commenterComments
+    ).length;
+  }
+
   return (
     <React.Fragment>
       <BackDropOverlay />
@@ -178,12 +187,10 @@ export const BlogModal = function () {
                 />
               </p>
             </div>
-            <h5 className={BlogModalStyles.commentTitle}>{`${
-              Object.keys(blogData.comments).length
-            } ${
-              Object.keys(blogData.comments).length === 1
-                ? "comment"
-                : "comments"
+            <h5
+              className={BlogModalStyles.commentTitle}
+            >{`${totalNumberOfComments} ${
+              totalNumberOfComments === 1 ? "comment" : "comments"
             }`}</h5>
             {userData.status === userStatus.loggedIn && (
               <React.Fragment>

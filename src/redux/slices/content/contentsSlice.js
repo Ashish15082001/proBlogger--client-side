@@ -115,15 +115,20 @@ const contentSlice = createSlice({
         date,
       } = action.payload;
 
-      if (state.contentCache[blogId].comments[userId])
-        state.contentCache[blogId].comments[userId].comment += " " + comment;
-      else
+      if (!state.contentCache[blogId].comments[userId])
         state.contentCache[blogId].comments[userId] = {
-          date,
-          comment,
           commenterName,
           commenterProfileImage,
+          commenterComments: {},
         };
+
+      state.contentCache[blogId].comments[userId].commenterComments[
+        new Date(date).getTime()
+      ] = {
+        date,
+        comment,
+        userId,
+      };
     },
     addBlogToFavouritesContent(state, action) {
       const { blogId } = action.payload;
