@@ -43,17 +43,17 @@ export const AccountCard = function () {
               About
             </h5>
             <div className={AccountCardStyles.aboutItemsContainer}>
-              <div>
+              <div className={AccountCardStyles.aboutItem}>
                 <span className={AccountCardStyles.clickAble}>
                   {Object.keys(aboutUser.followers).length}
                 </span>
-                <p>Followers</p>
+                <p>Total numbers of Followers</p>
               </div>
               <div>
                 <span className={AccountCardStyles.clickAble}>
                   {Object.keys(aboutUser.followings).length}
                 </span>
-                <p>Followings</p>
+                <p>Total numbers of Followings</p>
               </div>
             </div>
           </motion.div>
@@ -69,33 +69,33 @@ export const AccountCard = function () {
             <div className={AccountCardStyles.aboutItemsContainer}>
               <div>
                 <span>{Object.keys(aboutBlogs.totalViews).length}</span>
-                <p>Total views</p>
+                <p>Sum of total views in each blog you published</p>
               </div>
               <div>
                 <span>{Object.keys(aboutBlogs.totalComments).length}</span>
-                <p>Total comments</p>
+                <p>Sum of total comments in each blog you published</p>
               </div>
               <div>
                 <span>{Object.keys(aboutBlogs.totalLikes).length}</span>
-                <p>Total likes</p>
+                <p>Sum of total likes in each blog you published</p>
               </div>
               <div>
                 <span className={AccountCardStyles.clickAble}>
                   {Object.keys(aboutBlogs.trendings).length}
                 </span>
-                <p>Trendings</p>
+                <p>Total numbers of blog publishes by you which are trending</p>
               </div>
               <div>
                 <span className={AccountCardStyles.clickAble}>
                   {Object.keys(aboutBlogs.publishes).length}
                 </span>
-                <p>Publishes</p>
+                <p>Total numbers of blogs published by you</p>
               </div>
               <div>
                 <span className={AccountCardStyles.clickAble}>
                   {Object.keys(aboutBlogs.favourites).length}
                 </span>
-                <p>favourites</p>
+                <p>Total numbers of blogs added to favourites</p>
               </div>
             </div>
           </motion.div>

@@ -6,15 +6,19 @@
   overflow: hidden;
   box-shadow: var(--box-shadow);
   padding: 1rem;
+  width: 95%;
+  margin-bottom: 2rem;
+  /* border: 1px solid red; */
 }
 
-.AccountCardContainer > span {
+/* .AccountCardContainer > span {
   display: block;
   margin-block: 2rem;
   color: var(--color-primary);
   font-size: var(--heading-small);
   font-weight: var(--semi-bold-text);
-}
+  border: 1px solid rgb(0, 255, 98);
+} */
 
 #userName,
 #email {
@@ -39,7 +43,8 @@
 
 .flexContainer {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  /* border: 1px solid red; */
 }
 
 .aboutContainer > h5 {
@@ -49,6 +54,8 @@
 
 .aboutItemsContainer {
   display: flex;
+  flex-wrap: wrap;
+  /* border: 1px solid red; */
 }
 
 .aboutItemsContainerTitle {
@@ -59,7 +66,7 @@
 }
 
 .aboutItemsContainer > div {
-  border: 1px solid var(--color-dark);
+  /* border: 1px solid var(--color-dark); */
   border-radius: 8px;
   padding: 1rem;
   display: grid;
@@ -67,20 +74,18 @@
 }
 
 .aboutItemsContainer span {
+  /* justify-self: start; */
+  margin-right: 1rem;
   font-size: var(--heading-large);
   font-weight: var(--semi-bold-text);
 }
 
 .aboutItemsContainer > div {
+  display: flex;
+  /* display: grid;
+  grid-template-columns: 5rem 1fr; */
   margin-inline: 0.2rem;
-}
-
-.aboutItemsContainer > div:first-child {
-  margin-left: 0;
-}
-
-.aboutItemsContainer > div:last-child {
-  margin-right: 0;
+  margin-block: 0.5rem;
 }
 
 .aboutItemsContainer p {
