@@ -4,7 +4,6 @@ import { modalNames } from "../../redux/slices/modals/modalsSlice";
 import { BackDropOverlay } from "../backdrop overlay/BackDropOverlay";
 
 import { AuthModal } from "./auth modal/AuthModal";
-import { ConfirmationModel } from "./confirmation modal/ConfirmationModel";
 
 export const Modal = function () {
   const showModal = useSelector(
