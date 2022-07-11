@@ -1,0 +1,42 @@
+.parentContainer {
+  position: fixed;
+  z-index: 150;
+  display: grid;
+  place-items: center;
+  /* border: 1px solid red; */
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+}
+.modalTitle {
+  color: var(--color-dark);
+  font-size: var(--small-heading);
+  font-weight: var(--semi-bold-text);
+  margin-bottom: 1rem;
+  text-align: center;
+}
+.modalDescription {
+  color: var(--color-less-dark);
+  font-size: var(--paragraph-small);
+  text-align: justify;
+}
+.confirmationModel {
+  padding: 2rem;
+  background-color: var(--color-secondary);
+  box-shadow: var(--box-shadow);
+  border-radius: 8px;
+  max-width: 25rem;
+  width: 95vw;
+}
+
+.btnContainer {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btnContainer > button:first-child {
+  margin-right: 0.5rem;
+}

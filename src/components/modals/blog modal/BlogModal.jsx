@@ -166,11 +166,11 @@ export const BlogModal = function () {
                   : blogData.publisherName}
               </span>
               {" on "}
-              <span className={BlogModalStyles.timeOfPublish}>
-                {new Date(blogData.timeOfPublish).toDateString()}
+              <span className={BlogModalStyles.date}>
+                {new Date(blogData.date).toDateString()}
               </span>
               {" at "}
-              <span className={BlogModalStyles.timeOfPublish}>
+              <span className={BlogModalStyles.date}>
                 {new Date(blogData.date).toLocaleTimeString()}
               </span>
             </p>

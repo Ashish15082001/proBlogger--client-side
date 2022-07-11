@@ -6,7 +6,7 @@ import { store } from "./redux/store";
 import "./index.css";
 import { PageLayout } from "./Pages/PageLayout";
 import reportWebVitals from "./reportWebVitals";
-import { AuthModal } from "./components/modals/auth modal/AuthModal";
+import { Modal } from "./components/modals/Modal";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 export const setTheme = function (theme) {
@@ -18,7 +18,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <AuthModal />
+        <Modal />
         <PageLayout />
       </BrowserRouter>
     </Provider>

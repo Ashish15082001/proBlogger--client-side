@@ -38,3 +38,17 @@
   background-color: var(--color-dark);
   color: var(--color-secondary);
 }
+@media screen and (max-width: 720px) {
+  .greeting {
+    display: none;
+  }
+  .mainHeader {
+    height: 4rem;
+  }
+  .pageNumberNavigationContainer {
+    position: static;
+    margin-block: 1rem;
+    transform: none;
+    margin-inline: auto;
+  }
+}

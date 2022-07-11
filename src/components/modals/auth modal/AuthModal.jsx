@@ -6,7 +6,6 @@ import {
 } from "../../../redux/slices/modals/modalsSlice";
 import { LoginModal } from "./login modal/LoginModal";
 import { SignupModal } from "./signup modal/SignupModal";
-import { BackDropOverlay } from "../../backdrop overlay/BackDropOverlay";
 import { userStatus } from "../../../redux/slices/user/userSlice";
 
 export const AuthModal = function () {
@@ -20,20 +19,8 @@ export const AuthModal = function () {
     if (isLoggedIn) dispatch(hideModal());
   }, [dispatch, isLoggedIn]);
 
-  if (modalName === modalNames.login)
-    return (
-      <React.Fragment>
-        <BackDropOverlay />
-        <LoginModal />
-      </React.Fragment>
-    );
-  if (modalName === modalNames.signup)
-    return (
-      <React.Fragment>
-        <BackDropOverlay />
-        <SignupModal />
-      </React.Fragment>
-    );
+  if (modalName === modalNames.login) return <LoginModal />;
+  if (modalName === modalNames.signup) return <SignupModal />;
 
   return null;
 };

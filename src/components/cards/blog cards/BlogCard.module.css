@@ -7,6 +7,8 @@
   text-decoration: none;
   transition: all 0.2s ease-in-out;
   cursor: pointer;
+  position: relative;
+  /* border: 1px solid red; */
 }
 
 .blog_profile_image {

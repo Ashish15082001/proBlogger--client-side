@@ -38,6 +38,11 @@ export const userSlice = createSlice({
       const { blogId } = action.payload;
       delete state.statistics.aboutBlogs.favourites[blogId];
     },
+    removeMyBlog(state, action) {
+      const { blogId } = action.payload;
+
+      delete state.statistics.aboutBlogs.publishes[blogId];
+    },
   },
   extraReducers: (builder) =>
     builder
@@ -79,5 +84,9 @@ export const userSlice = createSlice({
 });
 
 export const userSliceReducer = userSlice.reducer;
-export const { logOut, addBlogToFavourites, removeBlogFromFavourites } =
-  userSlice.actions;
+export const {
+  logOut,
+  addBlogToFavourites,
+  removeBlogFromFavourites,
+  removeMyBlog,
+} = userSlice.actions;

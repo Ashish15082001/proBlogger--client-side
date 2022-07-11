@@ -4,6 +4,7 @@ export const modalNames = {
   none: "no modal",
   login: "login modal",
   signup: "signup modal",
+  deletionConfirmation: "deletion confirmation modal",
   // publishBlog: "publish blog",
 };
 
@@ -16,7 +17,8 @@ const modalsSlice = createSlice({
   initialState,
   reducers: {
     showModal(state, action) {
-      state.modalName = action.payload.modalName;
+      const { modalName } = action.payload;
+      state.modalName = modalName;
     },
     hideModal(state, action) {
       state.modalName = modalNames.none;

@@ -98,3 +98,9 @@
   background-color: var(--color-dark);
   color: var(--color-secondary);
 }
+
+@media screen and (max-width: 720px) {
+  .commentCard {
+    padding: 0.5rem;
+  }
+}

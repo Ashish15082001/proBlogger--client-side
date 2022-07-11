@@ -109,7 +109,7 @@ button {
   padding-block: 0.5em;
   background-color: var(--color-dark);
   color: var(--color-secondary);
-  font-size: var(--small-heading);
+  font-size: var(--heading-small);
   font-weight: var(--semi-bold-text);
   justify-self: center;
   cursor: pointer;

@@ -23,7 +23,11 @@ export const CommentCard = function ({ commenterUserId, blogId }) {
             imageUrl={`${serverDomain}${commentData.commenterProfileImage.destination}/${commentData.commenterProfileImage.filename}`}
           />
           <span className={CommentCardStyles.commenterName}>
-            {commentData.commenterName}
+            {`${
+              commentData.commenterName.length > 10
+                ? commentData.commenterName.substr(0, 15) + "..."
+                : commentData.commenterName
+            }`}
           </span>
         </div>
         <div className={CommentCardStyles.upperLeftPart}>

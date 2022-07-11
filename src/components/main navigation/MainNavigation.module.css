@@ -70,3 +70,12 @@
     > path) {
   fill: var(--color-secondary);
 }
+
+@media screen and (max-width: 720px) {
+  .navigation_text {
+    display: none;
+  }
+  .navlink > span {
+    margin-right: 0;
+  }
+}

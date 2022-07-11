@@ -68,7 +68,7 @@
 }
 
 .publisherName,
-.timeOfPublish {
+.date {
   font-weight: var(--semi-bold-text);
 }
 
@@ -124,4 +124,16 @@
 
 .blogContainer svg:hover {
   transform: scale(1.2);
+}
+
+@media screen and (max-width: 720px) {
+  .parentContainer {
+    padding: 0.5rem;
+  }
+  .blogContainer {
+    width: 100%;
+  }
+  .blogLowerPart {
+    padding: 1rem;
+  }
 }

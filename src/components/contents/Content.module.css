@@ -6,10 +6,13 @@
   width: max-content;
   margin-inline: auto;
   margin-bottom: 1rem;
+  position: relative;
+  /* border: 1px solid red; */
 }
 
 li {
   list-style: none;
+  position: relative;
 }
 
 .pageNumberChangeContainer svg {
@@ -68,8 +71,11 @@ li {
   }
 }
 
-@media screen and (max-width: 669px) {
+@media screen and (max-width: 720px) {
   .content_grid {
-    grid-template-columns: repeat(1, 19rem);
+    grid-template-columns: repeat(1, 1fr);
+    width: 98vw;
+    max-width: 24rem;
+    padding: 0;
   }
 }
