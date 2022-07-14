@@ -1,5 +1,5 @@
-import { DeleteIcon } from "../../../icons/DeleteIcon";
-import { EditIcon } from "../../../icons/EditIcon";
+// import { DeleteIcon } from "../../../icons/DeleteIcon";
+// import { EditIcon } from "../../../icons/EditIcon";
 import BlogCardStyles from "./BlogCard.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { serverDomain } from "../../../constants";

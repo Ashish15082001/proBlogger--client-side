@@ -11,7 +11,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AccountIcon } from "../../icons/AccountIcon";
 import { LogoutIcon } from "../../icons/LogoutIcon";
-import { ThemeIcon } from "../../icons/ThemeIcon";
+// import { ThemeIcon } from "../../icons/ThemeIdcon";
 import { CreateAccountIcon } from "../../icons/CreateAccountIcon";
 import { LoginIcon } from "../../icons/LoginIcon";
 
