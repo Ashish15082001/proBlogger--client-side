@@ -138,9 +138,14 @@ const contentSlice = createSlice({
       const { blogId } = action.payload;
       delete state.favouritesContent.entities[blogId];
     },
-    removeBlogFromMyBlogsContent(state, action) {
+    deleteMyBlog(state, action) {
       const { blogId } = action.payload;
+      delete state.trendingContent.entities[blogId];
+      delete state.blogsContent.entities[blogId];
+      delete state.favouritesContent.entities[blogId];
       delete state.myBlogsContent.entities[blogId];
+
+      delete state.contentCache[blogId];
     },
   },
   extraReducers: (builder) =>
@@ -203,6 +208,6 @@ export const {
   viewBlog,
   addBlogToFavouritesContent,
   removeBlogFromFavouritesContent,
-  removeBlogFromMyBlogsContent,
+  deleteMyBlog,
 } = contentSlice.actions;
 export const contentSliceReducer = contentSlice.reducer;

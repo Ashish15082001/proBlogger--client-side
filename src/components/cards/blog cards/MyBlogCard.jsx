@@ -6,12 +6,13 @@ import { serverDomain } from "../../../constants";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   contentTypes,
-  removeBlogFromMyBlogsContent,
+  deleteMyBlog,
 } from "../../../redux/slices/content/contentsSlice";
 import { removeMyBlog, userStatus } from "../../../redux/slices/user/userSlice";
 import { showToast } from "../../../redux/slices/toast/toastSlice";
 import React, { useState } from "react";
 import { ConfirmationModel } from "../../modals/confirmation modal/ConfirmationModel";
+import { deleteMyBlogApi } from "../../../api/deleteMyBlogApi";
 
 export const MyBlogCard = function ({ blogId }) {
   const dispatch = useDispatch();
@@ -21,15 +22,21 @@ export const MyBlogCard = function ({ blogId }) {
   const selectedBlogData = useSelector(
     (state) => state.contents.contentCache[blogId]
   );
+  const userId = useSelector((state) => state.user.credentials._id);
 
   const isLoggedIn = useSelector((state) => state.user.status);
   const pageNumber = new URLSearchParams(location.search).get("pageNumber")
     ? new URLSearchParams(location.search).get("pageNumber")
     : 1;
 
-  const deleteBlog = function () {
-    dispatch(removeMyBlog({ blogId }));
-    dispatch(removeBlogFromMyBlogsContent({ blogId }));
+  const onDeleteMyBlog = async function () {
+    try {
+      await deleteMyBlogApi({ blogId, userId });
+      dispatch(removeMyBlog({ blogId }));
+      dispatch(deleteMyBlog({ blogId }));
+    } catch (error) {
+      // dispatch(showToast())
+    }
   };
 
   const toggleDeleteConfirmationModal = function (event) {
@@ -41,7 +48,7 @@ export const MyBlogCard = function ({ blogId }) {
     <React.Fragment>
       {showConfirmationModal && (
         <ConfirmationModel
-          onContinue={deleteBlog}
+          onContinue={onDeleteMyBlog}
           onCancel={toggleDeleteConfirmationModal}
           title="Are You Sure ?"
           description="You will not be able to revert this deletion afterwards. Please proceed with caution."
@@ -70,12 +77,12 @@ export const MyBlogCard = function ({ blogId }) {
           }}
         >
           <div className={BlogCardStyles.overlay}>
-            <span onClick={toggleDeleteConfirmationModal}>
+            {/* <span onClick={toggleDeleteConfirmationModal}>
               <DeleteIcon />
             </span>
             <span>
               <EditIcon />
-            </span>
+            </span> */}
           </div>
         </div>
         <div className={BlogCardStyles.lower_part} grid="false">
@@ -87,26 +94,23 @@ export const MyBlogCard = function ({ blogId }) {
             {selectedBlogData.publisherName}
           </p>
           <p className={BlogCardStyles.blog_info}>
-            {`${Object.keys(selectedBlogData.views).length} ${
-              Object.keys(selectedBlogData.views).length === 1
-                ? "view"
-                : "views"
-            }`}
+            {`${Object.keys(selectedBlogData.views).length} ${Object.keys(selectedBlogData.views).length === 1
+              ? "view"
+              : "views"
+              }`}
           </p>
           <p className={BlogCardStyles.blog_info}>
-            {`${Object.keys(selectedBlogData.likes).length} ${
-              Object.keys(selectedBlogData.likes).length === 1
-                ? "like"
-                : "likes"
-            }`}
+            {`${Object.keys(selectedBlogData.likes).length} ${Object.keys(selectedBlogData.likes).length === 1
+              ? "like"
+              : "likes"
+              }`}
           </p>
           <div className={BlogCardStyles.stats_container}>
             <p className={BlogCardStyles.blog_info}>
-              {`${Object.keys(selectedBlogData.comments).length} ${
-                Object.keys(selectedBlogData.comments).length === 1
-                  ? "comment"
-                  : "comments"
-              }`}
+              {`${Object.keys(selectedBlogData.comments).length} ${Object.keys(selectedBlogData.comments).length === 1
+                ? "comment"
+                : "comments"
+                }`}
             </p>
             <p className={BlogCardStyles.blog_info}>
               {new Date(selectedBlogData.date).toDateString()}

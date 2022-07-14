@@ -118,12 +118,12 @@ export const MainHeader = function () {
                 </div>
               )}
               {/* <div className={MainHeaderStyles.seperator}></div> */}
-              <div className={MainHeaderStyles.menuOption}>
+              {/* <div className={MainHeaderStyles.menuOption}>
                 <span>
                   <ThemeIcon />
                 </span>
                 <p>Theme</p>
-              </div>
+              </div> */}
             </motion.div>
           )}
         </AnimatePresence>
