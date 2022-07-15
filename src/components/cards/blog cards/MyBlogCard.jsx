@@ -1,5 +1,5 @@
 import { DeleteIcon } from "../../../icons/DeleteIcon";
-import { EditIcon } from "../../../icons/EditIcon";
+// import { EditIcon } from "../../../icons/EditIcon";
 import BlogCardStyles from "./BlogCard.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { serverDomain } from "../../../constants";
@@ -80,9 +80,9 @@ export const MyBlogCard = function ({ blogId }) {
             <span onClick={toggleDeleteConfirmationModal}>
               <DeleteIcon />
             </span>
-            <span>
+            {/* <span>
               <EditIcon />
-            </span>
+            </span> */}
           </div>
         </div>
         <div className={BlogCardStyles.lower_part} grid="false">
