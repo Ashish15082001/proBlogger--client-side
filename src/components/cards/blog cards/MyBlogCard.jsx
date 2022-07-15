@@ -1,5 +1,5 @@
-// import { DeleteIcon } from "../../../icons/DeleteIcon";
-// import { EditIcon } from "../../../icons/EditIcon";
+import { DeleteIcon } from "../../../icons/DeleteIcon";
+import { EditIcon } from "../../../icons/EditIcon";
 import BlogCardStyles from "./BlogCard.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { serverDomain } from "../../../constants";
@@ -31,11 +31,11 @@ export const MyBlogCard = function ({ blogId }) {
 
   const onDeleteMyBlog = async function () {
     try {
-      await deleteMyBlogApi({ blogId, userId });
       dispatch(removeMyBlog({ blogId }));
       dispatch(deleteMyBlog({ blogId }));
+      await deleteMyBlogApi({ blogId, userId });
     } catch (error) {
-      // dispatch(showToast())
+      dispatch(showToast({ toastType: "error", message: error.message }));
     }
   };
 
@@ -77,12 +77,12 @@ export const MyBlogCard = function ({ blogId }) {
           }}
         >
           <div className={BlogCardStyles.overlay}>
-            {/* <span onClick={toggleDeleteConfirmationModal}>
+            <span onClick={toggleDeleteConfirmationModal}>
               <DeleteIcon />
             </span>
             <span>
               <EditIcon />
-            </span> */}
+            </span>
           </div>
         </div>
         <div className={BlogCardStyles.lower_part} grid="false">

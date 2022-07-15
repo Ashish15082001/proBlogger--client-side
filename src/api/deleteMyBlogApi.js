@@ -11,7 +11,6 @@ export const deleteMyBlogApi = async function ({ userId, blogId }) {
         method: "POST",
         headers: {
           Authorization: "Bearer " + jwt,
-          "Content-Type": "application/json",
         },
       }
     );

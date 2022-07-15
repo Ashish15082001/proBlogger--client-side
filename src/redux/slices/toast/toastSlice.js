@@ -18,11 +18,11 @@ export const toastSlice = createSlice({
   initialState,
   reducers: {
     showToast(state, action) {
-      state[state.length] = {
+      state.push({
         status: toastStatus.visible,
         toastType: action.payload.toastType,
         message: action.payload.message,
-      };
+      });
     },
     hideToast(state, action) {
       // state.status = toastStatus.hidden;
