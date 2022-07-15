@@ -73,7 +73,7 @@ export const MyBlogCard = function ({ blogId }) {
         <div
           className={BlogCardStyles.blog_profile_image}
           style={{
-            backgroundImage: `url(${serverDomain}${selectedBlogData.blogProfileImage.destination}/${selectedBlogData.blogProfileImage.filename})`,
+            backgroundImage: `url(${serverDomain}uploads/images/${selectedBlogData.blogProfileImage.filename})`,
           }}
         >
           <div className={BlogCardStyles.overlay}>

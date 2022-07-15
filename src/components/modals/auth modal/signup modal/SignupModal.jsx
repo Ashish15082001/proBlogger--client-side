@@ -194,7 +194,7 @@ export const SignupModal = function (props) {
         })
       );
     } catch (error) {
-      console.log(error)
+      console.error(error)
       dispatch(showToast({ toastType: "error", message: error.message }));
     }
   };

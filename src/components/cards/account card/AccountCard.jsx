@@ -20,7 +20,7 @@ export const AccountCard = function () {
       >
         <div
           style={{
-            backgroundImage: `url(${serverDomain}${userCredentials.profileImage.destination}/${userCredentials.profileImage.filename})`,
+            backgroundImage: `url(${serverDomain}uploads/images/${userCredentials.profileImage.filename})`,
           }}
           className={AccountCardStyles.profilePicture}
         ></div>

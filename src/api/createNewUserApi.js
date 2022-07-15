@@ -6,8 +6,9 @@ export const createNewUserApi = async function (userData) {
       method: "POST",
       body: userData,
     });
+    console.log(response);
     const responseData = await response.json();
-
+    console.log(responseData);
     if (!response.ok) throw new Error(responseData.message);
 
     const jwt = responseData.token;

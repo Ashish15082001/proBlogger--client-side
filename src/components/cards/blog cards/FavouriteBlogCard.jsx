@@ -62,7 +62,7 @@ export const FavouriteBlogCard = function ({ blogId }) {
       <div
         className={BlogCardStyles.blog_profile_image}
         style={{
-          backgroundImage: `url(${serverDomain}${selectedBlogData.blogProfileImage.destination}/${selectedBlogData.blogProfileImage.filename})`,
+          backgroundImage: `url(${serverDomain}uploads/images/${selectedBlogData.blogProfileImage.filename})`,
         }}
       >
         <div className={BlogCardStyles.overlay}>
@@ -73,7 +73,7 @@ export const FavouriteBlogCard = function ({ blogId }) {
       </div>
       <div className={BlogCardStyles.lower_part} grid="true">
         <Avatar
-          imageUrl={`${serverDomain}${selectedBlogData.publisherProfileImage.destination}/${selectedBlogData.publisherProfileImage.filename}`}
+          imageUrl={`${serverDomain}uploads/images/${selectedBlogData.publisherProfileImage.filename}`}
         />
         <div className={BlogCardStyles.right_part}>
           <h2 className={BlogCardStyles.blog_title}>

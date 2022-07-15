@@ -138,7 +138,7 @@ export const BlogModal = function () {
           <div
             className={BlogModalStyles.blogProfieImage}
             style={{
-              backgroundImage: `url(${serverDomain}${blogData.blogProfileImage.destination}/${blogData.blogProfileImage.filename})`,
+              backgroundImage: `url(${serverDomain}uploads/images/${blogData.blogProfileImage.filename})`,
             }}
           >
             <p
@@ -161,7 +161,7 @@ export const BlogModal = function () {
               {"posted by "}
               <span className={BlogModalStyles.publisherName}>
                 {blogData.publisherName ===
-                `${userCredentials.firstName} ${userCredentials.lastName}`
+                  `${userCredentials.firstName} ${userCredentials.lastName}`
                   ? "you"
                   : blogData.publisherName}
               </span>
@@ -176,9 +176,8 @@ export const BlogModal = function () {
             </p>
             <p className={BlogModalStyles.aboutBlog}>{blogData.aboutBlog}</p>
             <div className={BlogModalStyles.statsContainer}>
-              <p>{`${Object.keys(blogData.views).length} ${
-                Object.keys(blogData.views).length === 1 ? "view" : "views"
-              }`}</p>
+              <p>{`${Object.keys(blogData.views).length} ${Object.keys(blogData.views).length === 1 ? "view" : "views"
+                }`}</p>
               <p>
                 {Object.keys(blogData.likes).length}
                 <ThumbUpIcon
@@ -189,14 +188,13 @@ export const BlogModal = function () {
             </div>
             <h5
               className={BlogModalStyles.commentTitle}
-            >{`${totalNumberOfComments} ${
-              totalNumberOfComments === 1 ? "comment" : "comments"
-            }`}</h5>
+            >{`${totalNumberOfComments} ${totalNumberOfComments === 1 ? "comment" : "comments"
+              }`}</h5>
             {userData.status === userStatus.loggedIn && (
               <React.Fragment>
                 <PublishCommentForm
                   blogId={blogId}
-                  avatarImageUrl={`${serverDomain}${userCredentials.profileImage.destination}/${userCredentials.profileImage.filename}`}
+                  avatarImageUrl={`${serverDomain}uploads/images/${userCredentials.profileImage.filename}`}
                 />
               </React.Fragment>
             )}

@@ -13,4 +13,3 @@ export const userIdKey = "user id";
 
 export const serverDomain = "https://problogger-by-ashish.herokuapp.com/";
 // export const serverDomain = "http://localhost:3001/";
-// 
