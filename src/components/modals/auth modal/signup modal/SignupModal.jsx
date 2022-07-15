@@ -43,7 +43,7 @@ export const SignupModal = function (props) {
   const [triedFormSubmition, setTriedFormSubmition] = useState(false);
   const userData = useSelector((state) => state.user);
   const isSigningUp = userData.status === userStatus.signingUp;
-  
+
   const onFirstNameChanged = function (event) {
     const enteredFirstName = sanitiseInputText(event.target.value);
 
@@ -194,6 +194,7 @@ export const SignupModal = function (props) {
         })
       );
     } catch (error) {
+      console.log(error)
       dispatch(showToast({ toastType: "error", message: error.message }));
     }
   };
