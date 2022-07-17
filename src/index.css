@@ -105,7 +105,7 @@ code {
 button {
   border-radius: 8px;
   border: 1px solid var(--color-dark);
-  padding-inline: 0.7em;
+  padding-inline: 1em;
   padding-block: 0.4em;
   background-color: var(--color-dark);
   color: var(--color-secondary);

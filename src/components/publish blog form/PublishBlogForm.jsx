@@ -12,6 +12,7 @@ import { publishBlogApi } from "../../api/publishBlogApi";
 
 export const PublishBlogForm = function () {
   const dispatch = useDispatch();
+  const [isPublishingBlog, setIsPublishingBlog] = useState(false)
   const [blogTitle, setBlogTitle] = useState("");
   const [blogTitleStatus, setBlogTitleStatus] = useState({ isError: false });
   const [blogProfileImage, setBlogProfileImage] = useState(null);
@@ -104,13 +105,15 @@ export const PublishBlogForm = function () {
 
       const blogData = new FormData();
       const date = new Date().toISOString();
-      
+
       blogData.set("blogTitle", sanitiseInputText(blogTitle));
       blogData.set("aboutBlog", sanitiseInputText(aboutBlog));
       blogData.set("blogProfileImage", blogProfileImage);
       blogData.set("date", date);
 
+      setIsPublishingBlog(true);
       await publishBlogApi(blogData);
+      setIsPublishingBlog(false);
       resetPublishBlogFormState();
       dispatch(
         showToast({
@@ -120,6 +123,8 @@ export const PublishBlogForm = function () {
       );
     } catch (error) {
       dispatch(showToast({ toastType: "error", message: error.message }));
+    } finally {
+      setIsPublishingBlog(false);
     }
   };
 
@@ -154,7 +159,7 @@ export const PublishBlogForm = function () {
             onTextValueChange={onAboutBlogChanged}
             status={aboutBlogStatus}
           />
-          <button type="submit">publish</button>
+          <button type="submit" disabled={isPublishingBlog}>{`${isPublishingBlog ? 'publishing blog' : 'publish'}`}</button>
         </form>
       </motion.div>
     </div>
