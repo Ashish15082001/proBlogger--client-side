@@ -1,4 +1,3 @@
-import { Avatar } from "../Avatar/Avatar";
 import PublishCommentFormStyles from "./PublishCommentForm.module.css";
 import { TextArea } from "../form components/input components/text area/TextArea";
 import { useState } from "react";
@@ -8,9 +7,11 @@ import { publishCommentApi } from "../../api/publishCommentApi";
 import { useDispatch, useSelector } from "react-redux";
 import { showToast } from "../../redux/slices/toast/toastSlice";
 import { commentOnBlog } from "../../redux/slices/content/contentsSlice";
+import { NameAvatar } from "../Avatar/NameAvatar";
 
 export const PublishCommentForm = function (props) {
-  const { avatarImageUrl, blogId } = props;
+  // const { avatarImageUrl, blogId } = props;
+  const { shortName, blogId } = props;
   const dispatch = useDispatch();
   const userCredentials = useSelector((state) => state.user.credentials);
   const [comment, setComment] = useState("");
@@ -51,7 +52,8 @@ export const PublishCommentForm = function (props) {
 
   return (
     <div className={PublishCommentFormStyles.PublishCommentFormContainer}>
-      <Avatar imageUrl={avatarImageUrl} />
+      {/* <Avatar imageUrl={avatarImageUrl} /> */}
+      <NameAvatar shortName={shortName} />
       <TextArea
         style={{ height: "6rem" }}
         textValue={comment}

@@ -2,7 +2,6 @@ import { DeleteIcon } from "../../../icons/DeleteIcon";
 // import { EditIcon } from "../../../icons/EditIcon";
 import BlogCardStyles from "./BlogCard.module.css";
 import { useDispatch, useSelector } from "react-redux";
-import { serverDomain } from "../../../constants";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
   contentTypes,
@@ -73,7 +72,7 @@ export const MyBlogCard = function ({ blogId }) {
         <div
           className={BlogCardStyles.blog_profile_image}
           style={{
-            backgroundImage: `url(${serverDomain}uploads/images/${selectedBlogData.blogProfileImage.filename})`,
+            backgroundImage: `url(${selectedBlogData.blogProfileImageURL})`,
           }}
         >
           <div className={BlogCardStyles.overlay}>

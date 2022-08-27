@@ -4,5 +4,14 @@
   border-radius: 50%;
   background-position: center;
   background-size: cover;
+  background-color: var(--color-primary);
+  display: grid;
+  place-items: center;
   /* background-image: url("/public/images/laura-chouette-__uuuysuybw-unsplash.jpg"); */
+}
+
+.avatar > p {
+  color: var(--color-secondary);
+  font-size: var(--heading-small);
+  font-weight: var(--semi-bold-text);
 }

@@ -6,17 +6,17 @@ import { motion } from "framer-motion";
 import { TextArea } from "../form components/input components/text area/TextArea";
 import { showToast } from "../../redux/slices/toast/toastSlice";
 import { useDispatch } from "react-redux";
-import { validateImage, validateInputText } from "../../utilities/validate";
+import { validateInputText, validateURL } from "../../utilities/validate";
 import { sanitiseInputText } from "../../utilities/sanitise";
 import { publishBlogApi } from "../../api/publishBlogApi";
 
 export const PublishBlogForm = function () {
   const dispatch = useDispatch();
-  const [isPublishingBlog, setIsPublishingBlog] = useState(false)
+  const [isPublishingBlog, setIsPublishingBlog] = useState(false);
   const [blogTitle, setBlogTitle] = useState("");
   const [blogTitleStatus, setBlogTitleStatus] = useState({ isError: false });
-  const [blogProfileImage, setBlogProfileImage] = useState(null);
-  const [blogProfileImageStatus, setBlogProfileImageStatus] = useState({
+  const [blogProfileImageURL, setBlogProfileImageURL] = useState("");
+  const [blogProfileImageURLStatus, setBlogProfileImageURLStatus] = useState({
     isError: false,
   });
   const [aboutBlog, setAboutBlog] = useState("");
@@ -36,18 +36,33 @@ export const PublishBlogForm = function () {
     setBlogTitle(enteredBlogTitle);
   };
 
-  const onBlogProfileImageChanged = function (event) {
-    const selectedBlogProfileImage = event.target.files[0];
+  const onBlogProfileImageURLChanged = function (event) {
+    // const selectedBlogProfileImage = event.target.files[0];
+
+    // if (triedFormSubmition) {
+    //   if (validateImage(selectedBlogProfileImage) === false) {
+    //     setBlogProfileImageStatus({
+    //       isError: true,
+    //       message: "please select valid image format",
+    //     });
+    //   } else setBlogProfileImageStatus({ isError: false });
+    // }
+    // setBlogProfileImage(selectedBlogProfileImage);
+
+    const enteredImageURL = event.target.value.trimStart();
 
     if (triedFormSubmition) {
-      if (validateImage(selectedBlogProfileImage) === false) {
-        setBlogProfileImageStatus({
+      if (validateURL(enteredImageURL) === false)
+        setBlogProfileImageURLStatus({
           isError: true,
-          message: "please select valid image format",
+          message: "invalid image url",
         });
-      } else setBlogProfileImageStatus({ isError: false });
+      else
+        setBlogProfileImageURLStatus({
+          isError: false,
+        });
     }
-    setBlogProfileImage(selectedBlogProfileImage);
+    setBlogProfileImageURL(enteredImageURL);
   };
 
   const onAboutBlogChanged = function (event) {
@@ -65,10 +80,10 @@ export const PublishBlogForm = function () {
 
   const resetPublishBlogFormState = function () {
     setBlogTitle("");
-    setBlogProfileImage(null);
+    setBlogProfileImageURL("");
     setAboutBlog("");
     setBlogTitleStatus({ isError: false });
-    setBlogProfileImageStatus({ isError: false });
+    setBlogProfileImageURLStatus({ isError: false });
     setAboutBlogStatus({ isError: false });
     setTriedFormSubmition(false);
   };
@@ -85,11 +100,11 @@ export const PublishBlogForm = function () {
           message: "invalid blog title",
         });
       }
-      if (validateImage(blogProfileImage) === false) {
+      if (validateInputText(blogProfileImageURL) === false) {
         isError = true;
-        setBlogProfileImageStatus({
+        setBlogProfileImageURLStatus({
           isError: true,
-          message: "please select valid image format",
+          message: "invalid image url",
         });
       }
       if (validateInputText(sanitiseInputText(aboutBlog)) === false) {
@@ -103,13 +118,13 @@ export const PublishBlogForm = function () {
       if (isError && triedFormSubmition === false) setTriedFormSubmition(true);
       if (isError) return;
 
-      const blogData = new FormData();
       const date = new Date().toISOString();
-
-      blogData.set("blogTitle", sanitiseInputText(blogTitle));
-      blogData.set("aboutBlog", sanitiseInputText(aboutBlog));
-      blogData.set("blogProfileImage", blogProfileImage);
-      blogData.set("date", date);
+      const blogData = {
+        blogTitle: sanitiseInputText(blogTitle),
+        aboutBlog: sanitiseInputText(aboutBlog),
+        blogProfileImageURL,
+        date,
+      };
 
       setIsPublishingBlog(true);
       await publishBlogApi(blogData);
@@ -146,11 +161,12 @@ export const PublishBlogForm = function () {
             status={blogTitleStatus}
           />
           <Input
-            label="select blog profile image"
-            onInputChange={onBlogProfileImageChanged}
-            inputType="file"
+            label="select blog profile image url"
+            onInputChange={onBlogProfileImageURLChanged}
+            inputType="text"
             autoFocus={false}
-            status={blogProfileImageStatus}
+            inputValue={blogProfileImageURL}
+            status={blogProfileImageURLStatus}
           />
           <TextArea
             style={{ height: "20rem" }}
@@ -159,7 +175,9 @@ export const PublishBlogForm = function () {
             onTextValueChange={onAboutBlogChanged}
             status={aboutBlogStatus}
           />
-          <button type="submit" disabled={isPublishingBlog}>{`${isPublishingBlog ? 'publishing blog' : 'publish'}`}</button>
+          <button type="submit" disabled={isPublishingBlog}>{`${
+            isPublishingBlog ? "publishing blog" : "publish"
+          }`}</button>
         </form>
       </motion.div>
     </div>

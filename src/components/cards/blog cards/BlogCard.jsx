@@ -1,10 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
-import { serverDomain } from "../../../constants";
 import BlogCardStyles from "./BlogCard.module.css";
 import { useLocation, useNavigate } from "react-router-dom";
-import { Avatar } from "../../Avatar/Avatar";
 import { userStatus } from "../../../redux/slices/user/userSlice";
 import { showToast } from "../../../redux/slices/toast/toastSlice";
+import { NameAvatar } from "../../Avatar/NameAvatar";
 
 export const BlogCard = function ({ blogId, contentType }) {
   const dispatch = useDispatch();
@@ -34,12 +33,19 @@ export const BlogCard = function ({ blogId, contentType }) {
       <div
         className={BlogCardStyles.blog_profile_image}
         style={{
-          backgroundImage: `url(${serverDomain}uploads/images/${selectedBlogData.blogProfileImage.filename})`,
+          backgroundImage: `url(${selectedBlogData.blogProfileImageURL})`,
         }}
       ></div>
       <div className={BlogCardStyles.lower_part} grid="true">
-        <Avatar
+        {/* <Avatar
           imageUrl={`${serverDomain}uploads/images/${selectedBlogData.publisherProfileImage.filename}`}
+        /> */}
+        <NameAvatar
+          shortName={selectedBlogData.publisherName
+            .split(" ")
+            .slice(0, 2)
+            .map((str) => str[0])
+            .join("")}
         />
         <div className={BlogCardStyles.right_part}>
           <h2 className={BlogCardStyles.blog_title}>

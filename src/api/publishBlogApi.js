@@ -7,9 +7,10 @@ export const publishBlogApi = async function (blogData) {
 
     const response = await fetch(`${serverDomain}user/${userId}/publishBlog`, {
       method: "POST",
-      body: blogData,
+      body: JSON.stringify(blogData),
       headers: {
         Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
       },
     });
 

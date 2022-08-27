@@ -1,10 +1,9 @@
-import { Avatar } from "../../Avatar/Avatar";
 import { useSelector } from "react-redux";
 import CommentCardStyles from "./CommentCard.module.css";
-import { serverDomain } from "../../../constants";
 import { MenuIcon } from "../../../icons/MenuIcon";
+import { NameAvatar } from "../../Avatar/NameAvatar";
 
-export const CommentCard = function ({ commenterUserId, blogId }) {
+export const CommentCard = function ({ commenterUserId, blogId, shortName }) {
   const userData = useSelector((state) => state.user);
   const commentData = useSelector(
     (state) => state.contents.contentCache[blogId].comments[commenterUserId]
@@ -19,14 +18,16 @@ export const CommentCard = function ({ commenterUserId, blogId }) {
     <div key={commentId} className={CommentCardStyles.commentCard}>
       <div className={CommentCardStyles.upperPart}>
         <div className={CommentCardStyles.commenterInfoContainer}>
-          <Avatar
+          {/* <Avatar
             imageUrl={`${serverDomain}uploads/images/${commentData.commenterProfileImage.filename}`}
-          />
+          /> */}
+          <NameAvatar shortName={shortName} />
           <span className={CommentCardStyles.commenterName}>
-            {`${commentData.commenterName.length > 10
+            {`${
+              commentData.commenterName.length > 10
                 ? commentData.commenterName.substr(0, 15) + "..."
                 : commentData.commenterName
-              }`}
+            }`}
           </span>
         </div>
         <div className={CommentCardStyles.upperLeftPart}>

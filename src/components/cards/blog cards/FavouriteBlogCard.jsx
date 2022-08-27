@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { serverDomain } from "../../../constants";
 import { DeleteIcon } from "../../../icons/DeleteIcon";
 import BlogCardStyles from "./BlogCard.module.css";
-import { Avatar } from "../../Avatar/Avatar";
 import { showToast } from "../../../redux/slices/toast/toastSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import {
@@ -14,6 +12,7 @@ import {
   removeBlogFromFavouritesContent,
 } from "../../../redux/slices/content/contentsSlice";
 import { removeBlogFromFavouritesApi } from "../../../api/removeBlogFromFavouritesApi";
+import { NameAvatar } from "../../Avatar/NameAvatar";
 
 export const FavouriteBlogCard = function ({ blogId }) {
   const dispatch = useDispatch();
@@ -62,7 +61,7 @@ export const FavouriteBlogCard = function ({ blogId }) {
       <div
         className={BlogCardStyles.blog_profile_image}
         style={{
-          backgroundImage: `url(${serverDomain}uploads/images/${selectedBlogData.blogProfileImage.filename})`,
+          backgroundImage: `url(${selectedBlogData.blogProfileImageURL})`,
         }}
       >
         <div className={BlogCardStyles.overlay}>
@@ -72,8 +71,15 @@ export const FavouriteBlogCard = function ({ blogId }) {
         </div>
       </div>
       <div className={BlogCardStyles.lower_part} grid="true">
-        <Avatar
+        {/* <Avatar
           imageUrl={`${serverDomain}uploads/images/${selectedBlogData.publisherProfileImage.filename}`}
+        /> */}
+        <NameAvatar
+          shortName={selectedBlogData.publisherName
+            .split(" ")
+            .slice(0, 2)
+            .map((str) => str[0])
+            .join("")}
         />
         <div className={BlogCardStyles.right_part}>
           <h2 className={BlogCardStyles.blog_title}>
