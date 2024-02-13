@@ -11,5 +11,6 @@ export const urls = {
 export const jwtKey = "proBlogger token";
 export const userIdKey = "user id";
 
-export const serverDomain = "https://problogger-by-ashish.herokuapp.com/";
+export const serverDomain = "https://baateinserverside-production.up.railway.app/";
+// export const serverDomain = "https://problogger-by-ashish.herokuapp.com/";
 // export const serverDomain = "http://localhost:3001/";
